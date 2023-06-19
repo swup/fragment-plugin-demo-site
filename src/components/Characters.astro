@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-
 const posts = (await getCollection("characters")).sort();
 ---
 
@@ -16,7 +15,9 @@ const posts = (await getCollection("characters")).sort();
 						>
 							<div
 								class="teaser_image"
-								style={`background-image: url(/characters/${post.data.image});`}
+								style={{
+									backgroundImage: `url(/characters/${post.data.image})`,
+								}}
 							/>
 						</div>
 						{post.data.name}

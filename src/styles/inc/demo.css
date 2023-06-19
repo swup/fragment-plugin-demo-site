@@ -6,6 +6,11 @@
   line-height: 1.4;
 }
 
+.site-title,
+.page-title {
+  @apply font-extrabold text-4xl;
+}
+
 body {
   max-width: 1000px;
   margin-block: 5rem;

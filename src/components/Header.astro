@@ -1,24 +1,23 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
+const { isFrontPage } = Astro.props;
 ---
 
-<header>
-	<h2>
-		{SITE_TITLE}
-	</h2>
-	<nav>
+<header class="pb-10">
+	{
+		isFrontPage ? (
+			<h1 class="site-title">{SITE_TITLE}</h1>
+		) : (
+			<div class="site-title">{SITE_TITLE}</div>
+		)
+	}
+	<nav class="pt-5 flex gap-3">
 		<HeaderLink href="/">Home</HeaderLink>
-		<HeaderLink href="/characters">Characters</HeaderLink>
-		<HeaderLink href="/about">About</HeaderLink>
+		<HeaderLink href="/characters/">Characters</HeaderLink></li>
+		<HeaderLink href="/about/">About</HeaderLink>
 		<HeaderLink href="https://github.com/withastro/astro" target="_blank">GitHub</HeaderLink>
 	</nav>
 </header>
 <style>
-	header {
-		margin: 0em 0 2em;
-	}
-	h2 {
-		margin: 0.5em 0;
-	}
 </style>

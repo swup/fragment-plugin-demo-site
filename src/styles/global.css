@@ -1,2 +1,6 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 @import "./inc/custom-media.css";
 @import "./inc/demo.css";

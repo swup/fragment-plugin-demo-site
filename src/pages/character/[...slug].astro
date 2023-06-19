@@ -1,24 +1,84 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content';
-import Character from '../../layouts/Caracter.astro';
-import Characters from '../../components/Characters.astro';
+import { CollectionEntry, getCollection } from "astro:content";
+import Character from "../../layouts/Caracter.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('characters');
+	const posts = await getCollection("characters");
 	return posts.map((post) => ({
 		params: { slug: post.slug },
 		props: post,
 	}));
 }
-type Props = CollectionEntry<'characters'>;
+type Props = CollectionEntry<"characters">;
 
 const post = Astro.props;
 const { Content } = await post.render();
+
+const { name, color, image } = post.data;
 ---
 
 <Character {...post.data}>
-	<Content />
+	<div
+		id="character-overlay"
+		class="overlay transition-overlay is-visible"
+		x-init="$nextTick(() => $el.classList.add('is-visible'))"
+		data-fragment-url="/?character=mario"
+	>
+		<div class="overlay_inner">
+			<a href="/characters/" class="overlay_close" data-close-character=""></a>
+			<main class="character transition-character" id="character">
+				<div
+					class="character_header"
+					style={{
+						backgroundColor: color,
+					}}
+				>
+					<a href="/characters/" class="character_close" data-close-character=""
+						>✕</a
+					>
+					<div
+						class="character_image"
+						style={{
+							backgroundImage: `url(/characters/${image})`,
+						}}
+					>
+					</div>
+				</div>
+				<div class="character_body text">
+					<h1 class="page-title">{name}</h1>
+					<p>
+						<strong>{name}</strong> is a character in the Super Mario universe.
+					</p>
+					<p>
+						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde
+						possimus vero aliquam inventore molestiae cumque quibusdam impedit
+						dolor quo dolores eum minus sint.
+					</p>
+					<p><a href="/about">About</a></p>
+				</div>
+				<nav>
+					<ul class="character_nav">
+						<li class="character_nav_item">
+							<a
+								class="character_nav_link --previous"
+								data-swup-history="replace"
+								href="./?character=princess-daisy"
+							>
+								← Princess Daisy</a
+							>
+						</li>
+						<li class="character_nav_item">
+							<a
+								class="character_nav_link --next"
+								data-swup-history="replace"
+								href="./?character=luigi"
+							>
+								Luigi →</a
+							>
+						</li>
+					</ul>
+				</nav>
+			</main>
+		</div>
+	</div>
 </Character>
-<div id="characters">
-	<Characters/>
-</div>

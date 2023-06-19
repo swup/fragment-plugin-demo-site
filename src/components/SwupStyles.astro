@@ -1,0 +1,63 @@
+<style is:global>
+  /* All the styles for the fragment transitions: */
+
+  /*
+	* The default transition (for visits without fragment)
+	*/
+  html:not([data-fragment-visit]) .transition-main {
+    transition: opacity 250ms;
+    opacity: 1;
+  }
+  html:not([data-fragment-visit]).is-animating .transition-main {
+    opacity: 0;
+  }
+
+  /*
+  * The transition between characters
+  */
+  html[data-fragment-visit="replaceCharacters"] .transition-teaser {
+    transition-property: opacity, transform;
+    transition-duration: 450ms;
+  }
+  html[data-fragment-visit="replaceCharacters"].is-animating
+    .transition-teaser {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser {
+    transition-duration: 100ms;
+  }
+
+  /*
+  * The transition for the overlay
+  */
+  html[data-fragment-visit="openOverlay"] .transition-overlay,
+  html[data-fragment-visit="closeOverlay"] .transition-overlay {
+    transition: opacity 350ms;
+  }
+  html[data-fragment-visit="openOverlay"].is-animating .transition-overlay,
+  html[data-fragment-visit="closeOverlay"].is-animating .transition-overlay {
+    opacity: 0;
+  }
+  html[data-fragment-visit="openOverlay"].is-leaving .transition-overlay,
+  html[data-fragment-visit="closeOverlay"].is-rendering .transition-overlay {
+    transition-duration: 100ms;
+  }
+
+  /*
+  * The transition between characters
+  */
+  html[data-fragment-visit="replaceCharacter"] .transition-character {
+    transition: opacity 200ms, transform 200ms;
+  }
+  html[data-fragment-visit="replaceCharacter"].is-animating
+    .transition-character {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  html[data-fragment-visit="replaceCharacter"].is-leaving
+    .transition-character {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+</style>

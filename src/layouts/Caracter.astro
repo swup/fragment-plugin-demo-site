@@ -1,101 +1,14 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Base from '../components/Base.astro';
+import Characters from "../components/Characters.astro";
 
-type Props = CollectionEntry<"characters">["data"];
-
-const { name, color, image } = Astro.props;
+const { name } = Astro.props;
 const description = `${name} is a character in the Super Mario universe`;
-const imageUrl = `url(/characters/${image})`;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={name} description={description} image={image} />
-		<style>
-			.title {
-				font-size: 2em;
-				margin: 0.25em 0 0;
-			}
-			hr {
-				border-top: 1px solid #ddd;
-				margin: 1rem 0;
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
-
-	<body>
-		<Header />
-		<div
-			id="character-overlay"
-			class="overlay transition-overlay is-visible"
-			x-init="$nextTick(() => $el.classList.add('is-visible'))"
-			data-fragment-url="/?character=mario"
-		>
-			<div class="overlay_inner">
-				<a href="/characters/" class="overlay_close" data-close-character=""></a>
-				<main class="character transition-character" id="character">
-					<div class="character_header">
-						<a
-							href="/characters/"
-							class="character_close"
-							data-close-character="">✕</a
-						>
-						<div
-							class="character_image"
-						>
-						</div>
-					</div>
-					<div class="character_body text">
-						<h1>{name}</h1>
-						<p>
-							<strong>{name}</strong> is a character in the Super Mario universe.
-						</p>
-						<p>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde
-							possimus vero aliquam inventore molestiae cumque quibusdam impedit
-							dolor quo dolores eum minus sint.
-						</p>
-						<p><a href="/about">About</a></p>
-					</div>
-					<nav>
-						<ul class="character_nav">
-							<li class="character_nav_item">
-								<a
-									class="character_nav_link --previous"
-									data-swup-history="replace"
-									href="./?character=princess-daisy"
-								>
-									← Princess Daisy</a
-								>
-							</li>
-							<li class="character_nav_item">
-								<a
-									class="character_nav_link --next"
-									data-swup-history="replace"
-									href="./?character=luigi"
-								>
-									Luigi →</a
-								>
-							</li>
-						</ul>
-					</nav>
-				</main>
-			</div>
-		</div>
-		<style define:vars={{ color, imageUrl }}>
-			.character_header {
-				background-color: var(--color);
-			}
-			.character_image {
-				background-image: var(--imageUrl)
-			}
-		</style>
-		<Footer />
-	</body>
-</html>
+<Base title={name} description={description}>
+	<slot />
+	<div id="characters">
+		<Characters />
+	</div>
+</Base>
