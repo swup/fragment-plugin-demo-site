@@ -6,7 +6,7 @@ const { name } = Astro.props;
 const description = `${name} is a character in the Super Mario universe`;
 ---
 
-<Base title={name} description={description}>
+<Base title={`Detail: ${name}`} description={description}>
 	<slot />
 	<div id="teasers">
 		<Teasers />
