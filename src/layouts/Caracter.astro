@@ -1,6 +1,6 @@
 ---
 import Base from '../components/Base.astro';
-import Characters from "../components/Characters.astro";
+import Teasers from "../components/Teasers.astro";
 
 const { name } = Astro.props;
 const description = `${name} is a character in the Super Mario universe`;
@@ -8,7 +8,7 @@ const description = `${name} is a character in the Super Mario universe`;
 
 <Base title={name} description={description}>
 	<slot />
-	<div id="characters">
-		<Characters />
+	<div id="teasers">
+		<Teasers />
 	</div>
 </Base>

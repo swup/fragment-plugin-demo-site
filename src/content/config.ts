@@ -7,7 +7,15 @@ const characters = defineCollection({
 		color: z.string(),
 		filters: z.array(z.string()),
 		image: z.string(),
+		sortOrder: z.number().optional()
 	}),
 });
 
-export const collections = { characters };
+const filters = defineCollection({
+	// Type-check frontmatter using a schema
+	schema: z.object({
+		name: z.string(),
+	}),
+});
+
+export const collections = { characters, filters };

@@ -8,7 +8,7 @@ const { title, description, isFrontPage } = Astro.props;
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<BaseHead title={title ?? SITE_TITLE} description={description ?? SITE_DESCRIPTION} />
+		<BaseHead title={title ? `${title} - ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} />
 	</head>
 
 	<body>

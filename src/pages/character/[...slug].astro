@@ -19,14 +19,14 @@ const { name, color, image } = post.data;
 
 <Character {...post.data}>
 	<div
-		id="character-overlay"
+		id="overlay"
 		class="overlay transition-overlay is-visible"
 		x-init="$nextTick(() => $el.classList.add('is-visible'))"
 		data-fragment-url="/?character=mario"
 	>
 		<div class="overlay_inner">
 			<a href="/characters/" class="overlay_close" data-close-character=""></a>
-			<main class="character transition-character" id="character">
+			<main class="character transition-character" id="detail">
 				<div
 					class="character_header"
 					style={{

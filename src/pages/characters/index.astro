@@ -1,12 +1,13 @@
 ---
 import Base from "../../components/Base.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
-import Characters from "../../components/Characters.astro";
+import Teasers from "../../components/Teasers.astro";
+import Filters from "../../components/Filters.astro";
 ---
 
-<Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<main id="characters">
-		<Characters />
-		<!--?php require_once(dirname(__FILE__) . '/filters.php'); ?-->
+<Base title="Characters">
+	<main id="teasers">
+		<Filters />
+		<Teasers />
 	</main>
+	<div id="overlay"><!-- the placeholder for the overlay --></div>
 </Base>

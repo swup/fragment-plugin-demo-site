@@ -1,6 +1,13 @@
 ---
 import { getCollection } from "astro:content";
-const posts = (await getCollection("characters")).sort();
+
+import { getSortedCharacters } from "../js/utils.js";
+
+const { filter } = Astro.props;
+
+const posts = (await getSortedCharacters())!.filter((post) => {
+	return !filter || post.data.filters.includes(filter.slug);
+});
 ---
 
 <section class="teasers">

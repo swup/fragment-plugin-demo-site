@@ -1,0 +1,27 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+
+const filters = await getCollection("filters");
+
+const { filter: currentFilterSlug } = Astro.params;
+---
+
+<nav class="filters">
+	<ul class="filters_list">
+		{
+			filters.map((filter) => (
+				<li class="filters_item">
+					<a
+						class:list={[
+							"filters_link",
+							{ "is-active": filter.slug === currentFilterSlug },
+						]}
+						href={`/characters/${filter.slug}`}
+					>
+						{filter.data.name}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>

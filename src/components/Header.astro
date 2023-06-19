@@ -1,10 +1,10 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../consts';
+import NavLink from './NavLink.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 const { isFrontPage } = Astro.props;
 ---
 
-<header class="pb-10">
+<header class="site-header">
 	{
 		isFrontPage ? (
 			<h1 class="site-title">{SITE_TITLE}</h1>
@@ -12,11 +12,14 @@ const { isFrontPage } = Astro.props;
 			<div class="site-title">{SITE_TITLE}</div>
 		)
 	}
-	<nav class="pt-5 flex gap-3">
-		<HeaderLink href="/">Home</HeaderLink>
-		<HeaderLink href="/characters/">Characters</HeaderLink></li>
-		<HeaderLink href="/about/">About</HeaderLink>
-		<HeaderLink href="https://github.com/withastro/astro" target="_blank">GitHub</HeaderLink>
+	<nav>
+		<ul class="nav_list">
+			<li><NavLink href="/">Home</NavLink></li>
+			<li><NavLink href="/characters/">Characters</NavLink></li>
+			<li><NavLink href="/about/">About</NavLink></li>
+			<li><NavLink href="https://github.com/swup/fragment-plugin" target="_blank">GitHub</NavLink></li>
+		</ul>
+
 	</nav>
 </header>
 <style>

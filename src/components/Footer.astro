@@ -19,30 +19,30 @@ const today = new Date();
 				rules: [
 					// Rule 1: Between filters of the list
 					{
-						from: ["/", "/\\?filter=:filter"],
-						to: ["/", "/\\?filter=:filter"],
-						fragments: ["#characters"],
+						from: ["/characters/", "/characters/:filter"],
+						to: ["/characters/", "/characters/:filter"],
+						fragments: ["#teasers"],
 						name: "replaceCharacters",
 					},
 					// Rule 2: From the list to an overlay
 					{
-						from: ["/", "/\\?filter=:filter"],
-						to: "/\\?character=:character",
-						fragments: ["#character-overlay"],
+						from: ["/characters/", "/characters/:filter"],
+						to: "/character/:character",
+						fragments: ["#overlay"],
 						name: "openOverlay",
 					},
 					// Rule 3: From an overlay back to the list
 					{
-						from: "/\\?character=:character",
-						to: ["/", "/\\?filter=:filter"],
-						fragments: ["#character-overlay", "#characters"],
+						from: "/character/:character",
+						to: ["/characters/", "/characters/:filter"],
+						fragments: ["#overlay", "#teasers"],
 						name: "closeOverlay",
 					},
 					// Rule 4: Between overlays
 					{
-						from: "/\\?character=:character",
-						to: "/\\?character=:character",
-						fragments: ["#character"],
+						from: "/character/:character",
+						to: "/character/:character",
+						fragments: ["#detail"],
 						name: "replaceCharacter",
 					},
 				],

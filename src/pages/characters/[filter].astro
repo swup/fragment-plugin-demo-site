@@ -1,0 +1,28 @@
+---
+import Base from "../../components/Base.astro";
+import Teasers from "../../components/Teasers.astro";
+import Filters from "../../components/Filters.astro";
+
+import { CollectionEntry, getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const filters = await getCollection("filters");
+  const paths = filters.map((filter) => ({
+    params: { filter: filter.slug },
+    props: filter,
+  }));
+  return paths;
+}
+
+const filter = Astro.props;
+---
+
+<Base title={filter.data.name}>
+
+	<main id="teasers">
+		<Filters filter={filter} />
+		<Teasers filter={filter} />
+	</main>
+	<div id="overlay"><!-- the placeholder for the overlay --></div>
+</Base>
+
