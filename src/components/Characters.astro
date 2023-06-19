@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("characters")).sort();
+---
+
+<section class="teasers">
+	<ul class="teasers_list">
+		{
+			posts.map((post) => (
+				<li class="teaser transition-teaser">
+					<a class="teaser_link" href={`/character/${post.slug}/`}>
+						<div
+							class="teaser_batch"
+							style={`background-color: ${post.data.color};`}
+						>
+							<div
+								class="teaser_image"
+								style={`background-image: url(/characters/${post.data.image});`}
+							/>
+						</div>
+						{post.data.name}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</section>

@@ -1,0 +1,25 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import Characters from "../../components/Characters.astro";
+
+const posts = (await getCollection("characters")).sort();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main id="characters">
+			<Characters/>
+			<!--?php require_once(dirname(__FILE__) . '/filters.php'); ?-->
+		</main>
+		<Footer />
+	</body>
+</html>
