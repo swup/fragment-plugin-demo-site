@@ -1,17 +1,30 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import Character from "../../layouts/Caracter.astro";
 
+import { getSortedCharacters } from "../../js/utils.js";
+
+const posts = (await getSortedCharacters())!;
+
 export async function getStaticPaths() {
-	const posts = await getCollection("characters");
-	return posts.map((post) => ({
+	const posts = (await getSortedCharacters())!;
+
+	return posts.map((post, index) => ({
 		params: { slug: post.slug },
-		props: post,
+		props: {
+			post,
+			prevPost: posts[index - 1] || posts[posts.length - 1],
+			nextPost: posts[index + 1] || posts[0],
+		},
 	}));
 }
-type Props = CollectionEntry<"characters">;
+type Props = {
+	post: CollectionEntry<"characters">;
+	prevPost: CollectionEntry<"characters">,
+	nextPost: CollectionEntry<"characters">
+};
 
-const post = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await post.render();
 
 const { name, color, image } = post.data;
@@ -62,7 +75,7 @@ const { name, color, image } = post.data;
 							<a
 								class="character_nav_link --previous"
 								data-swup-history="replace"
-								href="./?character=princess-daisy"
+								href={`/character/${prevPost.slug}`}
 							>
 								← Princess Daisy</a
 							>
@@ -71,7 +84,7 @@ const { name, color, image } = post.data;
 							<a
 								class="character_nav_link --next"
 								data-swup-history="replace"
-								href="./?character=luigi"
+								href={`/character/${nextPost.slug}`}
 							>
 								Luigi →</a
 							>
