@@ -2,6 +2,8 @@
 const today = new Date();
 ---
 <script>
+	import injectSwupStyles from '../js/injectSwupStyles.js';
+
 	import Swup, { Handler } from "swup";
 	// @ts-ignore
 	import SwupScrollPlugin from "@swup/scroll-plugin";
@@ -9,6 +11,8 @@ const today = new Date();
 	// import SwupFragmentPlugin from "@swup/fragment-plugin";
 	// @ts-ignore
 	import SwupBodyClassPlugin from "@swup/body-class-plugin";
+
+	const styles = injectSwupStyles();
 
 	const swup = new Swup({
 		animateHistoryBrowsing: true,

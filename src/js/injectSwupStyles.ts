@@ -1,4 +1,5 @@
-<style is:global>
+export default function injectSwupStyles(): string {
+  const styles = /*css*/ `
   /* All the styles for the fragment transitions: */
 
   /*
@@ -60,4 +61,10 @@
     opacity: 0;
     transform: translateY(20px);
   }
-</style>
+  `
+  const styleElement = document.createElement('style');
+  styleElement.setAttribute('data-swup-styles', '');
+  styleElement.textContent = styles;
+  document.head.append(styleElement);
+  return styles;
+}
