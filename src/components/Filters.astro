@@ -1,7 +1,13 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
-import { Code } from 'astro/components';
+import { Debug } from 'astro/components';
 const filters = await getCollection("filters");
+const allFilters = [{
+	slug: undefined,
+	data: {
+		name: 'All'
+	}
+}, ...filters];
 
 const { filter: currentFilterSlug } = Astro.params;
 ---
@@ -9,7 +15,7 @@ const { filter: currentFilterSlug } = Astro.params;
 <nav class="filters">
 	<ul class="filters_list">
 		{
-			filters.map((filter) => (
+			allFilters.map((filter) => (
 				<li class="filters_item">
 					<a
 						class:list={[
@@ -17,7 +23,7 @@ const { filter: currentFilterSlug } = Astro.params;
 							{ "is-active": filter.slug === currentFilterSlug },
 						]}
 						data-tippy="Will replace <code>#overview</code>"
-						href={`/characters/${filter.slug}`}
+						href={filter.slug ? `/characters/${filter.slug}` : '/characters/'}
 					>
 						{filter.data.name}
 					</a>
