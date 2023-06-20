@@ -1,10 +1,10 @@
 ---
 import Base from '../components/Base.astro';
-import feather from 'feather-icons';
+import Icon from '../components/Icon.astro';
 ---
 <Base isFrontPage={true}>
 	<main>
 		<p>This is a demo site for testing the upcoming Swup Fragment Plugin</p>
-		<p><br><a class="button" href="/characters/">Browse some characters <Fragment set:html={feather.icons['arrow-right'].toSvg()}></Fragment></a></p>
+		<p><br><a class="button" href="/characters/">Browse some characters <Icon name="arrow-right"/></a></p>
 	</main>
 </Base>

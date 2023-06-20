@@ -6,7 +6,7 @@ import SwupFragmentPlugin from "../../../fragment-plugin/src/index.js";
 // @ts-ignore
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 
-import tippy from "tippy.js";
+import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
@@ -16,7 +16,7 @@ const rules = [
   {
     from: ["/characters/", "/characters/:filter"],
     to: ["/characters/", "/characters/:filter"],
-    fragments: ["#teasers"],
+    fragments: ["#overview"],
     name: "replaceCharacters",
   },
   // Rule 2: From the list to an overlay
@@ -30,7 +30,7 @@ const rules = [
   {
     from: "/character/:character",
     to: ["/characters/", "/characters/:filter"],
-    fragments: ["#overlay", "#teasers"],
+    fragments: ["#overlay", "#overview"],
     name: "closeOverlay",
   },
   // Rule 4: Between overlays
@@ -52,11 +52,18 @@ const swup = new Swup({
 });
 /** PRINT END **/
 
-
 function initTippy() {
-  tippy(`[data-tippy]`, {
-    allowHTML: true,
-    content: (ref) => String(ref.getAttribute("data-tippy")),
+  document.querySelectorAll("[data-tippy]").forEach((el) => {
+    const content = el.getAttribute('data-tippy');
+    if (!content) return;
+    tippy(el, {
+      allowHTML: true,
+      theme: 'light',
+      content,
+      plugins: [followCursor],
+      followCursor: el.matches('[data-tippy-follow]'),
+    });
+    el.removeAttribute('data-tippy');
   });
 }
 

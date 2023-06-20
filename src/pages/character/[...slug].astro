@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Character from "../../layouts/Caracter.astro";
+import Icon from '../../components/Icon.astro';
 
 import { getSortedCharacters } from "../../js/utils.js";
 
@@ -20,8 +21,8 @@ export async function getStaticPaths() {
 }
 type Props = {
 	post: CollectionEntry<"characters">;
-	prevPost: CollectionEntry<"characters">,
-	nextPost: CollectionEntry<"characters">
+	prevPost: CollectionEntry<"characters">;
+	nextPost: CollectionEntry<"characters">;
 };
 
 const { post, prevPost, nextPost } = Astro.props;
@@ -35,10 +36,15 @@ const { name, color, image } = post.data;
 		id="overlay"
 		class="overlay transition-overlay is-visible"
 		x-init="$nextTick(() => $el.classList.add('is-visible'))"
-		data-fragment-url="/?character=mario"
 	>
 		<div class="overlay_inner">
-			<a href="/characters/" class="overlay_close" data-close-character=""></a>
+			<a
+				href="/characters/"
+				class="overlay_close"
+				data-close-character
+				data-tippy="Will replace <code>#detail</code> and <code>#overlay</code>"
+				data-tippy-follow
+				></a>
 			<main class="character transition-character" id="detail">
 				<div
 					class="character_header"
@@ -46,9 +52,13 @@ const { name, color, image } = post.data;
 						backgroundColor: color,
 					}}
 				>
-					<a href="/characters/" class="character_close" data-close-character=""
-						>✕</a
-					>
+					<a
+						href="/characters/"
+						class="character_close"
+						data-close-character
+						data-tippy="Will replace <code>#detail</code> and <code>#overlay</code>">
+					<Icon name="x"/>
+					</a>
 					<div
 						class="character_image"
 						style={{

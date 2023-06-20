@@ -1,0 +1,5 @@
+---
+import feather from 'feather-icons';
+const { name } = Astro.props;
+---
+<Fragment set:html={feather.icons[name].toSvg()}></Fragment>
