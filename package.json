@@ -17,7 +17,12 @@
     "@swup/body-class-plugin": "^2.0.1",
     "@swup/scroll-plugin": "^2.0.3",
     "astro": "^2.6.4",
+    "feather-icons": "^4.29.0",
     "swup": "^3.1.0",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "@types/feather-icons": "^4.29.1"
   }
 }

@@ -15,7 +15,11 @@ const posts = (await getSortedCharacters())!.filter((post) => {
 		{
 			posts.map((post) => (
 				<li class="teaser transition-teaser">
-					<a class="teaser_link" href={`/character/${post.slug}/`}>
+					<a
+						class="teaser_link"
+						href={`/character/${post.slug}/`}
+						data-tippy="Will replace <code>#overlay</code>"
+						>
 						<div
 							class="teaser_batch"
 							style={`background-color: ${post.data.color};`}

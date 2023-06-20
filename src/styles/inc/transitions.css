@@ -1,6 +1,4 @@
-export default function injectSwupStyles(): string {
-  const styles = /*css*/ `
-  /* All the styles for the fragment transitions: */
+/* All the styles for the fragment transitions: */
 
   /*
 	* The default transition (for visits without fragment)
@@ -61,10 +59,3 @@ export default function injectSwupStyles(): string {
     opacity: 0;
     transform: translateY(20px);
   }
-  `
-  const styleElement = document.createElement('style');
-  styleElement.setAttribute('data-swup-styles', '');
-  styleElement.textContent = styles;
-  document.head.append(styleElement);
-  return styles;
-}

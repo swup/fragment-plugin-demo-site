@@ -13,9 +13,10 @@ const { filter: currentFilterSlug } = Astro.params;
 				<li class="filters_item">
 					<a
 						class:list={[
-							"filters_link",
+							"filters_link button",
 							{ "is-active": filter.slug === currentFilterSlug },
 						]}
+						data-tippy="Will replace <code>#teasers</code>"
 						href={`/characters/${filter.slug}`}
 					>
 						{filter.data.name}

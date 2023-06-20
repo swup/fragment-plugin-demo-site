@@ -1,0 +1,18 @@
+---
+import Base from "../components/Base.astro";
+import { Debug, Code } from "astro/components";
+
+import CSS from "../styles/inc/transitions.css?inline";
+
+import { loadSwupInitializationCode } from "../js/utils.ts";
+const JS = loadSwupInitializationCode();
+---
+
+<Base>
+	<div class="text">
+		<h2>The script for the fragments</h2>
+		<Code code={JS} lang="js" />
+		<h2>The CSS for the transitions</h2>
+		<Code code={CSS} lang="css" />
+	</div>
+</Base>

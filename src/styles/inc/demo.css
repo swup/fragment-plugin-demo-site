@@ -11,10 +11,6 @@
   @apply font-extrabold text-4xl;
 }
 
-.button {
-  @apply hover:bg-cyan-400 bg-cyan-500 transition-colors text-white font-bold py-2 px-4 rounded-full inline-block;
-}
-
 body {
   max-width: 1000px;
   margin-block: 5rem;
@@ -82,22 +78,40 @@ p a:where(:not(.button)) {
   gap: 0.5rem;
 }
 
-.filters_link {
-  display: block;
-  padding: 0.2em 0.8em;
+.button {
+  display: inline-flex;
+  gap: 0.2em;
+  padding: 0.3em 1em;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5em;
   text-decoration: none;
   font-weight: 600;
+  align-items: center;
+}
+.button--lg {
+  font-size: 1.2rem;
 }
 
-.filters_link:hover {
+.button:hover {
   background: #f1f1f1;
 }
 
-.filters_link.is-active {
+.button.is-active {
   background: #60DDCD;
   border-color: #60DDCD;
+}
+
+.button .feather {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.hint {
+  opacity: 0.5;
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-block: 3rem;
+  display: none;
 }
 
 /*
@@ -192,10 +206,11 @@ p a:where(:not(.button)) {
 .character_nav {
   display: flex;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
 }
 
 .character_nav_item {
-  flex: 1;
+  flex: none;
 }
 
 .character_nav_link {

@@ -18,11 +18,14 @@ const filter = Astro.props;
 ---
 
 <Base title={`Filter: ${filter.data.name}`}>
-
 	<main id="teasers">
 		<Filters filter={filter} />
 		<Teasers filter={filter} />
 	</main>
+  <p class="hint">
+    Navigating between the filters, will only replace the element <code>#teasers</code>.<br>
+    Clicking on one of the characters will only replace the element <code>#overlay</code>
+  </p>
 	<div id="overlay"><!-- the placeholder for the overlay --></div>
 </Base>
 

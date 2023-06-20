@@ -1,6 +1,8 @@
 ---
 import Base from '../components/Base.astro';
 import Teasers from "../components/Teasers.astro";
+import Filters from "../components/Filters.astro";
+
 
 const { name } = Astro.props;
 const description = `${name} is a character in the Super Mario universe`;
@@ -9,6 +11,7 @@ const description = `${name} is a character in the Super Mario universe`;
 <Base title={`Detail: ${name}`} description={description}>
 	<slot />
 	<div id="teasers">
+		<Filters />
 		<Teasers />
 	</div>
 </Base>
