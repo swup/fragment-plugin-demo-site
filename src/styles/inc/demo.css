@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   font-family: -apple-system, BlinkMacSystemFont, "helvetica neue", helvetica,
     roboto, noto, "segoe ui", arial, sans-serif;
@@ -13,7 +18,7 @@
 
 body {
   max-width: 1000px;
-  margin-block: 5rem;
+  margin-block: 8%;
   margin-inline: auto;
   padding: 1rem;
 }
@@ -28,8 +33,11 @@ a {
   color: inherit;
 }
 
-h1 {
+.site-title,
+.page-title {
   font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  line-height: 1.1;
 }
 
 p a:where(:not(.button)) {
@@ -49,9 +57,17 @@ p a:where(:not(.button)) {
   */
 .nav_list {
   display: flex;
-  gap: 1rem;
-  margin-block: 1rem;
+  flex-direction: column;
+  gap: 0.2em;
   font-weight: 600;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  margin-top: 1rem;
+
+  @media (--sm-n-above) {
+    flex-direction: row;
+    gap: 1em;
+  }
 }
 
 .nav_link {
@@ -66,8 +82,8 @@ p a:where(:not(.button)) {
 }
 
 /*
-  * Filters
-  */
+* Filters
+*/
 .filters {
   margin-block: 0 3rem;
 }
@@ -88,6 +104,7 @@ p a:where(:not(.button)) {
   font-weight: 600;
   align-items: center;
 }
+
 .button--lg {
   font-size: 1.2rem;
 }
@@ -115,8 +132,8 @@ p a:where(:not(.button)) {
 }
 
 /*
-  * Teasers
-  */
+* Teasers
+*/
 .teasers_list {
   --min-column-width: 20%;
 
@@ -161,8 +178,8 @@ p a:where(:not(.button)) {
 }
 
 /*
-  * Character
-  */
+* Character
+*/
 .character {
   position: relative;
   background: white;
@@ -203,8 +220,9 @@ p a:where(:not(.button)) {
   margin-bottom: 1rem;
 }
 
-:where(.text) > h2 {
+:where(.text)>h2 {
   font-weight: bold;
+  font-size: 1.25rem;
 }
 
 .character_nav {
@@ -227,8 +245,8 @@ p a:where(:not(.button)) {
 }
 
 /*
-  * Overlay
-  */
+* Overlay
+*/
 .overlay {
   position: fixed;
   top: 0;
@@ -270,7 +288,8 @@ p a:where(:not(.button)) {
   border-radius: 0.3rem;
   font-size: 0.9rem;
 }
-.astro-code > code {
+
+.astro-code>code {
   display: block;
   padding: 1rem;
 }
@@ -278,12 +297,16 @@ p a:where(:not(.button)) {
 /*
 * Inline Code
 */
-*:not(.astro-code) > code {
+*:not(.astro-code)>code {
   background: #24292e;
   border-radius: 0.3em;
   color: #60DDCD;
   padding: 0.2em 0.4em;
 }
+
+/*
+* ToolTips
+*/
 .tippy-box {
   font-size: 0.7rem;
   padding: 0.5em;

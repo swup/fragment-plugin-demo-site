@@ -1,8 +1,4 @@
-/* All the styles for the fragment transitions: */
-
-/*
-	* The default transition (for visits without fragment)
-	*/
+/* The default transition (for visits without fragment) */
 html:not([data-fragment-visit]) .transition-main {
   transition: opacity 250ms;
   opacity: 1;
@@ -12,9 +8,7 @@ html:not([data-fragment-visit]).is-animating .transition-main {
   opacity: 0;
 }
 
-/*
-  * The transition between characters
-  */
+/* The transition between characters */
 html[data-fragment-visit="replaceCharacters"] .transition-teaser {
   transition-property: opacity, transform;
   transition-duration: 450ms;
@@ -29,9 +23,7 @@ html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser {
   transition-duration: 100ms;
 }
 
-/*
-  * The transition for the overlay
-  */
+/* The transition for the overlay */
 html[data-fragment-visit="openOverlay"] .transition-overlay,
 html[data-fragment-visit="closeOverlay"] .transition-overlay {
   transition: opacity 350ms;
@@ -47,9 +39,7 @@ html[data-fragment-visit="closeOverlay"].is-rendering .transition-overlay {
   transition-duration: 100ms;
 }
 
-/*
-  * The transition between characters
-  */
+/* The transition between characters */
 html[data-fragment-visit="replaceCharacter"] .transition-character {
   transition: opacity 200ms, transform 200ms;
 }
