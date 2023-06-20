@@ -42,6 +42,9 @@ const rules = [
   },
 ];
 
+/**
+ * Initialize Swup
+ */
 const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [
@@ -50,22 +53,37 @@ const swup = new Swup({
     new SwupFragmentPlugin({ rules }),
   ],
 });
-/** PRINT END **/
 
+/**
+ * Make the close URL for overlays dynamic
+ * (when clicking 'x' or on the backdrop)
+ */
+swup.on("contentReplaced", (e) => {
+  const closeURL = document
+    .querySelector("#overview[data-swup-fragment-url]")
+    ?.getAttribute("data-swup-fragment-url");
+  if (!closeURL) return;
+  const closeLinks = [
+    ...document.querySelectorAll("a[data-close-overlay]"),
+  ] as HTMLAnchorElement[];
+  closeLinks.forEach((el) => (el.href = closeURL));
+});
+/** PRINT END **/
 function initTippy() {
   document.querySelectorAll("[data-tippy]:not(.is-active)").forEach((el) => {
-    const content = el.getAttribute('data-tippy');
+    const content = el.getAttribute("data-tippy");
     // const placement =  as  || 'top';
     if (!content) return;
     tippy(el, {
       allowHTML: true,
-      theme: 'light',
+      theme: "light",
       content,
-      placement: el.getAttribute('data-tippy-placement') as TippyPlacement || 'top',
+      placement:
+        (el.getAttribute("data-tippy-placement") as TippyPlacement) || "top",
       plugins: [followCursor],
-      followCursor: el.matches('[data-tippy-follow]'),
+      followCursor: el.matches("[data-tippy-follow]"),
     });
-    el.removeAttribute('data-tippy');
+    el.removeAttribute("data-tippy");
   });
 }
 
@@ -76,20 +94,7 @@ initPageView();
 
 swup.on("contentReplaced", () => initPageView());
 
-let characterCloseUrl = "";
-const setCharacterCloseUrl: Handler<"transitionStart"> = (e) => {
-  if (document.querySelector(".character")) return;
-  characterCloseUrl = window.location.href;
-};
-swup.on("transitionStart", setCharacterCloseUrl);
 
-const applycharacterCloseUrl: Handler<"contentReplaced"> = (e) => {
-  if (!characterCloseUrl) return;
-  document
-    .querySelectorAll("[data-close-character]")
-    .forEach((el) => ((el as HTMLAnchorElement).href = characterCloseUrl));
-};
-swup.on("contentReplaced", applycharacterCloseUrl);
 
 const onKeyDown = (e: KeyboardEvent) => {
   const character = document.querySelector(".character");
