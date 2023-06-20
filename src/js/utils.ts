@@ -20,10 +20,10 @@ export async function getSortedCharacters(): Promise<CollectionEntry<"characters
 /**
  * Load the live version of the Swup initialization code
  */
-export function loadSwupInitializationCode(): string {
+export const loadSwupInitializationCode = (): string =>  {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const raw = fs.readFileSync(path.resolve(__dirname, '../js/initSwup.ts'), 'utf8');
+  const raw = fs.readFileSync(path.resolve(__dirname, '../js/global.ts'), 'utf8');
   const extract = raw.match(/\/\*\* PRINT START \*\*\/(.+)\/\*\* PRINT END \*\*\//s);
   if (!extract) return '';
   const swupCode = extract[1].trim();

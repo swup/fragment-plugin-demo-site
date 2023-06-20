@@ -257,17 +257,31 @@ p a:where(:not(.button)) {
   margin: 0 auto;
 }
 
+/*
+* Code Blocks
+*/
+.astro-code {
+  width: 100%;
+  overflow: auto;
+  border-radius: 0.3rem;
+  font-size: 0.9rem;
+}
+.astro-code > code {
+  display: block;
+  padding: 1rem;
+}
 
-.time {
-  position: fixed;
-  z-index: 999;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: hsl(150, 70%, 70%);
-  border-radius: 0.5em;
-  padding: 0.3em 0.8em;
-  box-shadow:
-    0px 0px 0 1px rgba(0 0 0 / 0.2),
-    1px 1px 10px rgba(0 0 0 / 0.2);
+/*
+* Inline Code
+*/
+*:not(.astro-code) > code {
+  background: #24292e;
+  border-radius: 0.3em;
+  color: #60DDCD;
+  padding: 0.2em 0.4em;
+}
+.tippy-box {
+  font-size: 0.7rem;
+  padding: 0.5em;
+  font-weight: bold;
 }

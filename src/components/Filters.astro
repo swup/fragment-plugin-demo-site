@@ -1,6 +1,6 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
-
+import { Code } from 'astro/components';
 const filters = await getCollection("filters");
 
 const { filter: currentFilterSlug } = Astro.params;

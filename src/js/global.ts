@@ -6,7 +6,7 @@ import SwupFragmentPlugin from "../../../fragment-plugin/src/index.js";
 // @ts-ignore
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 
-import tippy, { followCursor } from "tippy.js";
+import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
@@ -55,11 +55,13 @@ const swup = new Swup({
 function initTippy() {
   document.querySelectorAll("[data-tippy]").forEach((el) => {
     const content = el.getAttribute('data-tippy');
+    // const placement =  as  || 'top';
     if (!content) return;
     tippy(el, {
       allowHTML: true,
       theme: 'light',
       content,
+      placement: el.getAttribute('data-tippy-placement') as TippyPlacement || 'top',
       plugins: [followCursor],
       followCursor: el.matches('[data-tippy-follow]'),
     });
