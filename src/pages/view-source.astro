@@ -1,11 +1,10 @@
 ---
 import Base from "../components/Base.astro";
-import { Debug, Code } from "astro/components";
+import { Code } from "astro/components";
 
-import CSS from "../styles/inc/transitions.css?inline";
-
-import { loadSwupInitializationCode } from "../js/utils.js";
-const JS = loadSwupInitializationCode();
+import { loadSwupJS, loadSwupCSS } from "../js/utils.js";
+const JS = loadSwupJS();
+const CSS = loadSwupCSS();
 ---
 
 <Base>

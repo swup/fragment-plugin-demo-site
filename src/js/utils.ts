@@ -18,12 +18,19 @@ export async function getSortedCharacters(): Promise<CollectionEntry<"characters
 }
 
 /**
+ * Load the live version of the Swup transitions css
+ */
+export const loadSwupCSS = (): string =>  {
+  const file = `${process.cwd()}/src/styles/inc/transitions.css`;
+  return fs.readFileSync(file, 'utf8').trim();
+}
+
+/**
  * Load the live version of the Swup initialization code
  */
-export const loadSwupInitializationCode = (): string =>  {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const raw = fs.readFileSync(path.resolve(__dirname, '../js/global.ts'), 'utf8');
+export const loadSwupJS = (): string =>  {
+  const file = `${process.cwd()}/src/js/global.ts`;
+  const raw = fs.readFileSync(file, 'utf8');
   const extract = raw.match(/\/\*\* PRINT START \*\*\/(.+)\/\*\* PRINT END \*\*\//s);
   if (!extract) return '';
   const swupCode = extract[1].trim();
