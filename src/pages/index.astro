@@ -3,8 +3,15 @@ import Base from '../components/Base.astro';
 import Icon from '../components/Icon.astro';
 ---
 <Base isFrontPage={true}>
-	<main>
-		<p>This is a demo site for the upcoming Swup Fragment Plugin.</p>
-		<p><br><a class="button" href="/characters/">Browse some characters <Icon name="arrow-right"/></a></p>
+	<main class="text">
+		<p>
+			This is a demo and test site for the <a href="https://github.com/swup/fragment-plugin">fragment plugin</a> for <a href="https://github.com/swup/">swup</a>.
+		</p>
+		<p>
+			Under <a href="/characters/">Characters</a>, you can find a filterable list of items. Note how the items and filters are being replaced when filtering characters. How the detail page opens in an overlay when you click one of the characters. How only the content of the overlay is being replaced when navigating between the detail pages.
+		</p>
+		<p>All this is is the work of the Fragment Plugin! 🪄</p>
+		<p>Under <a href="/view-source/">View Source</a>, you can see how all this is being achieved.</p>
+		<p>Now, are you ready? Then start <a href="/characters/">Browsing some characters</a>!</p>
 	</main>
 </Base>
