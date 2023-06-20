@@ -53,7 +53,7 @@ const swup = new Swup({
 /** PRINT END **/
 
 function initTippy() {
-  document.querySelectorAll("[data-tippy]").forEach((el) => {
+  document.querySelectorAll("[data-tippy]:not(.is-active)").forEach((el) => {
     const content = el.getAttribute('data-tippy');
     // const placement =  as  || 'top';
     if (!content) return;
