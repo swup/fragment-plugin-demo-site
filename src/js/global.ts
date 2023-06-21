@@ -107,13 +107,13 @@ swup.on("contentReplaced", () => initPageView());
  * Close eventual overlays using the Escape key
  */
 const onKeyDown = (e: KeyboardEvent) => {
-  const character = document.querySelector(".character");
-  if (!character) return;
   if (e.metaKey) return;
+
+  const characterClose = document.querySelector("a.character_close") as HTMLAnchorElement;
 
   switch (e.key) {
     case "Escape":
-      character.querySelector("a.character_close").click();
+      if (characterClose) characterClose.click();
       break;
   }
 };
