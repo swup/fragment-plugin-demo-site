@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { getCollection, CollectionEntry } from "astro:content";
-import {icons, FeatherIconNames} from 'feather-icons';
 
 /**
  * Get the characters, sorted, cached

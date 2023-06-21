@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import Character from "../../layouts/Caracter.astro";
 import Icon from '../../components/Icon.astro';
 
-import { getSortedCharacters } from "../../js/utils.js";
+import { getSortedCharacters } from "../../js/backend.js";
 
 const posts = (await getSortedCharacters())!;
 
