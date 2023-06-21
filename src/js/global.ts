@@ -10,6 +10,17 @@ import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
+
+/**
+ * Load another version of the fragment plugin in development vs production
+ */
+const SwupFragmentPlugin =
+  process.env.NODE_ENV === "development"
+    ? (await import("../../../fragment-plugin/src/index.js")).default
+    : (await import("@swup/fragment-plugin")).default;
+
+// console.log(`current env: ${process.env.NODE_ENV}`);
+
 /** PRINT START **/
 const rules = [
   // Rule 1: Between filters of the list
@@ -43,13 +54,6 @@ const rules = [
 ];
 /** PRINT END **/
 
-/**
- * Load another version of the fragment plugin in development vs production
- */
-const SwupFragmentPlugin =
-  process.env.NODE_ENV === "production"
-    ? SwupFragmentPluginFromNPM
-    : (await import("../../../fragment-plugin/src/index.js")).default;
 /**
  * Initialize Swup
  */
