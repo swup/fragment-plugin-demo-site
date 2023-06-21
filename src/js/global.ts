@@ -12,9 +12,13 @@ import PreloadPlugin from "@swup/preload-plugin";
  * 4. git clone git@github.com:swup/fragment-plugin.git
  * 5. npm install
  */
-const FragmentPlugin = import.meta.env.PUBLIC_IMPORT_FRAGMENT_PLUGIN === 'local'
-  ? (await import("../../packages/fragment-plugin/src/index.js")).default
-  : (await import("@swup/fragment-plugin")).default;
+// const PLUGIN_PATH = import.meta.env.NETLIFY
+//   ? "@swup/fragment-plugin"
+//   : "../../packages/fragment-plugin/src/index.js";
+
+const FragmentPlugin = import.meta.env.NETLIFY
+  ? (await import("@swup/fragment-plugin")).default
+  : (await import("../../packages/fragment-plugin/src/index.js")).default;
 
 import { isTouch } from "./frontend.js";
 
