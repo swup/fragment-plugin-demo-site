@@ -14,14 +14,14 @@ import "tippy.js/themes/light.css";
 const rules = [
   // Rule 1: Between filters of the list
   {
-    from: ["/characters/", "/characters/:filter"],
-    to: ["/characters/", "/characters/:filter"],
+    from: "/characters/:filter?",
+    to: "/characters/:filter?",
     fragments: ["#overview"],
     name: "replaceCharacters",
   },
   // Rule 2: From the list to an overlay
   {
-    from: ["/characters/", "/characters/:filter"],
+    from: "/characters/:filter?",
     to: "/character/:character",
     fragments: ["#overlay"],
     name: "openOverlay",
@@ -29,7 +29,7 @@ const rules = [
   // Rule 3: From an overlay back to the list
   {
     from: "/character/:character",
-    to: ["/characters/", "/characters/:filter"],
+    to: "/characters/:filter?",
     fragments: ["#overlay", "#overview"],
     name: "closeOverlay",
   },
