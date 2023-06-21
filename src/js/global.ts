@@ -10,14 +10,14 @@ import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
-
 /**
  * Load another version of the fragment plugin in development vs production
  */
-const SwupFragmentPlugin =
+const PLUGIN_PATH =
   process.env.NODE_ENV === "development"
-    ? (await import("@swup/fragment-plugin")).default
-    : (await import("@swup/fragment-plugin")).default;
+    ? "../../../fragment-plugin/src/index.js"
+    : "@swup/fragment-plugin";
+const SwupFragmentPlugin = (await import(PLUGIN_PATH)).default;
 
 // console.log(`current env: ${process.env.NODE_ENV}`);
 
@@ -63,8 +63,8 @@ const swup = new Swup({
     new SwupScrollPlugin(),
     new SwupBodyClassPlugin(),
     new SwupPreloadPlugin(),
-    new SwupFragmentPlugin({ rules, debug: true })
-  ]
+    new SwupFragmentPlugin({ rules, debug: true }),
+  ],
 });
 
 /**
