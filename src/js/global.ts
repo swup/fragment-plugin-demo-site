@@ -2,8 +2,8 @@ import Swup, { Handler } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
-import FragmentPlugin from "@swup/fragment-plugin";
-// import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
+// import FragmentPlugin from "@swup/fragment-plugin";
+import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
 
@@ -58,21 +58,6 @@ const swup = new Swup({
     new PreloadPlugin(),
     new FragmentPlugin({ rules, debug: true }),
   ],
-});
-
-/**
- * Make the close URL for overlays dynamic
- * (when clicking 'x' or on the backdrop)
- */
-swup.on("contentReplaced", (e) => {
-  const closeURL = document
-    .querySelector("#list[data-swup-fragment-url]")
-    ?.getAttribute("data-swup-fragment-url");
-  if (!closeURL) return;
-  const closeLinks = [
-    ...document.querySelectorAll("a[data-close-overlay]"),
-  ] as HTMLAnchorElement[];
-  closeLinks.forEach((el) => (el.href = closeURL));
 });
 
 /**
