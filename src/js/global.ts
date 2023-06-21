@@ -12,7 +12,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
 /** PRINT START **/
-const fragmentPluginRules = [
+const rules = [
   // Rule 1: Between filters of the list
   {
     from: "/characters/:filter?",
@@ -42,6 +42,7 @@ const fragmentPluginRules = [
     name: "replaceCharacter",
   },
 ];
+/** PRINT END **/
 
 const plugins = [
   new SwupScrollPlugin(),
@@ -50,8 +51,8 @@ const plugins = [
 ];
 plugins.push(
   process.env.NODE_ENV === "production"
-    ? new SwupFragmentPlugin({ rules: fragmentPluginRules, debug: true })
-    : new SwupFragmentPluginDev({ rules: fragmentPluginRules, debug: true })
+    ? new SwupFragmentPlugin({ rules, debug: true })
+    : new SwupFragmentPluginDev({ rules, debug: true })
 );
 
 /**
@@ -76,7 +77,6 @@ swup.on("contentReplaced", (e) => {
   ] as HTMLAnchorElement[];
   closeLinks.forEach((el) => (el.href = closeURL));
 });
-/** PRINT END **/
 
 /**
  * Tooltips
