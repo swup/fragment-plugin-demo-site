@@ -16,7 +16,7 @@ import "tippy.js/themes/light.css";
  */
 const SwupFragmentPlugin =
   process.env.NODE_ENV === "development"
-    ? (await import("../../../fragment-plugin/src/index.js")).default
+    ? (await import("@swup/fragment-plugin")).default
     : (await import("@swup/fragment-plugin")).default;
 
 // console.log(`current env: ${process.env.NODE_ENV}`);
