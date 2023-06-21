@@ -23,20 +23,30 @@ html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser {
   transition-duration: 100ms;
 }
 
-/* The transition for the overlay */
-html[data-fragment-visit="openOverlay"] .transition-overlay,
+/* The transition for opening an overlay */
+html[data-fragment-visit="openOverlay"] .transition-overlay {
+  transition: opacity 350ms;
+}
+
+html[data-fragment-visit="openOverlay"].is-animating .transition-overlay{
+  opacity: 0;
+}
+
+html[data-fragment-visit="openOverlay"].is-leaving .transition-overlay {
+  transition-duration: 100ms;
+}
+
+/* The transition for closing an overlay */
 html[data-fragment-visit="closeOverlay"] .transition-overlay {
   transition: opacity 350ms;
 }
 
-html[data-fragment-visit="openOverlay"].is-animating .transition-overlay,
 html[data-fragment-visit="closeOverlay"].is-animating .transition-overlay {
   opacity: 0;
 }
 
-html[data-fragment-visit="openOverlay"].is-leaving .transition-overlay,
 html[data-fragment-visit="closeOverlay"].is-rendering .transition-overlay {
-  transition-duration: 100ms;
+  transition-duration: 10ms;
 }
 
 /* The transition between characters */
