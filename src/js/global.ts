@@ -1,6 +1,5 @@
 import Swup, { Handler } from "swup";
 import SwupScrollPlugin from "@swup/scroll-plugin";
-import SwupFragmentPluginDev from "../../../fragment-plugin/src/index.js";
 import SwupFragmentPlugin from "@swup/fragment-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
@@ -44,23 +43,24 @@ const rules = [
 ];
 /** PRINT END **/
 
-const plugins = [
-  new SwupScrollPlugin(),
-  new SwupBodyClassPlugin(),
-  new SwupPreloadPlugin(),
-];
-plugins.push(
+/**
+ * Load another version of the plugin in development vs production
+ */
+const fragmentPlugin =
   process.env.NODE_ENV === "production"
-    ? new SwupFragmentPlugin({ rules, debug: true })
-    : new SwupFragmentPluginDev({ rules, debug: true })
-);
-
+    ? SwupFragmentPlugin
+    : (await import("../../../fragment-plugin/src/index.js")).default;
 /**
  * Initialize Swup
  */
 const swup = new Swup({
   animateHistoryBrowsing: true,
-  plugins
+  plugins: [
+    new SwupScrollPlugin(),
+    new SwupBodyClassPlugin(),
+    new SwupPreloadPlugin(),
+    new fragmentPlugin()
+  ]
 });
 
 /**
