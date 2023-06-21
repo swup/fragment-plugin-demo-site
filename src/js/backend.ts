@@ -58,7 +58,6 @@ ${swupCode}
  * Initialize Swup
  */
 const swup = new Swup({
-  animateHistoryBrowsing: true,
   plugins: [
     new ScrollPlugin(),
     new BodyClassPlugin(),
