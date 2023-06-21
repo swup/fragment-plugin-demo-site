@@ -25,7 +25,7 @@ const { filter: currentFilterSlug } = Astro.params;
 							"filters_link button",
 							{ "is-active": filter.slug === currentFilterSlug },
 						]}
-						data-tippy="Will replace <code>#overview</code>"
+						data-tippy="Fragments: <code>#list</code>"
 						href={filter.slug ? `/characters/${filter.slug}` : "/characters/"}
 					>
 						{filter.data.name}

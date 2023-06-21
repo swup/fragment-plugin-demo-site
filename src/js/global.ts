@@ -16,7 +16,7 @@ const rules = [
   {
     from: "/characters/:filter?",
     to: "/characters/:filter?",
-    fragments: ["#overview"],
+    fragments: ["#list"],
     name: "replaceCharacters",
   },
   // Rule 2: From the list to an overlay
@@ -30,7 +30,7 @@ const rules = [
   {
     from: "/character/:character",
     to: "/characters/:filter?",
-    fragments: ["#overlay", "#overview"],
+    fragments: ["#overlay", "#list"],
     name: "closeOverlay",
   },
   // Rule 4: Between overlays
@@ -60,7 +60,7 @@ const swup = new Swup({
  */
 swup.on("contentReplaced", (e) => {
   const closeURL = document
-    .querySelector("#overview[data-swup-fragment-url]")
+    .querySelector("#list[data-swup-fragment-url]")
     ?.getAttribute("data-swup-fragment-url");
   if (!closeURL) return;
   const closeLinks = [
