@@ -1,6 +1,4 @@
 import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import { getCollection, CollectionEntry } from "astro:content";
 
 /**
