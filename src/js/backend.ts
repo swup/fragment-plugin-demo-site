@@ -52,14 +52,5 @@ import SwupScrollPlugin from "@swup/scroll-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 
-${swupCode}
-
-const swup = new Swup({
-  plugins: [
-    new SwupScrollPlugin(),
-    new SwupBodyClassPlugin(),
-    new SwupPreloadPlugin(),
-    new SwupFragmentPlugin({ rules })
-  ]
-});`;
+${swupCode}`;
 }

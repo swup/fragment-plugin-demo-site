@@ -1,24 +1,26 @@
 import Swup, { Handler } from "swup";
-import SwupScrollPlugin from "@swup/scroll-plugin";
-import SwupFragmentPluginFromNPM from "@swup/fragment-plugin";
-import SwupBodyClassPlugin from "@swup/body-class-plugin";
-import SwupPreloadPlugin from "@swup/preload-plugin";
+import ScrollPlugin from "@swup/scroll-plugin";
+import BodyClassPlugin from "@swup/body-class-plugin";
+import PreloadPlugin from "@swup/preload-plugin";
+
+/**
+ * Allow to load a development version of fragment plugin:
+ *
+ * 1. echo "PUBLIC_IMPORT_FRAGMENT_PLUGIN=\"local\"" > .env
+ * 2. mkdir packages
+ * 3. cd packages
+ * 4. git clone git@github.com:swup/fragment-plugin.git
+ * 5. npm install
+ */
+const FragmentPlugin = import.meta.env.PUBLIC_IMPORT_FRAGMENT_PLUGIN === 'local'
+  ? (await import("../../packages/fragment-plugin/src/index.js")).default
+  : (await import("@swup/fragment-plugin")).default;
 
 import { isTouch } from "./frontend.js";
 
 import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
-
-/**
- * Load another version of the fragment plugin in development vs production
- */
-const PLUGIN_PATH = process.env.NETLIFY
-  ? "@swup/fragment-plugin"
-  : "../../../fragment-plugin/src/index.js";
-const SwupFragmentPlugin = (await import(PLUGIN_PATH)).default;
-
-// console.log(`current env: ${process.env.NODE_ENV}`);
 
 /** PRINT START **/
 const rules = [
@@ -51,7 +53,6 @@ const rules = [
     name: "replaceCharacter",
   },
 ];
-/** PRINT END **/
 
 /**
  * Initialize Swup
@@ -59,10 +60,10 @@ const rules = [
 const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [
-    new SwupScrollPlugin(),
-    new SwupBodyClassPlugin(),
-    new SwupPreloadPlugin(),
-    new SwupFragmentPlugin({ rules, debug: true }),
+    new ScrollPlugin(),
+    new BodyClassPlugin(),
+    new PreloadPlugin(),
+    new FragmentPlugin({ rules, debug: true }),
   ],
 });
 
@@ -80,6 +81,7 @@ swup.on("contentReplaced", (e) => {
   ] as HTMLAnchorElement[];
   closeLinks.forEach((el) => (el.href = closeURL));
 });
+/** PRINT END **/
 
 /**
  * Tooltips
