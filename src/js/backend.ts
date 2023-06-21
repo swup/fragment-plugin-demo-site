@@ -52,5 +52,18 @@ import SwupScrollPlugin from "@swup/scroll-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 
-${swupCode}`;
+${swupCode}
+
+/**
+ * Initialize Swup
+ */
+const swup = new Swup({
+  animateHistoryBrowsing: true,
+  plugins: [
+    new ScrollPlugin(),
+    new BodyClassPlugin(),
+    new PreloadPlugin(),
+    new FragmentPlugin({ rules, debug: true }),
+  ],
+});`;
 }

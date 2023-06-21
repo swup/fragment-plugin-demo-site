@@ -18,6 +18,9 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
 /** PRINT START **/
+/**
+ * Define the rules for Fragment Plugin
+ */
 const rules = [
   // Rule 1: Between filters of the list
   {
@@ -48,6 +51,7 @@ const rules = [
     name: "replaceCharacter",
   },
 ];
+/** PRINT END **/
 
 /**
  * Initialize Swup
@@ -76,7 +80,6 @@ swup.on("contentReplaced", (e) => {
   ] as HTMLAnchorElement[];
   closeLinks.forEach((el) => (el.href = closeURL));
 });
-/** PRINT END **/
 
 /**
  * Tooltips
