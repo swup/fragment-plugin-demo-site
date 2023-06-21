@@ -3,6 +3,7 @@ import SwupScrollPlugin from "@swup/scroll-plugin";
 // import SwupFragmentPlugin from "../../../fragment-plugin/src/index.js";
 import SwupFragmentPlugin from "@swup/fragment-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
+import SwupPreloadPlugin from "@swup/preload-plugin";
 
 import { isTouch } from './frontend.js';
 
@@ -11,7 +12,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
 /** PRINT START **/
-const rules = [
+const fragmentPluginRules = [
   // Rule 1: Between filters of the list
   {
     from: "/characters/:filter?",
@@ -48,9 +49,10 @@ const rules = [
 const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [
+    new SwupFragmentPlugin({ rules: fragmentPluginRules, debug: true }),
     new SwupScrollPlugin(),
     new SwupBodyClassPlugin(),
-    new SwupFragmentPlugin({ rules, debug: true }),
+    new SwupPreloadPlugin(),
   ],
 });
 

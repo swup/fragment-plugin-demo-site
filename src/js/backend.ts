@@ -36,9 +36,10 @@ export const loadSwupJS = (): string =>  {
 
   return `import Swup from "swup";
 
+import SwupFragmentPlugin from "@swup/fragment-plugin";
 import SwupScrollPlugin from "@swup/scroll-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
-import SwupFragmentPlugin from "@swup/fragment-plugin";
+import SwupPreloadPlugin from "@swup/preload-plugin";
 
 ${swupCode}`;
 }
