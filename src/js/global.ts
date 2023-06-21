@@ -3,13 +3,7 @@ import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
 import FragmentPlugin from "@swup/fragment-plugin";
-
-// let LocalFragmentPlugin: any;
-// if (import.meta.env.PUBLIC_IMPORT_FRAGMENT_PLUGIN === 'local') {
-//   LocalFragmentPlugin = (await import("../../packages/fragment-plugin/src/index.js"))?.default;
-// }
-
-// const FragmentPlugin = LocalFragmentPlugin ? LocalFragmentPlugin : NpmFragmentPlugin;
+// import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
 

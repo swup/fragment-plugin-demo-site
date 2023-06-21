@@ -43,7 +43,7 @@ html[data-fragment-visit="openOverlay"].is-animating .transition-overlay{
 }
 
 html[data-fragment-visit="openOverlay"].is-leaving .transition-overlay {
-  transition-duration: 100ms;
+  transition-duration: 0ms;
 }
 
 /* The transition for closing an overlay */
