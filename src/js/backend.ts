@@ -17,6 +17,19 @@ export async function getSortedCharacters(): Promise<CollectionEntry<"characters
 }
 
 /**
+ * Get the filters, sorted, cached
+ */
+export async function getSortedFilters(): Promise<CollectionEntry<"filters">[]> {
+  let cache: CollectionEntry<"filters">[] | undefined;
+  if (cache) return cache;
+
+  const posts = (await getCollection("filters"))
+    .sort((a, b) => (a.data.sortOrder || 10000) - (b.data.sortOrder || 10000));
+  cache = posts;
+  return posts;
+}
+
+/**
  * Load the live version of the Swup transitions css
  */
 export const loadSwupCSS = (): string =>  {

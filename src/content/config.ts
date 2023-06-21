@@ -15,6 +15,7 @@ const filters = defineCollection({
 	// Type-check frontmatter using a schema
 	schema: z.object({
 		name: z.string(),
+		sortOrder: z.number().optional()
 	}),
 });
 

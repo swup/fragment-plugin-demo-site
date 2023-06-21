@@ -1,7 +1,7 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
-import { Debug } from "astro/components";
-const filters = await getCollection("filters");
+import { getSortedFilters } from '../js/backend.js';
+
+const filters = await getSortedFilters();
 const allFilters = [
 	{
 		slug: undefined,
