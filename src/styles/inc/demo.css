@@ -124,14 +124,6 @@ p a:where(:not(.button)),
   height: 1.2em;
 }
 
-.hint {
-  opacity: 0.5;
-  font-style: italic;
-  font-size: 0.8rem;
-  margin-block: 3rem;
-  display: none;
-}
-
 /*
 * Teasers
 */

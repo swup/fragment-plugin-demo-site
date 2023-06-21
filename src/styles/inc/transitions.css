@@ -9,18 +9,28 @@ html:not([data-fragment-visit]).is-animating .transition-main {
 }
 
 /* The transition between characters */
-html[data-fragment-visit="replaceCharacters"] .transition-teaser {
+html[data-fragment-visit="replaceCharacters"] .transition-teaser,
+html[data-fragment-visit="closeOverlay"] .transition-teaser {
   transition-property: opacity, transform;
   transition-duration: 450ms;
 }
 
-html[data-fragment-visit="replaceCharacters"].is-animating .transition-teaser {
+html[data-fragment-visit="replaceCharacters"].is-animating .transition-teaser,
+html[data-fragment-visit="closeOverlay"].is-animating .transition-teaser {
   opacity: 0;
   transform: scale(0.75);
 }
 
-html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser {
+html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser,
+html[data-fragment-visit="closeOverlay"].is-leaving .transition-teaser {
   transition-duration: 100ms;
+}
+
+/* Reset the styles for unchanged list */
+#list.swup-fragment-unchanged .transition-teaser {
+  opacity: 1;
+  transform: scale(1);
+  transition: none;
 }
 
 /* The transition for opening an overlay */
