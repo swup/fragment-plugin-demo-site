@@ -8,7 +8,7 @@
     roboto, noto, "segoe ui", arial, sans-serif;
   margin: 0;
   font-size: 18px;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .site-title,
@@ -67,7 +67,7 @@ p a:where(:not(.button)),
 
   @media (--sm-n-above) {
     flex-direction: row;
-    gap: 1em;
+    gap: 1.5em;
   }
 }
 
@@ -85,8 +85,8 @@ p a:where(:not(.button)),
 /*
 * Filters
 */
-.filters + .teasers {
-  margin-block-start: 3rem;
+.filters {
+  margin-block-end: 2rem !important;
 }
 
 .filters_list {
@@ -296,6 +296,9 @@ p a:where(:not(.button)),
   color: #60DDCD;
   padding: 0.2em 0.4em;
   font-weight: normal;
+  font-size: min(14px, 1em);
+  position: relative;
+  top: -0.1em;
 }
 
 /*
