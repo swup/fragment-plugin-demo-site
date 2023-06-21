@@ -1,6 +1,6 @@
 import Swup, { Handler } from "swup";
 import SwupScrollPlugin from "@swup/scroll-plugin";
-import SwupFragmentPlugin from "@swup/fragment-plugin";
+import SwupFragmentPluginFromNPM from "@swup/fragment-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 
@@ -44,11 +44,11 @@ const rules = [
 /** PRINT END **/
 
 /**
- * Load another version of the plugin in development vs production
+ * Load another version of the fragment plugin in development vs production
  */
-const fragmentPlugin =
+const SwupFragmentPlugin =
   process.env.NODE_ENV === "production"
-    ? SwupFragmentPlugin
+    ? SwupFragmentPluginFromNPM
     : (await import("../../../fragment-plugin/src/index.js")).default;
 /**
  * Initialize Swup
@@ -59,7 +59,7 @@ const swup = new Swup({
     new SwupScrollPlugin(),
     new SwupBodyClassPlugin(),
     new SwupPreloadPlugin(),
-    new fragmentPlugin()
+    new SwupFragmentPlugin({ rules, debug: true })
   ]
 });
 
