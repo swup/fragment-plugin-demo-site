@@ -13,10 +13,9 @@ import "tippy.js/themes/light.css";
 /**
  * Load another version of the fragment plugin in development vs production
  */
-const PLUGIN_PATH =
-  process.env.NODE_ENV === "development"
-    ? "../../../fragment-plugin/src/index.js"
-    : "@swup/fragment-plugin";
+const PLUGIN_PATH = process.env.NETLIFY
+  ? "@swup/fragment-plugin"
+  : "../../../fragment-plugin/src/index.js";
 const SwupFragmentPlugin = (await import(PLUGIN_PATH)).default;
 
 // console.log(`current env: ${process.env.NODE_ENV}`);
