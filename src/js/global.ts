@@ -50,7 +50,7 @@ const swup = new Swup({
   plugins: [
     new SwupScrollPlugin(),
     new SwupBodyClassPlugin(),
-    new SwupFragmentPlugin({ rules }),
+    new SwupFragmentPlugin({ rules, debug: true }),
   ],
 });
 
