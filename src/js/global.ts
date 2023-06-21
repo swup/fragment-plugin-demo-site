@@ -2,23 +2,14 @@ import Swup, { Handler } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
+import NpmFragmentPlugin from "@swup/fragment-plugin";
 
-/**
- * Allow to load a development version of fragment plugin:
- *
- * 1. echo "PUBLIC_IMPORT_FRAGMENT_PLUGIN=\"local\"" > .env
- * 2. mkdir packages
- * 3. cd packages
- * 4. git clone git@github.com:swup/fragment-plugin.git
- * 5. npm install
- */
-// const PLUGIN_PATH = import.meta.env.NETLIFY
-//   ? "@swup/fragment-plugin"
-//   : "../../packages/fragment-plugin/src/index.js";
+let LocalFragmentPlugin: any;
+if (import.meta.env.PUBLIC_IMPORT_FRAGMENT_PLUGIN === 'local') {
+  LocalFragmentPlugin = (await import("../../packages/fragment-plugin/src/index.js"))?.default;
+}
 
-const FragmentPlugin = import.meta.env.NETLIFY
-  ? (await import("@swup/fragment-plugin")).default
-  : (await import("../../packages/fragment-plugin/src/index.js")).default;
+const FragmentPlugin = LocalFragmentPlugin ? LocalFragmentPlugin : NpmFragmentPlugin;
 
 import { isTouch } from "./frontend.js";
 
