@@ -1,10 +1,10 @@
 import Swup, { Handler } from "swup";
-// @ts-ignore
 import SwupScrollPlugin from "@swup/scroll-plugin";
 import SwupFragmentPlugin from "../../../fragment-plugin/src/index.js";
 // import SwupFragmentPlugin from "@swup/fragment-plugin";
-// @ts-ignore
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
+
+import { isTouch } from './frontend.js';
 
 import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -69,10 +69,16 @@ swup.on("contentReplaced", (e) => {
   closeLinks.forEach((el) => (el.href = closeURL));
 });
 /** PRINT END **/
+
+/**
+ * Tooltips
+ */
 function initTippy() {
+
+  if (isTouch()) return;
+
   document.querySelectorAll("[data-tippy]:not(.is-active)").forEach((el) => {
     const content = el.getAttribute("data-tippy");
-    // const placement =  as  || 'top';
     if (!content) return;
     tippy(el, {
       allowHTML: true,
@@ -87,40 +93,27 @@ function initTippy() {
   });
 }
 
+/**
+ * PageView
+ */
 function initPageView() {
   initTippy();
 }
 initPageView();
-
 swup.on("contentReplaced", () => initPageView());
 
 
-
+/**
+ * Close eventual overlays using the Escape key
+ */
 const onKeyDown = (e: KeyboardEvent) => {
   const character = document.querySelector(".character");
   if (!character) return;
-
   if (e.metaKey) return;
 
   switch (e.key) {
     case "Escape":
-      (
-        character.querySelector("a.character_close") as HTMLAnchorElement
-      ).click();
-      break;
-    case "ArrowLeft":
-      (
-        character.querySelector(
-          ".character_nav_link.--previous"
-        ) as HTMLAnchorElement
-      ).click();
-      break;
-    case "ArrowRight":
-      (
-        character.querySelector(
-          ".character_nav_link.--next"
-        ) as HTMLAnchorElement
-      ).click();
+      character.querySelector("a.character_close").click();
       break;
   }
 };

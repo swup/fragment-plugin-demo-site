@@ -5,8 +5,6 @@ import Icon from '../../components/Icon.astro';
 
 import { getSortedCharacters } from "../../js/backend.js";
 
-const posts = (await getSortedCharacters())!;
-
 export async function getStaticPaths() {
 	const posts = (await getSortedCharacters())!;
 
