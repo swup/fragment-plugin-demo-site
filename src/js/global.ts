@@ -1,11 +1,11 @@
 import Swup, { Handler } from "swup";
 import SwupScrollPlugin from "@swup/scroll-plugin";
-import SwupFragmentPlugin from "../../../fragment-plugin/src/index.js";
-// import SwupFragmentPlugin from "@swup/fragment-plugin";
+import SwupFragmentPluginDev from "../../../fragment-plugin/src/index.js";
+import SwupFragmentPlugin from "@swup/fragment-plugin";
 import SwupBodyClassPlugin from "@swup/body-class-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 
-import { isTouch } from './frontend.js';
+import { isTouch } from "./frontend.js";
 
 import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -43,17 +43,23 @@ const fragmentPluginRules = [
   },
 ];
 
+const plugins = [
+  new SwupScrollPlugin(),
+  new SwupBodyClassPlugin(),
+  new SwupPreloadPlugin(),
+];
+plugins.push(
+  process.env.NODE_ENV === "production"
+    ? new SwupFragmentPlugin({ rules: fragmentPluginRules, debug: true })
+    : new SwupFragmentPluginDev({ rules: fragmentPluginRules, debug: true })
+);
+
 /**
  * Initialize Swup
  */
 const swup = new Swup({
   animateHistoryBrowsing: true,
-  plugins: [
-    new SwupFragmentPlugin({ rules: fragmentPluginRules, debug: true }),
-    new SwupScrollPlugin(),
-    new SwupBodyClassPlugin(),
-    new SwupPreloadPlugin(),
-  ],
+  plugins
 });
 
 /**
@@ -76,7 +82,6 @@ swup.on("contentReplaced", (e) => {
  * Tooltips
  */
 function initTippy() {
-
   if (isTouch()) return;
 
   document.querySelectorAll("[data-tippy]:not(.is-active)").forEach((el) => {
@@ -104,14 +109,15 @@ function initPageView() {
 initPageView();
 swup.on("contentReplaced", () => initPageView());
 
-
 /**
  * Close eventual overlays using the Escape key
  */
 const onKeyDown = (e: KeyboardEvent) => {
   if (e.metaKey) return;
 
-  const characterClose = document.querySelector("a.character_close") as HTMLAnchorElement;
+  const characterClose = document.querySelector(
+    "a.character_close"
+  ) as HTMLAnchorElement;
 
   switch (e.key) {
     case "Escape":
