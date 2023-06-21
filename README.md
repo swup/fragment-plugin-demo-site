@@ -2,6 +2,8 @@
 
 This is a demo and test site for the [swup fragment plugin](https://github.com/swup/fragment-plugin).
 
+This repo is deployed automatically at [swup-fragment-plugin.netlify.app](https://swup-fragment-plugin.netlify.app).
+
 ## Run locally
 
 ```shell
