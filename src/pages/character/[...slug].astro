@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Character from "../../layouts/Caracter.astro";
-import Icon from '../../components/Icon.astro';
+import Icon from "../../components/Icon.astro";
 
 import { getSortedCharacters } from "../../js/backend.js";
+
+import Filters from "../../components/Filters.astro";
 
 export async function getStaticPaths() {
 	const posts = (await getSortedCharacters())!;
@@ -25,7 +27,6 @@ type Props = {
 
 const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await post.render();
-
 const { name, color, image } = post.data;
 ---
 
@@ -41,8 +42,7 @@ const { name, color, image } = post.data;
 				class="overlay_close"
 				data-close-overlay
 				data-tippy="Fragments: <code>#overlay</code> and <code>#list</code>"
-				data-tippy-follow
-				></a>
+				data-tippy-follow></a>
 			<main class="character transition-character" id="detail">
 				<div
 					class="character_header"
@@ -54,8 +54,9 @@ const { name, color, image } = post.data;
 						href="/characters/"
 						class="character_close"
 						data-close-overlay
-						data-tippy="Fragments: <code>#overlay</code> and <code>#list</code>">
-					<Icon name="x"/>
+						data-tippy="Fragments: <code>#overlay</code> and <code>#list</code>"
+					>
+						<Icon name="x" />
 					</a>
 					<div
 						class="character_image"
@@ -75,7 +76,9 @@ const { name, color, image } = post.data;
 						possimus vero aliquam inventore molestiae cumque quibusdam impedit
 						dolor quo dolores eum minus sint.
 					</p>
-					<p><a data-tippy="Fragments: <code>#swup</code>" href="/view-source/">View Source</a></p>
+					<h2>Direct links to filters</h2>
+					<Filters tooltip="Fragments: <code>#overlay</code> and <code>#list</code>" />
+
 				</div>
 				<nav>
 					<ul class="character_nav">

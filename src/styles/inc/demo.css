@@ -85,8 +85,8 @@ p a:where(:not(.button)),
 /*
 * Filters
 */
-.filters {
-  margin-block: 0 3rem;
+.filters + .teasers {
+  margin-block-start: 3rem;
 }
 
 .filters_list {

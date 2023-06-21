@@ -12,6 +12,7 @@ const allFilters = [
 	...filters,
 ];
 
+const { tooltip } = Astro.props;
 const { filter: currentFilterSlug } = Astro.params;
 ---
 
@@ -25,7 +26,7 @@ const { filter: currentFilterSlug } = Astro.params;
 							"filters_link button",
 							{ "is-active": filter.slug === currentFilterSlug },
 						]}
-						data-tippy="Fragments: <code>#list</code>"
+						data-tippy={tooltip || "Fragments: <code>#list</code>"}
 						href={filter.slug ? `/characters/${filter.slug}` : "/characters/"}
 					>
 						{filter.data.name}
