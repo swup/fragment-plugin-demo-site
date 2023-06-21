@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "node ./scripts/deploy.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
@@ -24,6 +25,7 @@
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
-    "@types/feather-icons": "^4.29.1"
+    "@types/feather-icons": "^4.29.1",
+    "dotenv": "^16.3.1"
   }
 }
