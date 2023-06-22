@@ -1,11 +1,17 @@
-import Swup, { Handler } from "swup";
+import Swup, { Handler, Location } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
-import FragmentPlugin from "@swup/fragment-plugin";
-// import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
+// import FragmentPlugin, { Route } from "@swup/fragment-plugin";
+import FragmentPlugin, {
+  Route,
+} from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
+
+interface DOMEvent<T extends EventTarget> extends Event {
+  readonly target: T;
+}
 
 import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -61,37 +67,6 @@ const swup = new Swup({
 });
 
 /**
- * Tooltips
- */
-function initTippy() {
-  if (isTouch()) return;
-
-  document.querySelectorAll("[data-tippy]:not(.is-active)").forEach((el) => {
-    const content = el.getAttribute("data-tippy");
-    if (!content) return;
-    tippy(el, {
-      allowHTML: true,
-      theme: "light",
-      content,
-      placement:
-        (el.getAttribute("data-tippy-placement") as TippyPlacement) || "top",
-      plugins: [followCursor],
-      followCursor: el.matches("[data-tippy-follow]"),
-    });
-    el.removeAttribute("data-tippy");
-  });
-}
-
-/**
- * PageView
- */
-function initPageView() {
-  initTippy();
-}
-initPageView();
-swup.on("contentReplaced", () => initPageView());
-
-/**
  * Close eventual overlays using the Escape key
  */
 const onKeyDown = (e: KeyboardEvent) => {
@@ -108,3 +83,46 @@ const onKeyDown = (e: KeyboardEvent) => {
   }
 };
 window.addEventListener("keydown", onKeyDown);
+
+/**
+ * Show a tooltip with the targeted fragments when hovering internal links
+ */
+const showFragmentsTooltip = (
+  el: HTMLAnchorElement,
+  fragments: string[]
+): void => {
+  const tippyInstance = tippy(el, {
+    allowHTML: true,
+    theme: "light",
+    content: `fragments: ${fragments.map(selector => `${selector}`).join(", ")}`,
+    plugins: [followCursor],
+    followCursor: el.matches("[data-tippy-follow]"),
+    duration: 0,
+  });
+  el.addEventListener(
+    "mouseleave",
+    () => tippyInstance.destroy(),
+    { once: true }
+  );
+};
+
+/**
+ * Fired when hovering an internal link
+ */
+const onHoverLink = ({
+  delegateTarget,
+}: {
+  delegateTarget: HTMLAnchorElement;
+}) => {
+  const fragmentPlugin = swup.findPlugin("FragmentPlugin") as FragmentPlugin;
+  if (!fragmentPlugin) return;
+
+  const route: Route | undefined = fragmentPlugin.getFirstMatchingRule({
+    from: Location.fromUrl(window.location.href).url,
+    to: Location.fromElement(delegateTarget).url,
+  });
+
+  showFragmentsTooltip(delegateTarget, route?.fragments ?? ["#swup"]);
+};
+// @ts-ignore
+!isTouch() && swup.on("hoverLink", onHoverLink);
