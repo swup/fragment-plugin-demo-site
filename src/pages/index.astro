@@ -1,5 +1,6 @@
 ---
 import Base from '../components/Base.astro';
+import Filters from '../components/Filters.astro';
 ---
 <Base isFrontPage={true}>
 	<main class="text">
@@ -7,15 +8,8 @@ import Base from '../components/Base.astro';
 			This is a demo and test site for the <a href="https://github.com/swup/fragment-plugin">fragment plugin</a> for <a href="https://github.com/swup/">swup</a>.
 		</p>
 		<p>
-			Under <a href="/characters/">Characters</a>, you can find a filterable list of super mario characters. Note how the items and filters are being replaced when filtering characters. How the detail page opens in an overlay when you click one of the characters. How only the content of the overlay is being replaced when navigating between the detail pages.
+			Under <a href="/characters/">Characters</a>, you can find a filterable list of super mario characters. Note how only the <code>#items</code> and <code>#filters</code> are being replaced when filtering characters. How a single character opens in an <code>#overlay</code>. How only the <code>#detail</code> of a character is being replaced between characters, without touching the <code>#overlay</code>.
 		</p>
-		<p>All this is is the work of the Fragment Plugin! 🪄</p>
-		<p>Under <a href="/how-it-works/">View Source</a>, you can see how all this is being achieved.</p>
-		<p>Now, are you ready? Then start <a href="/characters/">Browsing some characters</a>!</p>
-		<h2>Test links:</h2>
-		<ul>
-			<li><a href="/character/mario">Open a character directly</a></li>
-			<li><a href="/characters/princesses">Open a filtered list directly</a></li>
-		</ul>
+		<p><strong>All this is is the work of the Fragment Plugin! 🪄</strong></p>
 	</main>
 </Base>

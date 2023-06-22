@@ -89,18 +89,38 @@ const onKeyDown = (e: KeyboardEvent) => {
 window.addEventListener("keydown", onKeyDown);
 
 /**
+ * Convert an array into a human readable string
+ * @see https://stackoverflow.com/a/3765601/586823
+ */
+const humanReadableArray = (
+  array: string[],
+  join = ", ",
+  final = " and "
+): string =>
+  array.reduce(function (accumulator, currentValue, index, arr) {
+    return (
+      accumulator + (index == arr.length - 1 ? final : join) + currentValue
+    );
+  });
+
+/**
  * Show a tooltip with the targeted fragments when hovering internal links
  */
 const showFragmentsTooltip = (
   el: HTMLAnchorElement,
-  fragments: string[]
+  selectors: string[]
 ): void => {
+
+  const content = selectors.length
+    ? `replaces ${humanReadableArray(
+        selectors.map((selector) => `<code>${selector}</code>`)
+      )}`
+    : "replaces nothing";
+
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
-    content: `fragments: ${fragments
-      .map((selector) => `${selector}`)
-      .join(", ")}`,
+    content,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
@@ -111,7 +131,7 @@ const showFragmentsTooltip = (
 };
 
 /**
- * Fired when hovering an internal link
+ * Show a tooltip containing the targeted fragments when hovering swup links
  */
 const onHoverLink = ({
   delegateTarget,
@@ -129,15 +149,15 @@ const onHoverLink = ({
   const rule: FragmentRule | undefined =
     fragmentPlugin.getFirstMatchingRule(route);
 
-  const fragments = rule?.fragments ?? ["#swup"];
+  const ruleFragments = rule?.fragments ?? ["#swup"];
 
-  const fragmentsThatWillChange = fragments.filter((selector) => {
+  const actualFragments = ruleFragments.filter((selector) => {
     const el = document.querySelector(selector);
     if (!el) return false;
     return !fragmentPlugin.elementMatchesFragmentUrl(el, route.to);
   });
 
-  showFragmentsTooltip(delegateTarget, fragmentsThatWillChange);
+  showFragmentsTooltip(delegateTarget, actualFragments);
 };
 // @ts-ignore
 !isTouch() && swup.on("hoverLink", onHoverLink);
