@@ -4,8 +4,7 @@
 }
 
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, "helvetica neue", helvetica,
-    roboto, noto, "segoe ui", arial, sans-serif;
+  font-family: var(--font-sans);
   margin: 0;
   font-size: 18px;
   line-height: 1.5;
@@ -283,6 +282,7 @@ p a:where(:not(.button)),
 }
 
 .astro-code>code {
+  font-family: var(--font-mono);
   display: block;
   padding: 1rem;
 }
@@ -291,12 +291,13 @@ p a:where(:not(.button)),
 * Inline Code
 */
 *:not(.astro-code)>code {
-  background: #24292e;
+  font-family: var(--font-mono);
+  background: 	hsl(172, 65%, 90%);
   border-radius: 0.3em;
-  color: #60DDCD;
-  padding: 0.2em 0.4em;
+  color: rgb(0 0 0 / 0.8);
+  padding: 0.2em 0.5em 0.3em;
   font-weight: normal;
-  font-size: min(14px, 1em);
+  font-size: max(12px, 0.7em);
   position: relative;
   top: -0.1em;
 }
