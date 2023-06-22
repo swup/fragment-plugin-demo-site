@@ -1,11 +1,16 @@
 /* The default transition (for visits without fragment) */
 html:not([data-fragment-visit]) .transition-main {
-  transition: opacity 250ms;
+  transition: opacity 250ms, transform 250ms;
   opacity: 1;
 }
 
 html:not([data-fragment-visit]).is-animating .transition-main {
   opacity: 0;
+  transform: translateY(-20px);
+}
+
+html:not([data-fragment-visit]).is-leaving .transition-main {
+  transform: translateY(20px);
 }
 
 /* The transition between characters */
@@ -14,13 +19,11 @@ html[data-fragment-visit="closeOverlay"] .transition-teaser {
   transition-property: opacity, transform;
   transition-duration: 450ms;
 }
-
 html[data-fragment-visit="replaceCharacters"].is-animating .transition-teaser,
 html[data-fragment-visit="closeOverlay"].is-animating .transition-teaser {
   opacity: 0;
   transform: scale(0.75);
 }
-
 html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser,
 html[data-fragment-visit="closeOverlay"].is-leaving .transition-teaser {
   transition-duration: 100ms;
