@@ -4,7 +4,8 @@ import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
 // import FragmentPlugin, { Route } from "@swup/fragment-plugin";
 import FragmentPlugin, {
-  Route,
+  FragmentRule,
+  FragmentRoute,
 } from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
@@ -117,12 +118,22 @@ const onHoverLink = ({
   const fragmentPlugin = swup.findPlugin("FragmentPlugin") as FragmentPlugin;
   if (!fragmentPlugin) return;
 
-  const route: Route | undefined = fragmentPlugin.getFirstMatchingRule({
+  const route: FragmentRoute = {
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(delegateTarget).url,
+  }
+
+  const rule: FragmentRule | undefined = fragmentPlugin.getFirstMatchingRule(route);
+
+  const fragments = rule?.fragments ?? ["#swup"]
+
+  const fragmentsThatWillChange = fragments.filter(selector => {
+    const el = document.querySelector(selector);
+    if (!el) return false;
+    return !fragmentPlugin.hasFragmentUrl(el, route.to);
   });
 
-  showFragmentsTooltip(delegateTarget, route?.fragments ?? ["#swup"]);
+  showFragmentsTooltip(delegateTarget, fragmentsThatWillChange);
 };
 // @ts-ignore
 !isTouch() && swup.on("hoverLink", onHoverLink);
