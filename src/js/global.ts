@@ -134,7 +134,7 @@ const onHoverLink = ({
   const fragmentsThatWillChange = fragments.filter((selector) => {
     const el = document.querySelector(selector);
     if (!el) return false;
-    return !fragmentPlugin.hasFragmentUrl(el, route.to);
+    return !fragmentPlugin.elementMatchesFragmentUrl(el, route.to);
   });
 
   showFragmentsTooltip(delegateTarget, fragmentsThatWillChange);
