@@ -2,11 +2,14 @@ import Swup, { Handler, Location } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
-// import FragmentPlugin, { Route } from "@swup/fragment-plugin";
 import FragmentPlugin, {
   FragmentRule,
   FragmentRoute,
-} from "../../packages/fragment-plugin/src/index.js";
+} from "@swup/fragment-plugin";
+// import FragmentPlugin, {
+//   FragmentRule,
+//   FragmentRoute,
+// } from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
 
@@ -95,16 +98,16 @@ const showFragmentsTooltip = (
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
-    content: `fragments: ${fragments.map(selector => `${selector}`).join(", ")}`,
+    content: `fragments: ${fragments
+      .map((selector) => `${selector}`)
+      .join(", ")}`,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
   });
-  el.addEventListener(
-    "mouseleave",
-    () => tippyInstance.destroy(),
-    { once: true }
-  );
+  el.addEventListener("mouseleave", () => tippyInstance.destroy(), {
+    once: true,
+  });
 };
 
 /**
@@ -121,13 +124,14 @@ const onHoverLink = ({
   const route: FragmentRoute = {
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(delegateTarget).url,
-  }
+  };
 
-  const rule: FragmentRule | undefined = fragmentPlugin.getFirstMatchingRule(route);
+  const rule: FragmentRule | undefined =
+    fragmentPlugin.getFirstMatchingRule(route);
 
-  const fragments = rule?.fragments ?? ["#swup"]
+  const fragments = rule?.fragments ?? ["#swup"];
 
-  const fragmentsThatWillChange = fragments.filter(selector => {
+  const fragmentsThatWillChange = fragments.filter((selector) => {
     const el = document.querySelector(selector);
     if (!el) return false;
     return !fragmentPlugin.hasFragmentUrl(el, route.to);
