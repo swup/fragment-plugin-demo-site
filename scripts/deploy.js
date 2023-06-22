@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+/**
+ * This script could be used when we'd like to deploy
+ * this site to a classic VPS using rsync. Steps:
+ *
+ * - provide an env var RSYNC_PATH, e.g. "user@example.com:/www/htdocs/my-site/"
+ * - run this script from the project root
+ */
+
 import { exec, execSync } from "child_process";
 import * as dotenv from "dotenv";
 dotenv.config({ path: ".env" });
