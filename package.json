@@ -15,7 +15,7 @@
     "@astrojs/rss": "^2.4.3",
     "@astrojs/sitemap": "^1.3.3",
     "@swup/body-class-plugin": "^2.0.1",
-    "@swup/fragment-plugin": "github:swup/fragment-plugin#e656d9e2f1a7e581f7f24e356fe83015078a13a5",
+    "@swup/fragment-plugin": "github:swup/fragment-plugin#develop",
     "@swup/preload-plugin": "^2.2.0",
     "@swup/scroll-plugin": "^2.0.3",
     "astro": "^2.6.4",
