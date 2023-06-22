@@ -110,17 +110,10 @@ const showFragmentsTooltip = (
   el: HTMLAnchorElement,
   selectors: string[]
 ): void => {
-
-  const content = selectors.length
-    ? `replaces ${humanReadableArray(
-        selectors.map((selector) => `<code>${selector}</code>`)
-      )}`
-    : "replaces nothing";
-
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
-    content,
+    content: `replaces ${humanReadableArray(selectors.map(selector => `<code>${selector}</code>`))}`,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
@@ -157,7 +150,7 @@ const onHoverLink = ({
     return !fragmentPlugin.elementMatchesFragmentUrl(el, route.to);
   });
 
-  showFragmentsTooltip(delegateTarget, actualFragments);
+  if (actualFragments.length) showFragmentsTooltip(delegateTarget, actualFragments);
 };
 // @ts-ignore
 !isTouch() && swup.on("hoverLink", onHoverLink);
