@@ -134,7 +134,9 @@ const onHoverLink = ({
   delegateTarget: HTMLAnchorElement;
 }) => {
   // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin("FragmentPlugin") as FragmentPlugin | undefined;
+  const fragmentPlugin = swup.findPlugin("FragmentPlugin") as
+    | FragmentPlugin
+    | undefined;
   if (!fragmentPlugin) return;
 
   // Get the route of the link
@@ -148,18 +150,16 @@ const onHoverLink = ({
     fragmentPlugin.getFirstMatchingRule(route);
 
   // Get the fragments of the rule or the default `containers` from swup
-  const ruleFragments = rule?.fragments ?? swup.options.containers;
+  const fragmentsFromRule = rule?.fragments ?? swup.options.containers;
 
   // Remove fragments that already match the current URL
-  const actualFragments = ruleFragments.filter((selector) => {
-    const el = document.querySelector(selector);
-    if (!el) return false;
-    return !fragmentPlugin.elementMatchesFragmentUrl(el, route.to);
-  });
+  const fragmentsToReplace = fragmentsFromRule.filter((selector) =>
+    fragmentPlugin.validateFragment(selector, route.to)
+  );
 
   // If there will be fragments replaced, show a tooltip
-  if (actualFragments.length)
-    showFragmentsTooltip(delegateTarget, actualFragments);
+  if (fragmentsToReplace.length)
+    showFragmentsTooltip(delegateTarget, fragmentsToReplace);
 };
 // @ts-ignore
 !isTouch() && swup.on("hoverLink", onHoverLink);
