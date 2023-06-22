@@ -113,7 +113,9 @@ const showFragmentsTooltip = (
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
-    content: `replaces ${humanReadableArray(selectors.map(selector => `<code>${selector}</code>`))}`,
+    content: `replaces ${humanReadableArray(
+      selectors.map((selector) => `<code>${selector}</code>`)
+    )}`,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
@@ -131,26 +133,33 @@ const onHoverLink = ({
 }: {
   delegateTarget: HTMLAnchorElement;
 }) => {
-  const fragmentPlugin = swup.findPlugin("FragmentPlugin") as FragmentPlugin;
+  // Get the fragment plugin
+  const fragmentPlugin = swup.findPlugin("FragmentPlugin") as FragmentPlugin | undefined;
   if (!fragmentPlugin) return;
 
+  // Get the route of the link
   const route: FragmentRoute = {
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(delegateTarget).url,
   };
 
+  // Get the matching rule for the link
   const rule: FragmentRule | undefined =
     fragmentPlugin.getFirstMatchingRule(route);
 
-  const ruleFragments = rule?.fragments ?? ["#swup"];
+  // Get the fragments of the rule or the default `containers` from swup
+  const ruleFragments = rule?.fragments ?? swup.options.containers;
 
+  // Remove fragments that already match the current URL
   const actualFragments = ruleFragments.filter((selector) => {
     const el = document.querySelector(selector);
     if (!el) return false;
     return !fragmentPlugin.elementMatchesFragmentUrl(el, route.to);
   });
 
-  if (actualFragments.length) showFragmentsTooltip(delegateTarget, actualFragments);
+  // If there will be fragments replaced, show a tooltip
+  if (actualFragments.length)
+    showFragmentsTooltip(delegateTarget, actualFragments);
 };
 // @ts-ignore
 !isTouch() && swup.on("hoverLink", onHoverLink);
