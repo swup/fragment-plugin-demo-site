@@ -2,8 +2,8 @@ import Swup, { Handler, Location } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
-// import FragmentPlugin from "@swup/fragment-plugin";
-import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
+import FragmentPlugin from "@swup/fragment-plugin";
+// import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
 
