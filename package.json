@@ -18,7 +18,7 @@
     "@swup/fragment-plugin": "github:swup/fragment-plugin#934feffa0919daf15125e8ce4eb6cfd6a7c8a0ff",
     "@swup/preload-plugin": "^2.2.0",
     "@swup/scroll-plugin": "^2.0.3",
-    "astro": "^2.6.4",
+    "astro": "^2.7.0",
     "feather-icons": "^4.29.0",
     "postcss-preset-env": "^8.5.0",
     "swup": "^3.1.0",
