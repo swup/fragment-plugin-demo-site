@@ -40,7 +40,7 @@ const { name, color, image } = post.data;
 			<a
 				href="/characters/"
 				class="overlay_close"
-				data-swup-fragment-target="#list"
+				data-swup-fragment-link="#list"
 				data-tippy-follow></a>
 			<main class="character transition-character" id="detail">
 				<div
@@ -52,7 +52,7 @@ const { name, color, image } = post.data;
 					<a
 						href="/characters/"
 						class="character_close"
-						data-swup-fragment-target="#list"
+						data-swup-fragment-link="#list"
 					>
 						<Icon name="x" />
 					</a>
@@ -89,7 +89,7 @@ const { name, color, image } = post.data;
 								data-swup-history="replace"
 								href={`/character/${prevPost.slug}`}
 							>
-								← Princess Daisy</a
+								← {prevPost.data.name}</a
 							>
 						</li>
 						<li class="character_nav_item">
@@ -98,7 +98,7 @@ const { name, color, image } = post.data;
 								data-swup-history="replace"
 								href={`/character/${nextPost.slug}`}
 							>
-								Luigi →</a
+								{nextPost.data.name} →</a
 							>
 						</li>
 					</ul>

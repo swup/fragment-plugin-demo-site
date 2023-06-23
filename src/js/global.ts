@@ -2,14 +2,8 @@ import Swup, { Handler, Location } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
-import FragmentPlugin, {
-  FragmentRule,
-  FragmentRoute,
-} from "@swup/fragment-plugin";
-// import FragmentPlugin, {
-//   FragmentRule,
-//   FragmentRoute,
-// } from "../../packages/fragment-plugin/src/index.js";
+// import FragmentPlugin from "@swup/fragment-plugin";
+import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
 
 import { isTouch } from "./frontend.js";
 
@@ -106,10 +100,14 @@ const humanReadableArray = (
 /**
  * Show a tooltip with the targeted fragments when hovering internal links
  */
-const showFragmentsTooltip = (
+const showInternalLinkTooltip = (
   el: HTMLAnchorElement,
   selectors: string[]
 ): void => {
+  // Early returns
+  if (!selectors.length) return;
+  if (isTouch()) return;
+
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
@@ -128,38 +126,19 @@ const showFragmentsTooltip = (
 /**
  * Show a tooltip containing the targeted fragments when hovering swup links
  */
-const onHoverLink = ({
-  delegateTarget,
-}: {
-  delegateTarget: HTMLAnchorElement;
-}) => {
+const onHoverLink = (e: any) => {
+  const link = e.delegateTarget! as HTMLAnchorElement;
+
   // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin("FragmentPlugin") as
-    | FragmentPlugin
-    | undefined;
+  const fragmentPlugin: any = swup.findPlugin("FragmentPlugin");
   if (!fragmentPlugin) return;
 
-  // Get the route of the link
-  const route: FragmentRoute = {
+  const { fragments } = fragmentPlugin.createContext({
     from: Location.fromUrl(window.location.href).url,
-    to: Location.fromElement(delegateTarget).url,
-  };
+    to: Location.fromElement(link).url,
+  });
 
-  // Get the matching rule for the link
-  const rule: FragmentRule | undefined =
-    fragmentPlugin.getFirstMatchingRule(route);
-
-  // Get the fragments of the rule or the default `containers` from swup
-  const fragmentsFromRule = rule?.fragments ?? swup.options.containers;
-
-  // Remove fragments that already match the current URL
-  const fragmentsToReplace = fragmentsFromRule.filter((selector) =>
-    fragmentPlugin.validateFragment(selector, route.to)
-  );
-
-  // If there will be fragments replaced, show a tooltip
-  if (fragmentsToReplace.length)
-    showFragmentsTooltip(delegateTarget, fragmentsToReplace);
+  showInternalLinkTooltip(link, fragments || swup.options.containers);
 };
 // @ts-ignore
-!isTouch() && swup.on("hoverLink", onHoverLink);
+swup.on("hoverLink", onHoverLink);
