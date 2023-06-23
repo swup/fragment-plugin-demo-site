@@ -2,6 +2,9 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "paths": {
+      "__FRAGMENT_PLUGIN_PATH__": ["./packages/fragment-plugin/src/index.js"],
+    },
   }
 }

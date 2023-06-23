@@ -2,12 +2,10 @@ import Swup, { Handler, Location } from "swup";
 import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
+import { isTouch } from "./frontend.js";
+
 // @ts-expect-error
 import FragmentPlugin from "__FRAGMENT_PLUGIN_PATH__";
-console.log(FragmentPlugin);
-// import FragmentPlugin from "../../packages/fragment-plugin/src/index.js";
-
-import { isTouch } from "./frontend.js";
 
 interface DOMEvent<T extends EventTarget> extends Event {
   readonly target: T;
