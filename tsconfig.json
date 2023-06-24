@@ -3,8 +3,9 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "noImplicitAny": false,
+    "baseUrl": "./",
     "paths": {
-      "__FRAGMENT_PLUGIN_PATH__": ["./packages/fragment-plugin/src/index.js"],
+      "__FRAGMENT_PLUGIN_PATH__": ["packages/fragment-plugin/src/index"],
     },
   }
 }
