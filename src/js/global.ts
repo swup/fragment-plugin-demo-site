@@ -5,10 +5,6 @@ import PreloadPlugin from "@swup/preload-plugin";
 import { isTouch } from "./frontend.js";
 import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
 
-interface DOMEvent<T extends EventTarget> extends Event {
-  readonly target: T;
-}
-
 import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";

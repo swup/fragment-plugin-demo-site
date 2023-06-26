@@ -5,8 +5,7 @@
     "noImplicitAny": false,
     "baseUrl": "./",
     "paths": {
-      "@packages/*": ["packages/*"],
-      "__FRAGMENT_PLUGIN_PATH__": ["packages/fragment-plugin/src/index"],
+      "@packages/*": ["packages/*"]
     },
   }
 }
