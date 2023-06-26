@@ -15,6 +15,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
+        "@packages/*": "./packages/*",
         __FRAGMENT_PLUGIN_PATH__
       },
     },

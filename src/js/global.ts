@@ -3,7 +3,7 @@ import ScrollPlugin from "@swup/scroll-plugin";
 import BodyClassPlugin from "@swup/body-class-plugin";
 import PreloadPlugin from "@swup/preload-plugin";
 import { isTouch } from "./frontend.js";
-import FragmentPlugin from "__FRAGMENT_PLUGIN_PATH__";
+import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
 
 interface DOMEvent<T extends EventTarget> extends Event {
   readonly target: T;
