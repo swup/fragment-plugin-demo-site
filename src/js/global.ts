@@ -1,4 +1,4 @@
-import Swup, { Location } from "swup";
+import Swup, { Handler, Location } from "swup";
 // import ScrollPlugin from "@swup/scroll-plugin";
 // import BodyClassPlugin from "@swup/body-class-plugin";
 // import PreloadPlugin from "@swup/preload-plugin";
@@ -143,3 +143,10 @@ const onHoverLink = ({ target: el }) => {
 };
 // Delegate mouseenter
 document.body.addEventListener("mouseenter", onHoverLink, { capture: true });
+
+// Scroll overlays when switching
+const onReplaceContent: Handler<"replaceContent"> = (context) => {
+  const overlay = document.querySelector("#overlay") as HTMLElement | null;
+  if (overlay) overlay.scrollTop = 0;
+}
+swup.hooks.on('replaceContent', onReplaceContent);
