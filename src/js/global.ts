@@ -1,13 +1,14 @@
-import Swup, { Handler, Location } from "swup";
-import ScrollPlugin from "@swup/scroll-plugin";
-import BodyClassPlugin from "@swup/body-class-plugin";
-import PreloadPlugin from "@swup/preload-plugin";
+import Swup, { Location } from "swup";
+// import ScrollPlugin from "@swup/scroll-plugin";
+// import BodyClassPlugin from "@swup/body-class-plugin";
+// import PreloadPlugin from "@swup/preload-plugin";
 import { isTouch } from "./frontend.js";
 import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
 
 import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
+import type SwupFragmentPlugin from "@packages/fragment-plugin/src/SwupFragmentPlugin.js";
 
 /** PRINT START **/
 /**
@@ -51,9 +52,9 @@ const rules = [
 const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [
-    new ScrollPlugin(),
-    new BodyClassPlugin(),
-    new PreloadPlugin(),
+    // new ScrollPlugin(),
+    // new BodyClassPlugin(),
+    // new PreloadPlugin(),
     new FragmentPlugin({ rules, debug: true }),
   ],
 });
@@ -120,19 +121,25 @@ const showInternalLinkTooltip = (
 /**
  * Show a tooltip containing the targeted fragments when hovering swup links
  */
-const onHoverLink = (e: any) => {
-  const link = e.delegateTarget! as HTMLAnchorElement;
+const onHoverLink = ({ target: el }) => {
+  const isLink = el instanceof HTMLAnchorElement;
+  if (!isLink) return;
+
+  // only do this for internal links
+  if (el.origin !== location.origin) return;
 
   // Get the fragment plugin
-  const fragmentPlugin: any = swup.findPlugin("FragmentPlugin");
+  const fragmentPlugin: SwupFragmentPlugin | undefined = swup.findPlugin(
+    "SwupFragmentPlugin"
+  ) as SwupFragmentPlugin | undefined;
   if (!fragmentPlugin) return;
 
   const { fragments } = fragmentPlugin.createContext({
     from: Location.fromUrl(window.location.href).url,
-    to: Location.fromElement(link).url,
+    to: Location.fromElement(el).url,
   });
 
-  showInternalLinkTooltip(link, fragments || swup.options.containers);
+  showInternalLinkTooltip(el, fragments || swup.options.containers);
 };
-// @ts-ignore
-swup.on("hoverLink", onHoverLink);
+// Delegate mouseenter
+document.body.addEventListener("mouseenter", onHoverLink, { capture: true });
