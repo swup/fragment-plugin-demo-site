@@ -142,7 +142,12 @@ const onHoverLink = ({ target: el }) => {
   showInternalLinkTooltip(el, fragments || swup.options.containers);
 };
 // Delegate mouseenter
-document.body.addEventListener("mouseenter", onHoverLink, { capture: true });
+swup.delegateEvent(
+  swup.options.linkSelector,
+  'mouseenter',
+  onHoverLink,
+  { capture: true }
+)
 
 // Scroll overlays when switching
 const onReplaceContent: Handler<"replaceContent"> = (context) => {
