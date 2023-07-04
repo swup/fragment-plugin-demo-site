@@ -32,7 +32,7 @@ export async function getSortedFilters(): Promise<CollectionEntry<"filters">[]> 
  */
 export const loadSwupCSS = (): string =>  {
   const file = `${process.cwd()}/src/styles/inc/transitions.css`;
-  return fs.readFileSync(file, 'utf8').trim();
+  return fs.readFileSync(file, 'utf8').split("/* cut */")[0].trim();
 }
 
 /**

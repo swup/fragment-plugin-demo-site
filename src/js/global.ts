@@ -1,11 +1,11 @@
-import Swup, { Handler, Location } from "swup";
+import Swup, { Handler, Location } from "@packages/swup/src/index.js";
 // import ScrollPlugin from "@swup/scroll-plugin";
 // import BodyClassPlugin from "@swup/body-class-plugin";
 // import PreloadPlugin from "@swup/preload-plugin";
-import { isTouch } from "./frontend.js";
+import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
 
-import tippy, { followCursor, Placement as TippyPlacement } from "tippy.js";
+import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 import type SwupFragmentPlugin from "@packages/fragment-plugin/src/SwupFragmentPlugin.js";
@@ -20,28 +20,26 @@ const rules = [
     from: "/characters/:filter?",
     to: "/characters/:filter?",
     fragments: ["#list"],
-    name: "replaceCharacters",
   },
   // Rule 2: From the list to an overlay
   {
     from: "/characters/:filter?",
     to: "/character/:character",
     fragments: ["#overlay"],
-    name: "openOverlay",
+    name: "open-overlay",
   },
   // Rule 3: From an overlay back to the list
   {
     from: "/character/:character",
     to: "/characters/:filter?",
     fragments: ["#overlay", "#list"],
-    name: "closeOverlay",
+    name: "close-overlay",
   },
   // Rule 4: Between overlays
   {
     from: "/character/:character",
     to: "/character/:character",
     fragments: ["#detail"],
-    name: "replaceCharacter",
   },
 ];
 /** PRINT END **/
@@ -58,6 +56,10 @@ const swup = new Swup({
     new FragmentPlugin({ rules, debug: true }),
   ],
 });
+
+swup.hooks.on('animationInStart', async () => {
+  // await sleep(20000);
+})
 
 /**
  * Close eventual overlays using the Escape key
@@ -134,7 +136,7 @@ const onHoverLink = ({ target: el }) => {
   ) as SwupFragmentPlugin | undefined;
   if (!fragmentPlugin) return;
 
-  const { fragments } = fragmentPlugin.createContext({
+  const { fragments } = fragmentPlugin.getContext({
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
@@ -142,16 +144,13 @@ const onHoverLink = ({ target: el }) => {
   showInternalLinkTooltip(el, fragments || swup.options.containers);
 };
 // Delegate mouseenter
-swup.delegateEvent(
-  swup.options.linkSelector,
-  'mouseenter',
-  onHoverLink,
-  { capture: true }
-)
+swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
+  capture: true,
+});
 
-// Scroll overlays when switching
+// Reset the scroll of the overlay when switching #detail
 const onReplaceContent: Handler<"replaceContent"> = (context) => {
   const overlay = document.querySelector("#overlay") as HTMLElement | null;
   if (overlay) overlay.scrollTop = 0;
-}
-swup.hooks.on('replaceContent', onReplaceContent);
+};
+swup.hooks.on("replaceContent", onReplaceContent);

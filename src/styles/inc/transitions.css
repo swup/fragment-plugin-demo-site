@@ -1,78 +1,79 @@
-/* The default transition (for visits without fragment) */
-html:not([data-fragment-visit]) .transition-main {
+/* The default transition for non-fragment visits */
+.transition-main {
   transition: opacity 250ms, transform 250ms;
   opacity: 1;
 }
 
-html:not([data-fragment-visit]).is-animating .transition-main {
+html.is-animating .transition-main {
   opacity: 0;
   transform: translateY(-20px);
 }
 
-html:not([data-fragment-visit]).is-leaving .transition-main {
+html.is-leaving .transition-main {
   transform: translateY(20px);
 }
 
-/* The transition between characters */
-html[data-fragment-visit="replaceCharacters"] .transition-teaser,
-html[data-fragment-visit="closeOverlay"] .transition-teaser {
+/*
+ * The transition when filtering the characters.
+ * Here we are animating children of the element #list
+ */
+#list.is-changing .transition-teaser {
   transition-property: opacity, transform;
   transition-duration: 450ms;
 }
-html[data-fragment-visit="replaceCharacters"].is-animating .transition-teaser,
-html[data-fragment-visit="closeOverlay"].is-animating .transition-teaser {
+
+#list.is-animating .transition-teaser {
   opacity: 0;
   transform: scale(0.75);
 }
-html[data-fragment-visit="replaceCharacters"].is-leaving .transition-teaser,
-html[data-fragment-visit="closeOverlay"].is-leaving .transition-teaser {
+
+#list.is-leaving .transition-teaser {
   transition-duration: 100ms;
 }
 
-/* Reset the styles for unchanged list */
-#list.swup-fragment-unchanged .transition-teaser {
-  opacity: 1;
-  transform: scale(1);
-  transition: none;
-}
-
-/* The transition for opening an overlay */
-html[data-fragment-visit="openOverlay"] .transition-overlay {
+/*
+* The transition for opening and closing an overlay.
+* The animation happens on the element itself
+*/
+.transition-overlay {
   transition: opacity 350ms;
 }
 
-html[data-fragment-visit="openOverlay"].is-animating .transition-overlay{
+.transition-overlay.is-animating {
   opacity: 0;
 }
-
-html[data-fragment-visit="openOverlay"].is-leaving .transition-overlay {
+/* Custom handling based on route */
+.transition-overlay.to-open-overlay.is-leaving,
+.transition-overlay.to-close-overlay.is-rendering {
   transition-duration: 0ms;
 }
 
-/* The transition for closing an overlay */
-html[data-fragment-visit="closeOverlay"] .transition-overlay {
-  transition: opacity 350ms;
-}
-
-html[data-fragment-visit="closeOverlay"].is-animating .transition-overlay {
-  opacity: 0;
-}
-
-html[data-fragment-visit="closeOverlay"].is-rendering .transition-overlay {
-  transition-duration: 10ms;
-}
-
-/* The transition between characters */
-html[data-fragment-visit="replaceCharacter"] .transition-character {
+/*
+* The transition between characters.
+* The animation happens on the element itself
+*/
+.transition-character.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
 
-html[data-fragment-visit="replaceCharacter"].is-animating .transition-character {
+.transition-character.is-animating {
   opacity: 0;
   transform: translateY(-20px);
 }
 
-html[data-fragment-visit="replaceCharacter"].is-leaving .transition-character {
+.transition-character.is-leaving {
   opacity: 0;
   transform: translateY(20px);
 }
+
+
+/* cut */
+
+/* .overlay-placeholder {
+  width: 300px;
+  aspect-ratio: 1;
+  background: red;
+  position: fixed;
+  top: 0;
+  pointer-events: none;
+} */

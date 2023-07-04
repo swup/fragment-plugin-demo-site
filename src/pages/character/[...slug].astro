@@ -33,14 +33,13 @@ const { name, color, image } = post.data;
 <Character {...post.data}>
 	<div
 		id="overlay"
-		class="overlay transition-overlay is-visible"
-		x-init="$nextTick(() => $el.classList.add('is-visible'))"
+		class="overlay transition-overlay"
 	>
 		<div class="overlay_inner">
 			<a
 				href="/characters/"
 				class="overlay_close"
-				data-swup-fragment-link="#list"
+				data-swup-link-to-fragment="#list"
 				data-tippy-follow></a>
 			<main class="character transition-character" id="detail">
 				<div
@@ -52,7 +51,7 @@ const { name, color, image } = post.data;
 					<a
 						href="/characters/"
 						class="character_close"
-						data-swup-fragment-link="#list"
+						data-swup-link-to-fragment="#list"
 					>
 						<Icon name="x" />
 					</a>
