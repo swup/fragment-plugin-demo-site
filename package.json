@@ -18,7 +18,8 @@
     "astro": "^2.7.0",
     "feather-icons": "^4.29.0",
     "postcss-preset-env": "^8.5.0",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "swup": "*"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.29.1",
