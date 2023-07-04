@@ -2,3 +2,11 @@
 	path = packages/fragment-plugin
 	url = https://github.com/swup/fragment-plugin.git
 	branch = next
+[submodule "packages/swup"]
+	path = packages/swup
+	url = https://github.com/swup/swup.git
+	branch = next
+[submodule "packages/swup-plugin"]
+	path = packages/swup-plugin
+	url = https://github.com/swup/plugin.git
+	branch = next
