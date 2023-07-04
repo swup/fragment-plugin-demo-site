@@ -1,7 +1,7 @@
 [submodule "packages/fragment-plugin"]
 	path = packages/fragment-plugin
 	url = https://github.com/swup/fragment-plugin.git
-	branch = next
+	branch = master
 [submodule "packages/swup"]
 	path = packages/swup
 	url = https://github.com/swup/swup.git
