@@ -41,16 +41,12 @@ export const loadSwupCSS = (): string =>  {
 export const loadSwupJS = (): string =>  {
   const file = `${process.cwd()}/src/js/global.ts`;
   const raw = fs.readFileSync(file, 'utf8');
-  const extract = raw.match(/\/\*\* PRINT START \*\*\/(.+)\/\*\* PRINT END \*\*\//s);
+  const extract = raw.match(/\/\*\* RULES START \*\*\/(.+)\/\*\* RULES END \*\*\//s);
   if (!extract) return '';
   const swupCode = extract[1].trim();
 
   return `import Swup from "swup";
-
 import SwupFragmentPlugin from "@swup/fragment-plugin";
-import SwupScrollPlugin from "@swup/scroll-plugin";
-import SwupBodyClassPlugin from "@swup/body-class-plugin";
-import SwupPreloadPlugin from "@swup/preload-plugin";
 
 ${swupCode}
 
@@ -59,10 +55,7 @@ ${swupCode}
  */
 const swup = new Swup({
   plugins: [
-    new ScrollPlugin(),
-    new BodyClassPlugin(),
-    new PreloadPlugin(),
-    new FragmentPlugin({ rules, debug: true }),
+    new FragmentPlugin({ rules }),
   ],
 });`;
 }

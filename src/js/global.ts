@@ -1,7 +1,4 @@
 import Swup, { Handler, Location } from "swup";
-// import ScrollPlugin from "@swup/scroll-plugin";
-// import BodyClassPlugin from "@swup/body-class-plugin";
-// import PreloadPlugin from "@swup/preload-plugin";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin from "@swup/fragment-plugin";
 
@@ -9,7 +6,7 @@ import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
-/** PRINT START **/
+/** RULES START **/
 /**
  * Define the rules for Fragment Plugin
  */
@@ -41,7 +38,7 @@ const rules = [
     fragments: ["#detail"],
   },
 ];
-/** PRINT END **/
+/** RULES END **/
 
 /**
  * Initialize Swup
@@ -49,9 +46,6 @@ const rules = [
 const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [
-    // new ScrollPlugin(),
-    // new BodyClassPlugin(),
-    // new PreloadPlugin(),
     new FragmentPlugin({ rules, debug: true }),
   ],
 });
