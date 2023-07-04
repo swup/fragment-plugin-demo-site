@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "node ./scripts/deploy.js"
+    "deploy": "node ./scripts/deploy.js",
+    "preinstall": "git submodule update"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",

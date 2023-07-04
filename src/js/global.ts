@@ -8,7 +8,6 @@ import FragmentPlugin from "@swup/fragment-plugin";
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
-import type SwupFragmentPlugin from "@packages/fragment-plugin/src/SwupFragmentPlugin.js";
 
 /** PRINT START **/
 /**
