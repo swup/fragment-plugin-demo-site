@@ -19,7 +19,8 @@
     "feather-icons": "^4.29.0",
     "postcss-preset-env": "^8.5.0",
     "tippy.js": "^6.3.7",
-    "swup": "*"
+    "swup": "file:packages/swup",
+    "@swup/fragment-plugin": "file:packages/fragment-plugin"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.29.1",
