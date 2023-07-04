@@ -9,16 +9,18 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "node ./scripts/deploy.js",
-    "preinstall": "git submodule update --init",
-    "prepare": "npm run build --workspaces"
+    "preinstall": "git submodule update --init --remote"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
     "@astrojs/rss": "^2.4.3",
     "@astrojs/sitemap": "^1.3.3",
+    "@swup/plugin": "^3.0.0-rc.1",
     "astro": "^2.7.0",
+    "delegate-it": "^6.0.1",
     "feather-icons": "^4.29.0",
     "postcss-preset-env": "^8.5.0",
+    "swup": "^4.0.0-rc.14",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
