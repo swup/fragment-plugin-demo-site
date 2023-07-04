@@ -1,9 +1,9 @@
-import Swup, { Handler, Location } from "@packages/swup/src/index.js";
+import Swup, { Handler, Location } from "swup";
 // import ScrollPlugin from "@swup/scroll-plugin";
 // import BodyClassPlugin from "@swup/body-class-plugin";
 // import PreloadPlugin from "@swup/preload-plugin";
 import { isTouch, sleep } from "./frontend.js";
-import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
+import FragmentPlugin from "@swup/fragment-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
