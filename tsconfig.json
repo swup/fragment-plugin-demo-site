@@ -5,6 +5,7 @@
     "noImplicitAny": false,
     "baseUrl": "./",
     "paths": {
+      "swup": ["packages/swup/src/index"],
       "@packages/*": ["packages/*"]
     },
   }

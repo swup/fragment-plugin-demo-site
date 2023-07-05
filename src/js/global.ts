@@ -1,4 +1,4 @@
-import Swup, { Handler, Location } from "@packages/swup/src/index.js";
+import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
 
@@ -49,6 +49,8 @@ const swup = new Swup({
     new FragmentPlugin({ rules, debug: true }),
   ],
 });
+
+console.log(swup.version);
 
 swup.hooks.on('animationInStart', async () => {
   // await sleep(20000);
