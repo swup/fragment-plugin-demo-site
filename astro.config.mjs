@@ -5,25 +5,18 @@ import { fileURLToPath } from "url";
 
 const local = (path) => fileURLToPath(new URL(path, import.meta.url));
 
-const alias = {
-  swup: local("./packages/swup/src/index.js"),
-  "@swup/fragment-plugin": local("./packages/fragment-plugin/src/index.js"),
-};
-
-// if (import.meta.env.DEV) {
-//   alias["swup"] = local("./packages/swup/src/index.js");
-//   alias["@swup/fragment-plugin"] = local(
-//     "./packages/fragment-plugin/src/index.js"
-//   );
-// }
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://example.com",
   integrations: [mdx(), sitemap()],
   vite: {
     resolve: {
-      alias,
+      alias: {
+        swup: local("./packages/swup/src/index.js"),
+        "@swup/fragment-plugin": local(
+          "./packages/fragment-plugin/src/index.js"
+        ),
+      },
     },
   },
   trailingSlash: "always",
