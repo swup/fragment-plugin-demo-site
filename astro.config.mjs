@@ -22,4 +22,5 @@ export default defineConfig({
       alias: aliases
     },
   },
+  trailingSlash: 'always',
 });
