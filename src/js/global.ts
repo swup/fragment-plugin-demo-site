@@ -45,16 +45,14 @@ const rules = [
  */
 const swup = new Swup({
   animateHistoryBrowsing: true,
-  plugins: [
-    new FragmentPlugin({ rules, debug: true }),
-  ],
+  plugins: [new FragmentPlugin({ rules, debug: true })],
 });
 
 console.log(swup.version);
 
-swup.hooks.on('animationInStart', async () => {
+swup.hooks.on("animationInStart", async () => {
   // await sleep(20000);
-})
+});
 
 /**
  * Close eventual overlays using the Escape key
@@ -126,17 +124,15 @@ const onHoverLink = ({ target: el }) => {
   if (el.origin !== location.origin) return;
 
   // Get the fragment plugin
-  const fragmentPlugin: SwupFragmentPlugin | undefined = swup.findPlugin(
-    "SwupFragmentPlugin"
-  ) as SwupFragmentPlugin | undefined;
+  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
   if (!fragmentPlugin) return;
 
-  const { fragments } = fragmentPlugin.getContext({
+  const state = fragmentPlugin.getState({
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
 
-  showInternalLinkTooltip(el, fragments || swup.options.containers);
+  showInternalLinkTooltip(el, state?.fragments || swup.options.containers);
 };
 // Delegate mouseenter
 swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
