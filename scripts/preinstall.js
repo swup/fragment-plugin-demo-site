@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * This script will be run when the package is being installed:
+ * On "npm install":
  *
  * - Clone the given `packages` into the subfolders
- * - Run `npm install` in each of the subfolders
+ * - Run `npm install` in each of the cloned folders
  */
 
 import { execSync } from "child_process";
@@ -26,9 +26,6 @@ const packages = [
 packages.forEach(({url, branch, folder}) => {
   // Bail early if the folder already exists
   if(existsSync(folder)) return;
-
-  // Delete the folder and it's contents
-  // execSync(`rm -rf ${folder}`);
 
   /**
    * Clone the repo into the given folder
