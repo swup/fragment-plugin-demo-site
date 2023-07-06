@@ -9,12 +9,12 @@ const alias = {
 
 const local = (path) => fileURLToPath(new URL(path, import.meta.url));
 
-if (import.meta.env.DEV) {
+// if (import.meta.env.DEV) {
   alias["swup"] = local("./packages/swup/src/index.js");
   alias["@swup/fragment-plugin"] = local(
     "./packages/fragment-plugin/src/index.js"
   );
-}
+// }
 
 // https://astro.build/config
 export default defineConfig({
