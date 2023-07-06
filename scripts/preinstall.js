@@ -14,18 +14,18 @@ const packages = [
   {
     url: "git@github.com:swup/fragment-plugin.git",
     branch: "develop",
-    folder: "./packages/fragment-plugin"
+    folder: "./packages/fragment-plugin",
   },
   {
     url: "git@github.com:swup/swup.git",
     branch: "next",
-    folder: "./packages/swup"
-  }
+    folder: "./packages/swup",
+  },
 ];
 
-packages.forEach(({url, branch, folder}) => {
+packages.forEach(({ url, branch, folder }) => {
   // Bail early if the folder already exists
-  if(existsSync(folder)) return;
+  if (existsSync(folder)) return;
 
   /**
    * Clone the repo into the given folder
@@ -36,4 +36,4 @@ packages.forEach(({url, branch, folder}) => {
    * @see https://stackoverflow.com/a/68299198/586823
    */
   execSync(`npm --prefix ${folder} install`);
-})
+});
