@@ -25,7 +25,7 @@ const { filter: currentFilterSlug } = Astro.params;
 							"filters_link button",
 							{ "is-active": filter.slug === currentFilterSlug },
 						]}
-						href={filter.slug ? `/characters/${filter.slug}/` : "/characters/"}
+						href={filter.slug ? `/characters/${filter.slug}` : "/characters/"}
 					>
 						{filter.data.name}
 					</a>
