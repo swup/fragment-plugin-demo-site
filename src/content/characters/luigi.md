@@ -1,6 +1,6 @@
 ---
 name: "Luigi"
-filters: ["mechanics"]
+filters: ["plumbers"]
 image: "luigi.png"
 color: "DodgerBlue"
 sortOrder: 2

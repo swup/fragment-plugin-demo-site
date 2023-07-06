@@ -1,6 +1,6 @@
 ---
 name: "Mario"
-filters: ["mechanics"]
+filters: ["plumbers"]
 image: "mario.png"
 color: "red"
 sortOrder: 1
