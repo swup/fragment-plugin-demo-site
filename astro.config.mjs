@@ -1,16 +1,19 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
-const swup =
-  import.meta.env.DEV
-    ? fileURLToPath(new URL("./packages/swup/src/index.js", import.meta.url))
-    : "swup";
-
-const aliases = {
-  swup,
+const alias = {
   "@packages/*": "./packages/*",
+};
+
+const local = (path) => fileURLToPath(new URL(path, import.meta.url));
+
+if (import.meta.env.DEV) {
+  alias["swup"] = local("./packages/swup/src/index.js");
+  alias["@swup/fragment-plugin"] = local(
+    "./packages/fragment-plugin/src/index.js"
+  );
 }
 
 // https://astro.build/config
@@ -19,8 +22,8 @@ export default defineConfig({
   integrations: [mdx(), sitemap()],
   vite: {
     resolve: {
-      alias: aliases
+      alias,
     },
   },
-  trailingSlash: 'always',
+  trailingSlash: "always",
 });

@@ -13,7 +13,7 @@ import { existsSync } from "fs";
 const packages = [
   {
     url: "git@github.com:swup/fragment-plugin.git",
-    branch: "next",
+    branch: "develop",
     folder: "./packages/fragment-plugin"
   },
   {
