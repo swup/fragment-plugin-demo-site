@@ -6,7 +6,7 @@
     "baseUrl": "./",
     "paths": {
       "swup": ["packages/swup/src/index"],
-      "@packages/*": ["packages/*"]
+      "@swup/fragment-plugin": ["packages/fragment-plugin/src/index"]
     },
   }
 }

@@ -3,17 +3,18 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { fileURLToPath } from "url";
 
-const alias = {
-  "@packages/*": "./packages/*",
-};
-
 const local = (path) => fileURLToPath(new URL(path, import.meta.url));
 
+const alias = {
+  swup: local("./packages/swup/src/index.js"),
+  "@swup/fragment-plugin": local("./packages/fragment-plugin/src/index.js"),
+};
+
 // if (import.meta.env.DEV) {
-  alias["swup"] = local("./packages/swup/src/index.js");
-  alias["@swup/fragment-plugin"] = local(
-    "./packages/fragment-plugin/src/index.js"
-  );
+//   alias["swup"] = local("./packages/swup/src/index.js");
+//   alias["@swup/fragment-plugin"] = local(
+//     "./packages/fragment-plugin/src/index.js"
+//   );
 // }
 
 // https://astro.build/config

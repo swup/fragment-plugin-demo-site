@@ -1,6 +1,6 @@
 import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import FragmentPlugin from "@packages/fragment-plugin/src/index.js";
+import FragmentPlugin from "@swup/fragment-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
