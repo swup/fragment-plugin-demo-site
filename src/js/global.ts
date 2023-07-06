@@ -145,3 +145,5 @@ const onReplaceContent: Handler<"replaceContent"> = (context) => {
   if (overlay) overlay.scrollTop = 0;
 };
 swup.hooks.on("replaceContent", onReplaceContent);
+
+swup.hooks.on("samePage", () => console.log('samePage'));
