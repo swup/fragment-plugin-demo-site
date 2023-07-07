@@ -1,6 +1,7 @@
 /* The default transition for non-fragment visits */
 .transition-main {
-  transition: opacity 250ms, transform 250ms;
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
 }
 
 html.is-animating .transition-main {
