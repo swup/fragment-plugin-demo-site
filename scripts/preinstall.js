@@ -12,12 +12,12 @@ import { existsSync } from "fs";
 
 const packages = [
   {
-    url: "git@github.com:swup/fragment-plugin.git",
+    url: "https://github.com/swup/fragment-plugin.git",
     branch: "develop",
     folder: "./packages/fragment-plugin",
   },
   {
-    url: "git@github.com:swup/swup.git",
+    url: "https://github.com/swup/swup.git",
     branch: "add-animation-selector-to-context",
     folder: "./packages/swup",
   },
