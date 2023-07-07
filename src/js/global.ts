@@ -167,7 +167,7 @@ function addAnchorLinks() {
     link.classList.add("anchor-link");
     link.innerHTML = `
     <span class='anchor-link_icon'>${feather.icons.link.toSvg()}</span>
-    <span class='anchor-link_text'>${heading.textContent}</span>
+    <span class='anchor-link_text'>${heading.innerHTML}</span>
   `;
     heading.innerHTML = link.outerHTML;
   });
