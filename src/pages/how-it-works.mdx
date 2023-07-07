@@ -53,7 +53,7 @@ Adding `data-swup-fragment-url="/characters/"`
 to the `#list` will persist it when closing
 the overlay / navigating towards [characters](/characters/):
 
-```html
+```astro 'data-link-to-fragment="#list"' 'data-swup-fragment-url="/characters/"'
 <main id="overlay">
 	<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
 	<!-- ...overlay content... -->
