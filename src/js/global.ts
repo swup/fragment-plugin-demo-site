@@ -50,9 +50,11 @@ const swup = new Swup({
 
 console.log(swup.version);
 
-swup.hooks.on("animationInStart", async () => {
-  // await sleep(20000);
-});
+// swup.hooks.on("transitionStart", async (context) => {
+//   context.transition.selector = '#list';
+//   // console.log(context);
+//   // await sleep(20000);
+// });
 
 /**
  * Close eventual overlays using the Escape key

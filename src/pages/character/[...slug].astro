@@ -33,7 +33,7 @@ const { name, color, image } = post.data;
 <Character {...post.data}>
 	<div
 		id="overlay"
-		class="overlay transition-overlay"
+		class="overlay"
 	>
 		<div class="overlay_inner">
 			<a
@@ -41,7 +41,7 @@ const { name, color, image } = post.data;
 				class="overlay_close"
 				data-swup-link-to-fragment="#list"
 				data-tippy-follow></a>
-			<main class="character transition-character" id="detail">
+			<main class="character" id="detail">
 				<div
 					class="character_header"
 					style={{
@@ -86,7 +86,7 @@ const { name, color, image } = post.data;
 							<a
 								class="character_nav_link --previous"
 								data-swup-history="replace"
-								href={`/character/${prevPost.slug}`}
+								href={`/character/${prevPost.slug}/`}
 							>
 								← {prevPost.data.name}</a
 							>
@@ -95,7 +95,7 @@ const { name, color, image } = post.data;
 							<a
 								class="character_nav_link --next"
 								data-swup-history="replace"
-								href={`/character/${nextPost.slug}`}
+								href={`/character/${nextPost.slug}/`}
 							>
 								{nextPost.data.name} →</a
 							>

@@ -14,36 +14,46 @@ html.is-leaving .transition-main {
 
 /*
  * The transition when filtering the characters.
- * Here we are animating children of the element #list
  */
-#list.is-changing .transition-teaser {
-  transition-property: opacity, transform;
-  transition-duration: 450ms;
+#list {
+  --duration-leave: 150ms;
+  --duration-enter: 400ms;
 }
-
-#list.is-animating .transition-teaser {
+#list.is-changing {
+  transition-duration: var(--duration-enter);
+}
+#list.is-leaving {
+  transition-duration: var(--duration-leave);
+}
+#list.is-changing .teaser {
+  transition-property: opacity, transform;
+  transition-duration: var(--duration-enter);
+  transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); /* easeOutQuint */
+}
+#list.is-animating .teaser {
   opacity: 0;
   transform: scale(0.75);
 }
-
-#list.is-leaving .transition-teaser {
-  transition-duration: 100ms;
+/* Change easing and duration for the leave-phase */
+#list.is-leaving .teaser {
+  transition-timing-function: ease-in;
+  transition-duration: var(--duration-leave);
 }
 
 /*
 * The transition for opening and closing an overlay.
 * The animation happens on the element itself
 */
-.transition-overlay.is-changing {
+#overlay.is-changing {
   transition: opacity 350ms;
 }
 
-.transition-overlay.is-animating {
+#overlay.is-animating {
   opacity: 0;
 }
 /* Custom handling based on route */
-.transition-overlay.to-open-overlay.is-leaving,
-.transition-overlay.to-close-overlay.is-rendering {
+#overlay.to-open-overlay.is-leaving,
+#overlay.to-close-overlay.is-rendering {
   transition-duration: 0ms;
 }
 
@@ -51,16 +61,16 @@ html.is-leaving .transition-main {
 * The transition between characters.
 * The animation happens on the element itself
 */
-.transition-character.is-changing {
+#detail.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
 
-.transition-character.is-animating {
+#detail.is-animating {
   opacity: 0;
   transform: translateY(-20px);
 }
 
-.transition-character.is-leaving {
+#detail.is-leaving {
   opacity: 0;
   transform: translateY(20px);
 }

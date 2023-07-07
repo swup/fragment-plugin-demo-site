@@ -12,7 +12,7 @@ const posts = (await getSortedCharacters())!.filter((post) => {
 	<ul class="teasers_list">
 		{
 			posts.map((post) => (
-				<li class="teaser transition-teaser">
+				<li class="teaser">
 					<a
 						class="teaser_link"
 						href={`/character/${post.slug}/`}
