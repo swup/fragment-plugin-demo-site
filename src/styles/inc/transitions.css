@@ -15,6 +15,7 @@ html.is-leaving .transition-main {
 
 /*
  * The transition when filtering the characters.
+ * Here, we are animating the `.teaeser` elements individually
  */
 #list.is-changing {
   --duration-leave: 150ms;
