@@ -8,7 +8,9 @@
  */
 
 import { execSync } from "child_process";
-import { existsSync } from "fs";
+import { existsSync, rmSync } from "fs";
+
+console.log(process.env.NETLIFY);
 
 const packages = [
   {
@@ -26,6 +28,9 @@ const packages = [
 packages.forEach(({ url, branch, folder }) => {
   // Bail early if the folder already exists
   if (existsSync(folder)) return;
+
+  // Always delete the target folders if on Netlify
+  if (process.env.NETLIFY) fs.rmSync(folder, { recursive: true, force: true });
 
   /**
    * Clone the repo into the given folder
