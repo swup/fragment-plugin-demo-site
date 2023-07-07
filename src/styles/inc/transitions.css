@@ -1,5 +1,5 @@
 /* The default transition for non-fragment visits */
-html.is-changing .transition-main {
+.transition-main {
   transition: opacity 250ms, transform 250ms;
 }
 
