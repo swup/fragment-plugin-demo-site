@@ -16,11 +16,9 @@ html.is-leaving .transition-main {
 /*
  * The transition when filtering the characters.
  */
-#list {
+#list.is-changing {
   --duration-leave: 150ms;
   --duration-enter: 400ms;
-}
-#list.is-changing {
   transition-duration: var(--duration-enter);
 }
 #list.is-leaving {

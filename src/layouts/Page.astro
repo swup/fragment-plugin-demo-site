@@ -3,27 +3,10 @@ import Base from "../components/Base.astro";
 import { Debug } from "astro/components";
 const { title, description, content } = Astro.props;
 ---
+
 <!-- <Debug data={content.isFrontPage} /> -->
 <Base title={title} description={description} isFrontPage={content.isFrontPage}>
 	<div class="text">
 		<slot />
 	</div>
 </Base>
-
-<script>
-	const headings = document
-		.querySelector(".text")
-		?.querySelectorAll("h2, h3, h4, h5");
-
-	headings?.forEach((heading) => {
-		if (!heading.id) return;
-		const link = document.createElement('a');
-		link.href = `#${heading.id}`
-		link.classList.add('anchor-link');
-		link.innerHTML = `
-			<span class='anchor-link_icon'>§</span>
-			<span class='anchor-link_text'>${heading.textContent}</span>
-		`;
-		heading.innerHTML = link.outerHTML;
-	});
-</script>

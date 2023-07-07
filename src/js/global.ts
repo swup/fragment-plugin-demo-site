@@ -6,6 +6,8 @@ import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
+import feather from "feather-icons";
+
 /** RULES START **/
 /**
  * Define the rules for Fragment Plugin
@@ -126,7 +128,7 @@ const onHoverLink = ({ target: el }) => {
   if (el.origin !== location.origin) return;
 
   // ignore anchor links
-  if (el.getAttribute('href')?.startsWith('#')) return;
+  if (el.getAttribute("href")?.startsWith("#")) return;
 
   // Get the fragment plugin
   const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
@@ -151,4 +153,23 @@ const onReplaceContent: Handler<"replaceContent"> = (context) => {
 };
 swup.hooks.on("replaceContent", onReplaceContent);
 
-swup.hooks.on("samePage", () => console.log('samePage'));
+swup.hooks.on("samePage", () => console.log("samePage"));
+
+function addAnchorLinks() {
+  const headings = document
+    .querySelector(".text")
+    ?.querySelectorAll("h2, h3, h4, h5");
+
+  headings?.forEach((heading) => {
+    if (!heading.id) return;
+    const link = document.createElement("a");
+    link.href = `#${heading.id}`;
+    link.classList.add("anchor-link");
+    link.innerHTML = `
+    <span class='anchor-link_icon'>${feather.icons.link.toSvg()}</span>
+    <span class='anchor-link_text'>${heading.textContent}</span>
+  `;
+    heading.innerHTML = link.outerHTML;
+  });
+}
+swup.hooks.on("pageView", addAnchorLinks);
