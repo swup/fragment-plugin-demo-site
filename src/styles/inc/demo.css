@@ -276,7 +276,7 @@ p a:where(:not(.button)),
 .astro-code {
   width: 100%;
   overflow: auto;
-  border-radius: 0.3rem;
+  border-radius: var(--radius-1);
   font-size: 0.9rem;
 }
 
@@ -317,20 +317,45 @@ p a:where(:not(.button)),
   position: relative;
   display: inline-block;
 }
-.anchor-link .feather {
+.anchor-link_icon {
   --size: 0.7em;
   display: block;
   width: var(--size);
   height: var(--size);
   position: absolute;
-  top: 0.4em;
   right: 100%;
   margin-right: 0.1em;
   opacity: 0;
-  transition: opacity 200ms;
+  font-weight: normal;
 }
 @media (--mouse) {
-  .anchor-link:hover .feather {
-    opacity: 1;
+  .anchor-link:hover .anchor-link_icon {
+    opacity: 0.5;
   }
+}
+
+/*
+* Hints
+*/
+.hint {
+  background: #caabff;
+  font-style: italic;
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: var(--radius-1);
+  @media (--sm-n-above) {
+    flex-direction: row;
+  }
+}
+.hit_icon {
+  position: relative;
+  top: 0.2em;
+}
+.hit_icon .feather {
+  display: block;
+  width: 1em;
+  height: 1em;
 }

@@ -1,0 +1,100 @@
+---
+layout: ../layouts/Page.astro
+title: How it works
+author: Rasso Hilber
+description: Find out how Fragment Plugin works!
+---
+
+import Base from "../components/Base.astro";
+import Hint from "../components/Hint.astro";
+import { Code } from "astro/components";
+import Icon from "../components/Icon.astro";
+
+import { loadSwupJS, loadSwupCSS } from "../js/backend.js";
+export const JS = loadSwupJS();
+export const CSS = loadSwupCSS();
+
+export const DataFragmentUrlExample = ``;
+
+
+## JavaScript API
+
+The following code is being used on this very site for initializing swup with fragment support:
+
+<Code code={JS} lang="js" />
+
+## CSS API
+
+The CSS for the animations of fragment visits is scoped to the fragments:
+
+<Code code={CSS} lang="css" />
+
+## DOM API
+
+<Hint hint={`this API is only required for advanced use cases`} />
+
+### [data-swup-fragment-url]
+
+In complex cases, it's helpful to tell fragment plugin the URL of the
+fragment beforehand. Suppose you visit one of the chracter detail pages
+directly, <a href="/character/luigi/" target="_blank">Luigi</a>, for
+example.
+
+When closing the overlay on that page, Fragment Plugin can't know if it
+should replace the list of characters or not.
+
+Adding `data-swup-fragment-url="/characters/"`
+to the `#list` will persist it when closing
+the overlay / navigating towards [characters](/characters/):
+
+```html
+<main id="overlay">
+	<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
+	<!-- ...overlay content... -->
+</main>
+<div id="list" data-swup-fragment-url="/characters/">
+	<!-- ...filters & characters... -->
+</div>
+```
+
+### [data-swup-link-to-fragment]
+
+
+You can tell any link on your site to be synced to the value of `[data-swup-fragment-url]`
+of any fragment. This is in use for the overlay close buttons over at [characters](/characters/):
+
+```html
+<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
+```
+
+
+
+{/* <div class="text">
+	<h2 id="js">
+		<a class="anchor-link" href="#js"><Icon name="link" /> JavaScript API</a>
+	</h2>
+	<p>
+
+	</p>
+	<Code code={JS} lang="js" />
+	<h2 id="css">
+		<a class="anchor-link" href="#css"><Icon name="link" /> CSS API</a>
+	</h2>
+	<p>
+		The CSS for the animations of fragment visits is scoped to the fragments:
+	</p>
+	<Code code={CSS} lang="css" />
+
+		<h2 id="dom">
+			<a class="anchor-link" href="#dom"><Icon name="link" /> DOM API</a>
+		</h2>
+
+		<h3>[data-swup-fragment-url]</h3>
+		<p>
+
+		</p>
+
+
+		<h3></h3>
+
+	</div> */}
