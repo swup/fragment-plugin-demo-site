@@ -122,8 +122,11 @@ const onHoverLink = ({ target: el }) => {
   const isLink = el instanceof HTMLAnchorElement;
   if (!isLink) return;
 
-  // only do this for internal links
+  // ignore external links
   if (el.origin !== location.origin) return;
+
+  // ignore anchor links
+  if (el.getAttribute('href')?.startsWith('#')) return;
 
   // Get the fragment plugin
   const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;

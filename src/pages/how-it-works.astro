@@ -1,17 +1,82 @@
 ---
 import Base from "../components/Base.astro";
 import { Code } from "astro/components";
+import Icon from "../components/Icon.astro";
 
 import { loadSwupJS, loadSwupCSS } from "../js/backend.js";
 const JS = loadSwupJS();
 const CSS = loadSwupCSS();
+
+const DataFragmentUrlExample = /*html*/ `<main id="overlay">
+	<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
+	<!-- ...overlay content... -->
+</main>
+<div
+	id="list"
+	data-swup-fragment-url="/characters/">
+	<!-- ...filters & characters... -->
+</div>`;
+
+const DataLinkToFragmentExample =
+	/*html*/
+	`<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>`;
 ---
 
 <Base>
 	<div class="text">
-		<p>The following code is being used on this very site for initializing swup with fragment support:</p>
-		<Code code={JS} lang="typescript" />
-		<p>The CSS for the transitions:</p>
+		<h2 id="js">
+			<a class="anchor-link" href="#js"><Icon name="link" /> JavaScript API</a>
+		</h2>
+		<p>
+			The following code is being used on this very site for initializing swup
+			with fragment support:
+		</p>
+		<Code code={JS} lang="js" />
+		<h2 id="css">
+			<a class="anchor-link" href="#css"><Icon name="link" /> CSS API</a>
+		</h2>
+		<p>
+			The CSS for the animations of fragment visits is scoped to the fragments:
+		</p>
 		<Code code={CSS} lang="css" />
+
+		<h2 id="dom">
+			<a class="anchor-link" href="#dom"><Icon name="link" /> DOM API</a>
+		</h2>
+
+		<h3>[data-swup-fragment-url]</h3>
+		<p>
+			In complex cases, it's helpful to tell fragment plugin the URL of the
+			fragment beforehand. Suppose you visit one of the chracter detail pages
+			directly, <a href="/character/luigi/" target="_blank">Luigi</a>, for
+			example.
+		</p>
+		<p>
+			When closing the overlay on that page, Fragment Plugin can't know if it
+			should replace the list of characters or not.
+		</p>
+		<p>
+			Adding <Code
+				code={`data-swup-fragment-url="/characters/"`}
+				lang="html"
+				inline
+			/>
+			to the <Code code={`#list`} lang="html" inline /> will persist it when closing
+			the overlay / navigating towards <a href="/characters/">characters</a>:
+		</p>
+		<Code code={DataFragmentUrlExample} lang="html" />
+
+		<h3>[data-swup-link-to-fragment]</h3>
+		<p>
+			You can tell any link on your site to be synced to <Code
+				code={`data-swup-fragment-url`}
+				lang="html"
+				inline
+			/>
+			of any fragment. This is in use for the overlay close buttons over at <a
+				href="/characters/">characters</a
+			>:
+		</p>
+		<Code code={DataLinkToFragmentExample} lang="html" />
 	</div>
 </Base>
