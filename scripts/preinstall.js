@@ -18,7 +18,7 @@ const packages = [
   },
   {
     url: "git@github.com:swup/swup.git",
-    branch: "next",
+    branch: "add-animation-selector-to-context",
     folder: "./packages/swup",
   },
 ];
