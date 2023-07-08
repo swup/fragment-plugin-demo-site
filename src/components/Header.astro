@@ -1,26 +1,23 @@
 ---
-import NavLink from './NavLink.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import NavLink from "./NavLink.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 const { isFrontPage } = Astro.props;
+const TitleTag = isFrontPage ? "h1" : "div";
 ---
 
 <header class="site-header">
-	{
-		isFrontPage ? (
-			<h1 class="site-title">{SITE_TITLE}</h1>
-		) : (
-			<div class="site-title">{SITE_TITLE}</div>
-		)
-	}
+	<TitleTag class="site-title">{SITE_TITLE}</TitleTag>
 	<nav>
 		<ul class="nav_list">
 			<li><NavLink href="/">Home</NavLink></li>
 			<li><NavLink href="/characters/">Characters</NavLink></li>
 			<li><NavLink href="/how-it-works/">How it works</NavLink></li>
-			<li><NavLink href="https://github.com/swup/fragment-plugin" target="_blank">GitHub</NavLink></li>
+			<li>
+				<NavLink href="https://github.com/swup/fragment-plugin" target="_blank">
+					GitHub
+				</NavLink>
+			</li>
 		</ul>
-
 	</nav>
 </header>
-<style>
-</style>
+<style></style>
