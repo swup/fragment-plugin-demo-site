@@ -23,13 +23,13 @@ export const DataFragmentUrlExample = ``;
 npm install swup @swup/fragment-plugin
 ```
 
-### Fragment Plugin provides three APIs:
+### Fragment support on this site is being achieved with:
 
-1. The [JavaScript API](#javascript-api) for setting up fragments
-2. The [CSS API](#css-api) for animating fragment visits
-3. The [DOM API](#dom-api) for special cases
+1. [JavaScript](#javascript) for setting up fragment rules
+2. [CSS](#css) for animating fragment visits
+3. The [DOM](#dom) for special cases and extra functionality
 
-## JavaScript API
+## JavaScript
 
 The following code is being used on this very site for initializing swup with fragment support:
 
@@ -97,7 +97,7 @@ even though you gave the instructions to replace it for that visit.
 There are scenarios where the plugin needs a little help by providing a fragment's URL from
 the server for the initial visit. Read more about that in the [DOM API](#dom-api)
 
-## CSS API
+## CSS
 
 The CSS for the animations of fragment visits is scoped to the fragments:
 
@@ -181,7 +181,7 @@ html.is-leaving .transition-main {
 }
 ```
 
-## DOM API
+## DOM
 
 {/* <Hint hint={`this API is only required for advanced use cases`} /> */}
 
