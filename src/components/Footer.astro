@@ -11,42 +11,47 @@
 	*/
 
 	/* Copy Tooltip */
-	.ec.ec-of75f .copy .feedback {
+	.ec.expressive-code .copy .feedback {
 		--tooltip-bg: var(--swup-green);
 		color: black;
+	}
+	.ec.expressive-code .copy {
+		display: none;
 	}
 	/* markers */
 	.ec-line mark::before {
 		pointer-events: none;
 	}
 	/* Frame */
-	.ec.ec-of75f .frame {
+	.ec.expressive-code .frame {
 		border: none;
 		box-shadow: none;
 	}
-	.ec.ec-of75f .frame pre {
+	.ec.expressive-code .frame pre {
 		border-radius: var(--radius-1);
+	}
+	.ec.expressive-code .frame code {
+		font-family: var(--font-mono) !important;
 	}
 	.frame:not(.is-terminal) pre {
 		border-top-right-radius: var(--radius-1) !important;
 	}
 	/* Header */
-	.ec.ec-of75f .frame .header {
+	.ec.expressive-code .frame .header {
 		border: none;
 	}
-	.ec.ec-of75f .frame.has-title:not(.is-terminal) .header {
+	.ec.expressive-code .frame.has-title:not(.is-terminal) .header {
 		background: transparent;
 	}
-	.ec.ec-of75f .frame.has-title:not(.is-terminal) .title {
+	.ec.expressive-code .frame.has-title:not(.is-terminal) .title {
 		border: none;
 		background: #282a36;
 		color: var(--swup-green);
 		border-bottom: 1px dotted rgb(255 255 255 / 0.3);
 		font-size: 0.8rem;
 	}
-	.ec.ec-of75f .frame.has-title:not(.is-terminal) .header::before,
-	.ec.ec-of75f .frame.has-title:not(.is-terminal) .header::after {
+	.ec.expressive-code .frame.has-title:not(.is-terminal) .header::before,
+	.ec.expressive-code .frame.has-title:not(.is-terminal) .header::after {
 		border: none !important;
 	}
-
 </style>
