@@ -260,6 +260,7 @@ p a:where(:not(.button)),
   height: 100svh;
   overflow: auto;
   z-index: 3;
+  overscroll-behavior: contain;
 }
 
 .overlay_inner {
