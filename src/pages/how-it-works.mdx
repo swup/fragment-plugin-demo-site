@@ -34,7 +34,7 @@ npm install swup @swup/fragment-plugin
 The following code is being used on this very site for initializing swup with fragment support:
 
 {/* <Code code={JS} lang="js" /> */}
-```js title="app.ts"
+```js
 import Swup from "swup";
 import SwupFragmentPlugin from "@swup/fragment-plugin";
 
@@ -80,12 +80,25 @@ const swup = new Swup({
 });
 ```
 
+Did you notice something strange about rule 3? It's telling the plugin to
+no only replace the `#overlay` but also the `#list`! Surely that's
+not we want when we are closing an overlay, right?
+
+Turns out, there are cases where we actually want that. When linking to another
+filter from an overlay, for example. Or when jumping multiple steps back or forward
+in the history.
+
+Fragment Plugin **keeps track of the URL for each fragment**. If a fragment already
+contains the current visit's URL, it **will be ignored for that visit**. There are cases where
+you can help the plugin a little by providing information about the fragment URL beforehand.
+Read more about that in the [DOM API](#dom-api)
+
 ## CSS API
 
 The CSS for the animations of fragment visits is scoped to the fragments:
 
 {/* <Code code={CSS} lang="css" /> */}
-```css title="transitions.css"
+```css
 /* The default transition for non-fragment visits */
 .transition-main {
   transition-property: opacity, transform;
@@ -170,21 +183,19 @@ html.is-leaving .transition-main {
 
 ### [data-swup-fragment-url]
 
-In complex cases, it's helpful to tell Fragment Plugin the URL of the
+In some cases, there is no way for Fragment Plugin to know the URL of the
 fragment beforehand. Suppose you visit one of the chracter detail pages
 directly, <a href="/character/luigi/" target="_blank">Luigi</a>, for
 example.
 
-When closing the overlay on that page, Fragment Plugin can't know if it
-should replace the list of characters or not.
+When closing the overlay on that page, Fragment Plugin **can't know if it
+should replace the list of characters or not**.
 
-Adding `data-swup-fragment-url="/characters/"`
-to the `#list` will persist it when closing
-the overlay / navigating towards [characters](/characters/):
+Adding `data-swup-fragment-url="/characters/"` to the `#list` will persist
+it when closing the overlay / navigating towards [characters](/characters/):
 
-```astro title="/character/luigi/index.html" 'data-link-to-fragment="#list"' 'data-swup-fragment-url="/characters/"'
+```astro title="/character/luigi/index.html" 'data-swup-fragment-url="/characters/"'
 <main id="overlay">
-	<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
 	<!-- ...overlay content... -->
 </main>
 <div id="list" data-swup-fragment-url="/characters/">
@@ -194,11 +205,15 @@ the overlay / navigating towards [characters](/characters/):
 
 ### [data-swup-link-to-fragment]
 
-
-You can tell any link on your site to be synced to the value of `[data-swup-fragment-url]`
+Using `[data-swup-link-to-fragment="#fragment-id"]`, you can tell any link on your site to be synced to the value of `[data-swup-fragment-url]`
 of any fragment. This is in use for the overlay close buttons over at [characters](/characters/):
 
-```html 'data-link-to-fragment="#list"'
-<!-- anywhere on your site -->
-<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
+```html title="/character/luigi/index.html" 'data-link-to-fragment="#list"'
+<main id="overlay">
+	<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
+	<!-- ...overlay content... -->
+</main>
+<div id="list" data-swup-fragment-url="/characters/">
+	<!-- ...filters & characters... -->
+</div>
 ```
