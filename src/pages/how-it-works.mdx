@@ -80,6 +80,8 @@ const swup = new Swup({
 });
 ```
 
+[Full documentation about the rules](https://github.com/swup/fragment-plugin#rules)
+
 Did you notice something strange about rule 3? It's telling the plugin to
 not only replace the `#overlay` but also the `#list`! Surely that's
 not we want when we are closing an overlay, right?
@@ -183,13 +185,13 @@ html.is-leaving .transition-main {
 
 ### [data-swup-fragment-url]
 
-In some cases, there is no way for Fragment Plugin to know the URL of the
+In some cases, there is no way for Fragment Plugin to know the URL of a
 fragment beforehand. Suppose you visit one of the chracter detail pages
 directly, <a href="/character/luigi/" target="_blank">Luigi</a>, for
 example.
 
 When closing the overlay on that page, Fragment Plugin **can't know if it
-should replace the list of characters or not**.
+should replace the `#list` of characters or not**.
 
 Adding `data-swup-fragment-url="/characters/"` to the `#list` will persist
 it when closing the overlay / navigating towards [characters](/characters/):
