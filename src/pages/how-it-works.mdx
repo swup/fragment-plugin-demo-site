@@ -17,7 +17,13 @@ export const CSS = loadSwupCSS();
 export const DataFragmentUrlExample = ``;
 
 
-**Fragment Plugin provides three APIs:**
+## Installation
+
+```bash
+npm install swup @swup/fragment-plugin
+```
+
+### Fragment Plugin provides three APIs:
 
 1. The [JavaScript API](#javascript-api) for setting up fragments
 2. The [CSS API](#css-api) for animating fragment visits
@@ -27,13 +33,136 @@ export const DataFragmentUrlExample = ``;
 
 The following code is being used on this very site for initializing swup with fragment support:
 
-<Code code={JS} lang="js" />
+{/* <Code code={JS} lang="js" /> */}
+```js title="app.ts"
+import Swup from "swup";
+import SwupFragmentPlugin from "@swup/fragment-plugin";
+
+/**
+ * Define the rules for Fragment Plugin
+ */
+const rules = [
+  // Rule 1: Between filters of the list
+  {
+    from: "/characters/:filter?",
+    to: "/characters/:filter?",
+    fragments: ["#list"],
+  },
+  // Rule 2: From the list to an overlay
+  {
+    from: "/characters/:filter?",
+    to: "/character/:character",
+    fragments: ["#overlay"],
+    name: "open-overlay",
+  },
+  // Rule 3: From an overlay back to the list
+  {
+    from: "/character/:character",
+    to: "/characters/:filter?",
+    fragments: ["#overlay", "#list"],
+    name: "close-overlay",
+  },
+  // Rule 4: Between overlays
+  {
+    from: "/character/:character",
+    to: "/character/:character",
+    fragments: ["#detail"],
+  },
+];
+
+/**
+ * Initialize Swup
+ */
+const swup = new Swup({
+  plugins: [
+    new FragmentPlugin({ rules }),
+  ],
+});
+```
 
 ## CSS API
 
 The CSS for the animations of fragment visits is scoped to the fragments:
 
-<Code code={CSS} lang="css" />
+{/* <Code code={CSS} lang="css" /> */}
+```css title="transitions.css"
+/* The default transition for non-fragment visits */
+.transition-main {
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
+}
+
+html.is-animating .transition-main {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+html.is-leaving .transition-main {
+  transform: translateY(20px);
+}
+
+/*
+ * The transition when filtering the characters.
+ * Here, we are animating the `.teaeser` elements individually
+ */
+#list.is-changing {
+  --duration-leave: 150ms;
+  --duration-enter: 400ms;
+  transition-duration: var(--duration-enter);
+}
+#list.is-leaving {
+  transition-duration: var(--duration-leave);
+}
+#list.is-changing .teaser {
+  transition-property: opacity, transform;
+  transition-duration: var(--duration-enter);
+  transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); /* easeOutQuint */
+}
+#list.is-animating .teaser {
+  opacity: 0;
+  transform: scale(0.75);
+}
+/* Change easing and duration for the leave-phase */
+#list.is-leaving .teaser {
+  transition-timing-function: ease-in;
+  transition-duration: var(--duration-leave);
+}
+
+/*
+* The transition for opening and closing an overlay.
+* The animation happens on the element itself
+*/
+#overlay.is-changing {
+  transition: opacity 350ms;
+}
+
+#overlay.is-animating {
+  opacity: 0;
+}
+/* Custom handling based on route */
+#overlay.to-open-overlay.is-leaving,
+#overlay.to-close-overlay.is-rendering {
+  transition-duration: 0ms;
+}
+
+/*
+* The transition between characters.
+* The animation happens on the element itself
+*/
+#detail.is-changing {
+  transition: opacity 200ms, transform 200ms;
+}
+
+#detail.is-animating {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+#detail.is-leaving {
+  opacity: 0;
+  transform: translateY(20px);
+}
+```
 
 ## DOM API
 
@@ -53,7 +182,7 @@ Adding `data-swup-fragment-url="/characters/"`
 to the `#list` will persist it when closing
 the overlay / navigating towards [characters](/characters/):
 
-```astro 'data-link-to-fragment="#list"' 'data-swup-fragment-url="/characters/"'
+```astro title="/character/luigi/index.html" 'data-link-to-fragment="#list"' 'data-swup-fragment-url="/characters/"'
 <main id="overlay">
 	<a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
 	<!-- ...overlay content... -->
@@ -69,6 +198,7 @@ the overlay / navigating towards [characters](/characters/):
 You can tell any link on your site to be synced to the value of `[data-swup-fragment-url]`
 of any fragment. This is in use for the overlay close buttons over at [characters](/characters/):
 
-```html
+```html 'data-link-to-fragment="#list"'
+<!-- anywhere on your site -->
 <a href="/characters/" data-link-to-fragment="#list">Close overlay</a>
 ```
