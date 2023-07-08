@@ -130,6 +130,17 @@ const onHoverLink = ({ target: el }) => {
   // ignore anchor links
   if (el.getAttribute("href")?.startsWith("#")) return;
 
+  // ignore links to same page
+  if (
+    swup.isSameResolvedUrl(
+      Location.fromElement(el).url,
+      Location.fromUrl(window.location.href).url
+    )
+  ) {
+    return;
+  }
+
+
   // Get the fragment plugin
   const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
   if (!fragmentPlugin) return;
