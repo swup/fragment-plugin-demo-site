@@ -86,14 +86,16 @@ Did you notice something strange about rule 3? It's telling the plugin to
 not only replace the `#overlay` but also the `#list`! Surely that's
 not we want when we are closing an overlay, right?
 
-Turns out, there are cases where we actually want that. When linking to another
-filter from an overlay, for example. Or when jumping multiple steps back or forward
-in the history.
+Turns out: There are cases where we actually want that! When navigating to another
+filter from an overlay, for example. Or when jumping multiple steps backwards or forwards
+in the browser history.
 
-Fragment Plugin **keeps track of the URL for each fragment**. If a fragment already
-contains the current visit's URL, it **will be ignored for that visit**. There are cases where
-you can help the plugin a little by providing information about the fragment URL beforehand.
-Read more about that in the [DOM API](#dom-api)
+Fragment Plugin **keeps track of the URL for each fragment** when it is being rendered.
+If a fragment already matches the current visit's URL, it **will be persisted**,
+even though you gave the instructions to replace it for that visit.
+
+There are scenarios where the plugin needs a little help by providing a fragment's URL from
+the server for the initial visit. Read more about that in the [DOM API](#dom-api)
 
 ## CSS API
 
