@@ -54,7 +54,7 @@ html.is-leaving .transition-main {
 /* Custom handling based on route */
 #overlay.to-open-overlay.is-leaving,
 #overlay.to-close-overlay.is-rendering {
-  transition-duration: 0ms;
+  transition-duration: 1ms;
 }
 
 /*

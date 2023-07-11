@@ -7,6 +7,12 @@ const local = path => fileURLToPath(new URL(path, import.meta.url));
 
 /** @type {import('astro-expressive-code').AstroExpressiveCodeOptions} */
 const expressiveCodeOptions = {
+  frames: {
+    styleOverrides: {
+      tooltipSuccessBackground: '#60ddcd',
+      tooltipSuccessForeground: 'black'
+    }
+  }
   // Example: Change the theme to "dracula"
   // theme: 'dracula',
 }
