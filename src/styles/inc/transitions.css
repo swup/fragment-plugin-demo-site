@@ -51,8 +51,8 @@ html.is-leaving .transition-main {
   opacity: 0;
 }
 /* Custom handling based on rule name */
-#overlay.open-overlay.is-leaving,
-#overlay.close-overlay.is-rendering {
+#overlay.to-open-overlay.is-leaving,
+#overlay.to-close-overlay.is-rendering {
   transition-duration: 1ms;
 }
 
