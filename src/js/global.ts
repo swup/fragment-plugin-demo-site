@@ -50,7 +50,7 @@ const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [
     new FragmentPlugin({ rules, debug: true }),
-    new ParallelPlugin({ containers: ["#detail"] }),
+    // new ParallelPlugin({ containers: ["#detail"] }),
   ],
 });
 
@@ -159,7 +159,7 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
 // Reset the scroll of the overlay when switching #detail
 const onContentReplace: Handler<"content:replace"> = (context) => {
   const overlay = document.querySelector("#overlay") as HTMLElement | null;
-  if (overlay) overlay.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  if (overlay) overlay.scrollTo({ top: 0, left: 0 });
 };
 swup.hooks.on("content:replace", onContentReplace);
 

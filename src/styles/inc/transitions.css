@@ -59,7 +59,7 @@ html.is-leaving .transition-main {
 /*
 * The animation between characters
 */
-/* #detail.is-changing {
+#detail.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
 
@@ -78,7 +78,7 @@ html.is-leaving .transition-main {
 
 #detail.is-leaving {
   transform: translateX(calc(20px * var(--direction) * -1));
-} */
+}
 
 
 /* cut */
