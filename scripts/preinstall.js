@@ -23,6 +23,11 @@ const packages = [
     branch: "next",
     folder: "./packages/swup",
   },
+  {
+    url: "https://github.com/swup/parallel-plugin.git",
+    branch: "master",
+    folder: "./packages/parallel-plugin",
+  },
 ];
 
 packages.forEach(({ url, branch, folder }) => {

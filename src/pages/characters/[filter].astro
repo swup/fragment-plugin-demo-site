@@ -19,7 +19,7 @@ const filter = Astro.props;
 
 <Base title={`Filter: ${filter.data.name}`}>
 	<main id="list">
-		<Filters filter={filter} />
+		<Filters filter={filter} mark-active={true} />
 		<Teasers filter={filter} />
 	</main>
 	<div id="overlay" class="overlay-placeholder"><!-- the placeholder for the overlay --></div>

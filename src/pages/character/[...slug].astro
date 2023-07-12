@@ -31,80 +31,83 @@ const { name, color, image } = post.data;
 ---
 
 <Character {...post.data}>
-	<div
-		id="overlay"
-		class="overlay"
-	>
+	<div id="overlay" class="overlay">
 		<div class="overlay_inner">
 			<a
 				href="/characters/"
 				class="overlay_close"
 				data-swup-link-to-fragment="#list"
 				data-tippy-follow></a>
-			<main class="character" id="detail">
-				<div
-					class="character_header"
-					style={{
-						backgroundColor: color,
-					}}
-				>
-					<a
-						href="/characters/"
-						class="character_close"
-						data-swup-link-to-fragment="#list"
-					>
-						<Icon name="x" />
-					</a>
+			<div class="detail-wrap">
+				<main class="character" id="detail">
 					<div
-						class="character_image"
+						class="character_header"
 						style={{
-							backgroundImage: `url(/characters/${image})`,
+							backgroundColor: color,
 						}}
 					>
+						<a
+							href="/characters/"
+							class="character_close"
+							data-swup-link-to-fragment="#list"
+						>
+							<Icon name="x" />
+						</a>
+						<div
+							class="character_image"
+							style={{
+								backgroundImage: `url(/characters/${image})`,
+							}}
+						>
+						</div>
 					</div>
-				</div>
-				<div class="character_body text">
-					<h1 class="page-title">{name}</h1>
-					<p>
-						<strong>{name}</strong> is a character in the Super Mario universe.
-						This is just some dummy text to make the whole thing look more natural.
-					</p>
-					<p>The <strong>most complex case</strong> on this page is closing an overlay.
-						Depending on where you are coming from and where you are going, you might want to
-						not only replace <code>#overlay</code>, but also the <code>#list</code> of characters.
-						Try it out by clicking one of the filters below that you haven't visited before opening this overlay:
-					</p>
-					<Filters />
-					<p>
-						Visit <a href="/how-it-works/">How it works</a>
-						for more information about how fragments are being enabled on this site.
-					</p>
-				</div>
-				<nav>
-					<ul class="character_nav">
-						<li class="character_nav_item">
-							<a
-								class="character_nav_link --previous"
-								data-swup-history="replace"
-								data-swup-animation="previous"
-								href={`/character/${prevPost.slug}/`}
-							>
-								← {prevPost.data.name}</a
-							>
-						</li>
-						<li class="character_nav_item">
-							<a
-								class="character_nav_link --next"
-								data-swup-history="replace"
-								data-swup-animation="next"
-								href={`/character/${nextPost.slug}/`}
-							>
-								{nextPost.data.name} →</a
-							>
-						</li>
-					</ul>
-				</nav>
-			</main>
+					<div class="character_body text">
+						<h1 class="page-title">{name}</h1>
+						<p>
+							<strong>{name}</strong> is a character in the Super Mario universe.
+							This is just some dummy text to make the whole thing look more natural.
+						</p>
+						<p>
+							The <strong>most complex case</strong> on this page is closing an overlay.
+							Depending on where you are coming from and where you are going, you
+							might want to not only replace <code>#overlay</code>, but also the <code
+								>#list</code
+							> of characters. Try it out by clicking one of the filters below that
+							you haven't visited before opening this overlay:
+						</p>
+						<Filters />
+						<p>
+							Visit <a href="/how-it-works/">How it works</a>
+							for more information about how fragments are being enabled on this
+							site.
+						</p>
+					</div>
+					<nav>
+						<ul class="character_nav">
+							<li class="character_nav_item">
+								<a
+									class="character_nav_link --previous"
+									data-swup-history="replace"
+									data-swup-animation="previous"
+									href={`/character/${prevPost.slug}/`}
+								>
+									← {prevPost.data.name}</a
+								>
+							</li>
+							<li class="character_nav_item">
+								<a
+									class="character_nav_link --next"
+									data-swup-history="replace"
+									data-swup-animation="next"
+									href={`/character/${nextPost.slug}/`}
+								>
+									{nextPost.data.name} →</a
+								>
+							</li>
+						</ul>
+					</nav>
+				</main>
+			</div><!-- /detail-wrap -->
 		</div>
 	</div>
 </Character>

@@ -1,6 +1,7 @@
 import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin from "@swup/fragment-plugin";
+import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -47,12 +48,13 @@ const rules = [
  */
 const swup = new Swup({
   animateHistoryBrowsing: true,
-  plugins: [new FragmentPlugin({ rules, debug: true })],
+  plugins: [
+    new FragmentPlugin({ rules, debug: true }),
+    new ParallelPlugin({ containers: ["#detail"] }),
+  ],
 });
 
-console.log(swup.version);
-
-// swup.hooks.on("animationOutStart", async (context) => {
+// swup.hooks.on("animationInStart", async (context) => {
 //   await sleep(20000);
 // });
 
@@ -138,7 +140,6 @@ const onHoverLink = ({ target: el }) => {
     return;
   }
 
-
   // Get the fragment plugin
   const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
   if (!fragmentPlugin) return;
@@ -158,7 +159,7 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
 // Reset the scroll of the overlay when switching #detail
 const onReplaceContent: Handler<"replaceContent"> = (context) => {
   const overlay = document.querySelector("#overlay") as HTMLElement | null;
-  if (overlay) overlay.scrollTop = 0;
+  if (overlay) overlay.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 };
 swup.hooks.on("replaceContent", onReplaceContent);
 
