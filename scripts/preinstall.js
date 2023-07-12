@@ -30,7 +30,7 @@ packages.forEach(({ url, branch, folder }) => {
   if (existsSync(folder)) return;
 
   // Always delete the target folders if on Netlify
-  if (process.env.NETLIFY) fs.rmSync(folder, { recursive: true, force: true });
+  if (process.env.NETLIFY) rmSync(folder, { recursive: true, force: true });
 
   /**
    * Clone the repo into the given folder
