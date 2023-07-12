@@ -44,7 +44,7 @@ html.is-leaving .transition-main {
 * The animation for opening and closing an overlay
 */
 #overlay.is-changing {
-  transition: opacity 350ms;
+  transition: opacity 300ms;
 }
 
 #overlay.is-animating {
@@ -54,6 +54,15 @@ html.is-leaving .transition-main {
 #overlay.to-open-overlay.is-leaving,
 #overlay.to-close-overlay.is-rendering {
   transition-duration: 1ms;
+}
+
+#overlay.is-changing #detail {
+  transition: transform 150ms;
+  transform: scale(1);
+}
+#overlay.to-open-overlay.is-animating #detail,
+#overlay.to-close-overlay.is-leaving #detail {
+  transform: scale(0.95);
 }
 
 /*
