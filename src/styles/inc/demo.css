@@ -288,7 +288,7 @@ p a:where(:not(.button)),
 /*
 * Code Blocks
 */
-/* .astro-code {
+.astro-code {
   width: 100%;
   overflow: auto;
   border-radius: var(--radius-1);
@@ -299,7 +299,7 @@ p a:where(:not(.button)),
   font-family: var(--font-mono);
   display: block;
   padding: 1rem;
-} */
+}
 
 /*
 * Inline Code

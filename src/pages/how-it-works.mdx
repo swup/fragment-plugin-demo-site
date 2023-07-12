@@ -33,53 +33,7 @@ npm install swup @swup/fragment-plugin
 
 The following code is being used on this very site for initializing swup with fragment support:
 
-{/* <Code code={JS} lang="js" /> */}
-
-```js
-import Swup from "swup";
-import FragmentPlugin from "@swup/fragment-plugin";
-
-/**
- * Define the rules for Fragment Plugin
- */
-const rules = [
-  // Rule 1: Between filters of the list
-  {
-    from: "/characters/:filter?",
-    to: "/characters/:filter?",
-    fragments: ["#list"],
-  },
-  // Rule 2: From the list to an overlay
-  {
-    from: "/characters/:filter?",
-    to: "/character/:character",
-    fragments: ["#overlay"],
-    name: "open-overlay",
-  },
-  // Rule 3: From an overlay back to the list
-  {
-    from: "/character/:character",
-    to: "/characters/:filter?",
-    fragments: ["#overlay", "#list"],
-    name: "close-overlay",
-  },
-  // Rule 4: Between overlays
-  {
-    from: "/character/:character",
-    to: "/character/:character",
-    fragments: ["#detail"],
-  },
-];
-
-/**
- * Initialize Swup
- */
-const swup = new Swup({
-  plugins: [
-    new FragmentPlugin({ rules }),
-  ],
-});
-```
+{<Code code={JS} lang="js" />}
 
 [Learn more about rules](https://github.com/swup/fragment-plugin#rules)
 
@@ -98,89 +52,9 @@ On subsequent visits, the fragment won't be replaced if it already matches the v
 
 The CSS for the animations of fragment visits is scoped to the fragments:
 
-{/* <Code code={CSS} lang="css" /> */}
-```css
-/* The default transition for non-fragment visits */
-.transition-main {
-  transition-property: opacity, transform;
-  transition-duration: 250ms;
-}
-
-html.is-animating .transition-main {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-html.is-leaving .transition-main {
-  transform: translateY(20px);
-}
-
-/*
- * The transition when filtering the characters.
- * Here, we are animating the `.teaeser` elements individually
- */
-#list.is-changing {
-  --duration-leave: 150ms;
-  --duration-enter: 400ms;
-  transition-duration: var(--duration-enter);
-}
-#list.is-leaving {
-  transition-duration: var(--duration-leave);
-}
-#list.is-changing .teaser {
-  transition-property: opacity, transform;
-  transition-duration: var(--duration-enter);
-  transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); /* easeOutQuint */
-}
-#list.is-animating .teaser {
-  opacity: 0;
-  transform: scale(0.75);
-}
-/* Change easing and duration for the leave-phase */
-#list.is-leaving .teaser {
-  transition-timing-function: ease-in;
-  transition-duration: var(--duration-leave);
-}
-
-/*
-* The transition for opening and closing an overlay.
-* The animation happens on the element itself
-*/
-#overlay.is-changing {
-  transition: opacity 350ms;
-}
-
-#overlay.is-animating {
-  opacity: 0;
-}
-/* Custom handling based on route */
-#overlay.to-open-overlay.is-leaving,
-#overlay.to-close-overlay.is-rendering {
-  transition-duration: 1ms;
-}
-
-/*
-* The transition between characters.
-* The animation happens on the element itself
-*/
-#detail.is-changing {
-  transition: opacity 200ms, transform 200ms;
-}
-
-#detail.is-animating {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-#detail.is-leaving {
-  opacity: 0;
-  transform: translateY(20px);
-}
-```
+<Code code={CSS} lang="css" />
 
 ## DOM
-
-{/* <Hint hint={`this API is only required for advanced use cases`} /> */}
 
 ### [data-swup-fragment-url]
 

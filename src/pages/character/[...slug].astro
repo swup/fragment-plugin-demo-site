@@ -86,6 +86,7 @@ const { name, color, image } = post.data;
 							<a
 								class="character_nav_link --previous"
 								data-swup-history="replace"
+								data-swup-animation="previous"
 								href={`/character/${prevPost.slug}/`}
 							>
 								← {prevPost.data.name}</a
@@ -95,6 +96,7 @@ const { name, color, image } = post.data;
 							<a
 								class="character_nav_link --next"
 								data-swup-history="replace"
+								data-swup-animation="next"
 								href={`/character/${nextPost.slug}/`}
 							>
 								{nextPost.data.name} →</a

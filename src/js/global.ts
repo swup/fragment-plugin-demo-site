@@ -52,10 +52,8 @@ const swup = new Swup({
 
 console.log(swup.version);
 
-// swup.hooks.on("transitionStart", async (context) => {
-//   context.transition.selector = '#list';
-//   // console.log(context);
-//   // await sleep(20000);
+// swup.hooks.on("animationOutStart", async (context) => {
+//   await sleep(20000);
 // });
 
 /**

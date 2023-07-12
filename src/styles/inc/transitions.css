@@ -41,8 +41,7 @@ html.is-leaving .transition-main {
 }
 
 /*
-* The transition for opening and closing an overlay.
-* The animation happens on the element itself
+* The animation for opening and closing an overlay
 */
 #overlay.is-changing {
   transition: opacity 350ms;
@@ -51,28 +50,34 @@ html.is-leaving .transition-main {
 #overlay.is-animating {
   opacity: 0;
 }
-/* Custom handling based on route */
-#overlay.to-open-overlay.is-leaving,
-#overlay.to-close-overlay.is-rendering {
+/* Custom handling based on rule name */
+#overlay.open-overlay.is-leaving,
+#overlay.close-overlay.is-rendering {
   transition-duration: 1ms;
 }
 
 /*
-* The transition between characters.
-* The animation happens on the element itself
+* The animation between characters
 */
 #detail.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
 
+#detail.to-next {
+  --direction: 1;
+}
+
+#detail.to-previous {
+  --direction: -1;
+}
+
 #detail.is-animating {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateX(calc(20px * var(--direction)));
 }
 
 #detail.is-leaving {
-  opacity: 0;
-  transform: translateY(20px);
+  transform: translateX(calc(20px * var(--direction) * -1));
 }
 
 
