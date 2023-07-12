@@ -25,7 +25,7 @@ const packages = [
   },
   {
     url: "https://github.com/swup/parallel-plugin.git",
-    branch: "master",
+    branch: "typescript",
     folder: "./packages/parallel-plugin",
   },
 ];
