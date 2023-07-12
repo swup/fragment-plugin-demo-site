@@ -54,7 +54,7 @@ const swup = new Swup({
   ],
 });
 
-// swup.hooks.on("animationInStart", async (context) => {
+// swup.hooks.on("animation:in:start", async (context) => {
 //   await sleep(20000);
 // });
 
@@ -157,13 +157,13 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
 });
 
 // Reset the scroll of the overlay when switching #detail
-const onReplaceContent: Handler<"replaceContent"> = (context) => {
+const onContentReplace: Handler<"content:replace"> = (context) => {
   const overlay = document.querySelector("#overlay") as HTMLElement | null;
   if (overlay) overlay.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 };
-swup.hooks.on("replaceContent", onReplaceContent);
+swup.hooks.on("content:replace", onContentReplace);
 
-swup.hooks.on("samePage", () => console.log("samePage"));
+swup.hooks.on("link:self", () => console.log("link to self"));
 
 function addAnchorLinks() {
   const headings = document
@@ -182,4 +182,4 @@ function addAnchorLinks() {
     heading.innerHTML = link.outerHTML;
   });
 }
-swup.hooks.on("pageView", addAnchorLinks);
+swup.hooks.on("page:view", addAnchorLinks);
