@@ -40,5 +40,5 @@ packages.forEach(({ url, branch, folder }) => {
    * Run `npm install` inside the folder
    * @see https://stackoverflow.com/a/68299198/586823
    */
-  // execSync(`npm --prefix ${folder} install`);
+  if (process.env.NETLIFY) execSync(`npm --prefix ${folder} install`);
 });
