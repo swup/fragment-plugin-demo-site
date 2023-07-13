@@ -35,6 +35,10 @@ html {
   }
 }
 
+html, body {
+  background: white;
+}
+
 #swup {
   max-width: 900px;
   margin-block: 6% 8%;
