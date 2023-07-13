@@ -4,4 +4,9 @@
   --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --swup-green: #60ddcd;
   --radius-1: 0.3rem;
+  --background: white;
+  --color-transparent-0: rgb(0 0 0 / 0.07);
+	--color-transparent-1: rgb(0 0 0 / 0.1);
+	--color-transparent-2: rgb(0 0 0 / 0.2);
+	--color-transparent-3: rgb(0 0 0 / 0.5);
 }
