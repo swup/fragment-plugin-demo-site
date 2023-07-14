@@ -147,15 +147,15 @@ const onHoverLink = ({ target: el }) => {
   }
 
   // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
+  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as FragmentPlugin;
   if (!fragmentPlugin) return;
 
-  const state = fragmentPlugin.getFragmentVisit({
+  const fragmentVisit = fragmentPlugin.getFragmentVisit({
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
 
-  showInternalLinkTooltip(el, state?.fragments?.map(fragment => fragment.selector) || swup.options.containers);
+  showInternalLinkTooltip(el, fragmentVisit?.fragments?.map(fragment => fragment.selector) || swup.options.containers);
 };
 // Delegate mouseenter
 swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
