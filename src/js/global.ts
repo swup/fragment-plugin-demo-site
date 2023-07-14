@@ -108,19 +108,17 @@ const humanReadableArray = (
  */
 const showInternalLinkTooltip = (
   el: HTMLAnchorElement,
-  fragments: {
-    selector: string
-  }[]
+  containers: string[]
 ): void => {
   // Early returns
-  if (!fragments.length) return;
+  if (!containers.length) return;
   if (isTouch()) return;
 
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
     content: `replaces ${humanReadableArray(
-      fragments.map((fragment) => `<code>${fragment.selector}</code>`)
+      containers.map((selector) => `<code>${selector}</code>`)
     )}`,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
@@ -163,7 +161,7 @@ const onHoverLink = ({ target: el }) => {
     to: Location.fromElement(el).url,
   });
 
-  showInternalLinkTooltip(el, state?.fragments || swup.options.containers);
+  showInternalLinkTooltip(el, state?.fragments?.map(fragment => fragment.selector) || swup.options.containers);
 };
 // Delegate mouseenter
 swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
