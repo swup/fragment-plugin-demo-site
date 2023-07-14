@@ -1,6 +1,8 @@
 import Swup, { Handler, Location, Context } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import FragmentPlugin, { Options as FragmentPluginOptions } from "@swup/fragment-plugin";
+import FragmentPlugin, {
+  Options as FragmentPluginOptions,
+} from "@swup/fragment-plugin";
 import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
@@ -13,7 +15,7 @@ import feather from "feather-icons";
 /**
  * Define the rules for Fragment Plugin
  */
-const rules: FragmentPluginOptions['rules'] = [
+const rules: FragmentPluginOptions["rules"] = [
   // Rule 1: Between filters of the list
   {
     from: "/characters/:filter?",
@@ -28,8 +30,8 @@ const rules: FragmentPluginOptions['rules'] = [
     fragments: [
       {
         selector: "#overlay",
-        teleport: true
-      }
+        teleport: true,
+      },
     ],
     name: "open-overlay",
   },
@@ -147,7 +149,9 @@ const onHoverLink = ({ target: el }) => {
   }
 
   // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as FragmentPlugin;
+  const fragmentPlugin = swup.findPlugin(
+    "SwupFragmentPlugin"
+  ) as FragmentPlugin;
   if (!fragmentPlugin) return;
 
   const fragmentVisit = fragmentPlugin.getFragmentVisit({
@@ -155,7 +159,11 @@ const onHoverLink = ({ target: el }) => {
     to: Location.fromElement(el).url,
   });
 
-  showInternalLinkTooltip(el, fragmentVisit?.fragments?.map(fragment => fragment.selector) || swup.options.containers);
+  showInternalLinkTooltip(
+    el,
+    fragmentVisit?.fragments?.map((fragment) => fragment.selector) ||
+      swup.options.containers
+  );
 };
 // Delegate mouseenter
 swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
