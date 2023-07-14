@@ -56,12 +56,21 @@ html.is-leaving .transition-main {
   transition-duration: 1ms;
 }
 
-#overlay.is-changing #detail {
+/* Transitioning to a page without an overlay */
+.is-changing #overlay {
+  transition: opacity 300ms;
+}
+.is-animating #overlay {
+  opacity: 0;
+}
+
+/* Zoom-Effect for the overlay content */
+.is-changing #detail {
   transition: transform 150ms;
   transform: scale(1);
 }
-#overlay.to-open-overlay.is-animating #detail,
-#overlay.to-close-overlay.is-leaving #detail {
+.to-open-overlay.is-animating #detail,
+.to-close-overlay.is-leaving #detail {
   transform: scale(0.95);
 }
 

@@ -1,6 +1,6 @@
-import Swup, { Handler, Location } from "swup";
+import Swup, { Handler, Location, Context } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import FragmentPlugin from "@swup/fragment-plugin";
+import FragmentPlugin, { Options as FragmentPluginOptions } from "@swup/fragment-plugin";
 import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
@@ -13,7 +13,7 @@ import feather from "feather-icons";
 /**
  * Define the rules for Fragment Plugin
  */
-const rules = [
+const rules: FragmentPluginOptions['rules'] = [
   // Rule 1: Between filters of the list
   {
     from: "/characters/:filter?",
@@ -24,7 +24,13 @@ const rules = [
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    fragments: ["#overlay"],
+    // fragments: ["#overlay"],
+    fragments: [
+      {
+        selector: "#overlay",
+        teleport: true
+      }
+    ],
     name: "open-overlay",
   },
   // Rule 3: From an overlay back to the list
@@ -54,9 +60,15 @@ const swup = new Swup({
   ],
 });
 
-// swup.hooks.on("animation:in:start", async (context) => {
+// swup.hooks.on("animation:out:start", async (context) => {
 //   await sleep(20000);
 // });
+
+// swup.hooks.on("content:replace", (context) => {
+//   cleanupTeleportedFragments(context);
+//   teleportFragment("#overlay", context);
+// });
+// teleportFragment("#overlay");
 
 /**
  * Close eventual overlays using the Escape key
@@ -96,17 +108,19 @@ const humanReadableArray = (
  */
 const showInternalLinkTooltip = (
   el: HTMLAnchorElement,
-  selectors: string[]
+  fragments: {
+    selector: string
+  }[]
 ): void => {
   // Early returns
-  if (!selectors.length) return;
+  if (!fragments.length) return;
   if (isTouch()) return;
 
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
     content: `replaces ${humanReadableArray(
-      selectors.map((selector) => `<code>${selector}</code>`)
+      fragments.map((fragment) => `<code>${fragment.selector}</code>`)
     )}`,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
@@ -162,8 +176,6 @@ const onContentReplace: Handler<"content:replace"> = (context) => {
   if (overlay) overlay.scrollTo({ top: 0, left: 0 });
 };
 swup.hooks.on("content:replace", onContentReplace);
-
-swup.hooks.on("link:self", () => console.log("link to self"));
 
 function addAnchorLinks() {
   const headings = document

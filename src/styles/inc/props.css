@@ -9,4 +9,5 @@
 	--color-transparent-1: rgb(0 0 0 / 0.1);
 	--color-transparent-2: rgb(0 0 0 / 0.2);
 	--color-transparent-3: rgb(0 0 0 / 0.5);
+  --header-height: 3rem;
 }

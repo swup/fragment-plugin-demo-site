@@ -10,12 +10,12 @@
 * Hide things visually, still shwo them to screen readers
 */
 .sr-only {
-	position: absolute !important;
-	left: -10000px !important;
-	top: auto !important;
-	width: 1px !important;
-	height: 1px !important;
-	overflow: hidden !important;
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
 }
 
 :root {
@@ -35,15 +35,16 @@ html {
   }
 }
 
-html, body {
+html,
+body {
   background: white;
 }
 
-#swup {
+.wrap {
   max-width: 900px;
-  margin-block: 6% 8%;
+  padding-block: calc(var(--header-height) + 6%) 8%;
   margin-inline: auto;
-  padding: 1rem;
+  padding-inline: 1rem;
 }
 
 ul {
@@ -83,14 +84,14 @@ p a:where(:not(.button)),
   line-height: 1;
   width: 100%;
   display: flex;
-  padding: 0.8rem;
-  padding-inline-end: 1rem;
+  padding-inline: 0.8rem 1rem;
   gap: 1rem;
   align-items: center;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 2;
   pointer-events: none;
+  height: var(--header-height);
 
   /* background: var(--background); */
   border-bottom: 1px solid var(--color-transparent-1);
