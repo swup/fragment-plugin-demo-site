@@ -20,11 +20,11 @@ const rules: FragmentPluginOptions['rules'] = [
     to: "/characters/:filter?",
     fragments: ["#list"],
   },
-  // Rule 2: From the list to an overlay
+  // Rule 2: From the list to an overlay.
+  // We want the overlay to be `teleport`ed to the root of the document.
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    // fragments: ["#overlay"],
     fragments: [
       {
         selector: "#overlay",
