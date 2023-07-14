@@ -53,7 +53,7 @@ const rules: FragmentPluginOptions['rules'] = [
  * Initialize Swup
  */
 const swup = new Swup({
-  animateHistoryBrowsing: true,
+  animateHistoryBrowsing: false,
   plugins: [
     new FragmentPlugin({ rules, debug: true }),
     // new ParallelPlugin({ containers: ["#detail"] }),
@@ -63,12 +63,6 @@ const swup = new Swup({
 // swup.hooks.on("animation:out:start", async (context) => {
 //   await sleep(20000);
 // });
-
-// swup.hooks.on("content:replace", (context) => {
-//   cleanupTeleportedFragments(context);
-//   teleportFragment("#overlay", context);
-// });
-// teleportFragment("#overlay");
 
 /**
  * Close eventual overlays using the Escape key
@@ -156,7 +150,7 @@ const onHoverLink = ({ target: el }) => {
   const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
   if (!fragmentPlugin) return;
 
-  const state = fragmentPlugin.getState({
+  const state = fragmentPlugin.getFragmentVisit({
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
