@@ -51,10 +51,10 @@ html.is-leaving .transition-main {
   opacity: 0;
 }
 /* Custom handling based on rule name */
-#overlay.to-open-overlay.is-leaving,
+/* #overlay.to-open-overlay.is-leaving,
 #overlay.to-close-overlay.is-rendering {
   transition-duration: 1ms;
-}
+} */
 
 /* Transitioning to a page without an overlay */
 .is-changing #overlay {
