@@ -22,6 +22,7 @@ const filter = Astro.props;
 		<Filters filter={filter} mark-active={true} />
 		<Teasers filter={filter} />
 	</main>
-	<template id="overlay"></template>
+  <swup-fragment-slot id="overlay"></swup-fragment-slot>
+	<!-- <template id="overlay"></template> -->
 </Base>
 
