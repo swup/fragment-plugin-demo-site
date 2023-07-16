@@ -39,7 +39,7 @@ body {
   background: white;
 }
 
-.wrap {
+#swup {
   max-width: 900px;
   padding-block: calc(var(--header-height) + 6%) 8%;
   margin-inline: auto;
