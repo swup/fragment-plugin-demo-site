@@ -21,7 +21,6 @@
 :root {
   font-family: var(--font-sans);
   margin: 0;
-  scroll-behavior: smooth;
 }
 
 html {
@@ -95,7 +94,8 @@ p a:where(:not(.button)),
 
   /* background: var(--background); */
   border-bottom: 1px solid var(--color-transparent-1);
-  backdrop-filter: blur(100px) brightness(120%);
+  /* backdrop-filter: blur(100px) brightness(120%); */
+  background: white;
 }
 
 
