@@ -3,12 +3,10 @@
   transition-property: opacity, transform;
   transition-duration: 250ms;
 }
-
 #swup.is-animating {
   opacity: 0;
   transform: translateY(-20px);
 }
-
 #swup.is-leaving {
   transform: translateY(20px);
 }
