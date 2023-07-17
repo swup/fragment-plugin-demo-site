@@ -27,12 +27,7 @@ const rules: FragmentPluginOptions["rules"] = [
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    fragments: [
-      {
-        selector: "#overlay",
-        teleport: true,
-      },
-    ],
+    fragments: ["#overlay"],
     name: "open-overlay",
   },
   // Rule 3: From an overlay back to the list
@@ -46,7 +41,8 @@ const rules: FragmentPluginOptions["rules"] = [
   {
     from: "/character/:character",
     to: "/character/:character",
-    fragments: ["#detail"],
+    fragments: ["#overlay"],
+    name: "switch-overlay",
   },
 ];
 /** RULES END **/
@@ -161,7 +157,7 @@ const onHoverLink = ({ target: el }) => {
 
   showInternalLinkTooltip(
     el,
-    fragmentVisit?.fragments?.map((fragment) => fragment.selector) ||
+    fragmentVisit?.fragments?.map((selector) => selector) ||
       swup.options.containers
   );
 };
