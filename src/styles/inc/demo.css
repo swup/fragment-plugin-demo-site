@@ -39,11 +39,14 @@ body {
   background: white;
 }
 
-#swup {
+#page {
   max-width: 900px;
   padding-block: calc(var(--header-height) + 6%) 8%;
   margin-inline: auto;
   padding-inline: 1rem;
+}
+#swup {
+  min-height: 100svh;
 }
 
 ul {

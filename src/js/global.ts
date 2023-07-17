@@ -44,6 +44,12 @@ const rules: FragmentPluginOptions["rules"] = [
     fragments: ["#overlay"],
     name: "switch-overlay",
   },
+  {
+    from: "(.*)",
+    to: "(.*)",
+    fragments: ["#swup"],
+    name: "default",
+  },
 ];
 /** RULES END **/
 
@@ -53,7 +59,10 @@ const rules: FragmentPluginOptions["rules"] = [
 const swup = new Swup({
   animateHistoryBrowsing: false,
   plugins: [
-    new FragmentPlugin({ rules, debug: true }),
+    new FragmentPlugin({
+      rules,
+      debug: true,
+    }),
     // new ParallelPlugin({ containers: ["#detail"] }),
   ],
 });

@@ -52,9 +52,11 @@ import { Code } from "astro/components";
 		</div>
 
 		<div id="swup" class="transition-main">
-			<Header isFrontPage={isFrontPage} />
-			<slot />
-			<Footer />
+			<div id="page">
+				<Header isFrontPage={isFrontPage} />
+				<slot />
+				<Footer />
+			</div>
 		</div>
 	</body>
 </html>

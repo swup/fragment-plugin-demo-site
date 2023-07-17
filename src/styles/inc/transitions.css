@@ -1,15 +1,15 @@
 /* The default transition for non-fragment visits */
-.transition-main {
+#swup.is-changing {
   transition-property: opacity, transform;
   transition-duration: 250ms;
 }
 
-html.is-animating .transition-main {
+#swup.is-animating {
   opacity: 0;
   transform: translateY(-20px);
 }
 
-html.is-leaving .transition-main {
+#swup.is-leaving {
   transform: translateY(20px);
 }
 
@@ -52,14 +52,6 @@ html.is-leaving .transition-main {
   opacity: 0;
 }
 
-/* Transitioning to a page without an overlay */
-.is-changing #overlay {
-  transition: opacity 300ms;
-}
-.is-animating #overlay {
-  opacity: 0;
-}
-
 /* Zoom-Effect for the overlay content */
 #overlay.to-open-overlay.is-changing #detail,
 #overlay.to-close-overlay.is-changing #detail {
@@ -88,10 +80,10 @@ html.is-leaving .transition-main {
 }
 #overlay.to-switch-overlay.is-animating #detail {
   opacity: 0;
-  transform: translateX(calc(20px * var(--direction)));
+  transform: translateX(calc(40px * var(--direction)));
 }
 #overlay.to-switch-overlay.is-leaving #detail {
-  transform: translateX(calc(20px * var(--direction) * -1));
+  transform: translateX(calc(40px * var(--direction) * -1));
 }
 
 
