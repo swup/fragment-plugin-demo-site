@@ -11,6 +11,8 @@ import "tippy.js/themes/light.css";
 
 import feather from "feather-icons";
 
+import Alpine, {AlpineComponent} from "alpinejs";
+
 /** RULES START **/
 /**
  * Define the rules for Fragment Plugin
@@ -43,13 +45,7 @@ const rules: FragmentPluginOptions["rules"] = [
     to: "/character/:character",
     fragments: ["#overlay"],
     name: "switch-overlay",
-  },
-  {
-    from: "(.*)",
-    to: "(.*)",
-    fragments: ["#swup"],
-    name: "default",
-  },
+  }
 ];
 /** RULES END **/
 
@@ -67,6 +63,34 @@ const swup = new Swup({
   ],
 });
 
+const closeOverlay = () => {
+  const closeLink = document.querySelector('a.character_close') as HTMLAnchorElement;
+  if (closeLink) swup.visit(closeLink.href);
+}
+
+type OverlayComponent = AlpineComponent<{
+  open: boolean;
+}>
+
+Alpine.data('overlay', (): OverlayComponent => ({
+  open: true,
+  bindings: {
+    "x-on:scroll": "onScroll"
+  },
+  onScroll() {
+    if (!this.open) return;
+    if (!this.$refs.detail) return;
+    const rect = this.$refs.detail.getBoundingClientRect();
+
+    if (rect.bottom < 0) {
+      this.open = false;
+			closeOverlay();
+    }
+  }
+}));
+
+Alpine.start();
+
 // swup.hooks.on("animation:out:start", async (context) => {
 //   await sleep(20000);
 // });
@@ -77,13 +101,9 @@ const swup = new Swup({
 const onKeyDown = (e: KeyboardEvent) => {
   if (e.metaKey) return;
 
-  const characterClose = document.querySelector(
-    "a.character_close"
-  ) as HTMLAnchorElement;
-
   switch (e.key) {
     case "Escape":
-      if (characterClose) characterClose.click();
+      closeOverlay();
       break;
   }
 };
@@ -124,6 +144,7 @@ const showInternalLinkTooltip = (
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
+    appendTo: "parent"
   });
   el.addEventListener("mouseleave", () => tippyInstance.destroy(), {
     once: true,

@@ -1,13 +1,13 @@
 /* The default transition for non-fragment visits */
-#swup.is-changing {
+.is-changing .transition-main {
   transition-property: opacity, transform;
   transition-duration: 250ms;
 }
-#swup.is-animating {
+html.is-animating .transition-main {
   opacity: 0;
   transform: translateY(-20px);
 }
-#swup.is-leaving {
+html.is-leaving .transition-main {
   transform: translateY(20px);
 }
 
@@ -60,6 +60,8 @@
 #overlay.to-close-overlay.is-leaving #detail {
   transform: scale(0.95);
 }
+
+
 
 /*
 * The animation between overlays. Directional animation based on data-swup-animation
