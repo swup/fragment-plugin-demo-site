@@ -3,7 +3,7 @@ import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
   Options as FragmentPluginOptions,
 } from "@swup/fragment-plugin";
-import ParallelPlugin from "@swup/parallel-plugin";
+// import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
