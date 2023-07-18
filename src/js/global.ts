@@ -43,8 +43,7 @@ const rules: FragmentPluginOptions["rules"] = [
   {
     from: "/character/:character",
     to: "/character/:character",
-    fragments: ["#overlay"],
-    name: "switch-overlay",
+    fragments: ["#detail"],
   }
 ];
 /** RULES END **/

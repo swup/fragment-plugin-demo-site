@@ -41,18 +41,15 @@ html.is-leaving .transition-main {
 /*
 * The animation for opening and closing an overlay
 */
-#overlay.to-open-overlay.is-changing,
-#overlay.to-close-overlay.is-changing {
+#overlay.is-changing {
   transition: opacity 300ms;
 }
-#overlay.to-open-overlay.is-animating,
-#overlay.to-close-overlay.is-animating {
+#overlay.is-animating {
   opacity: 0;
 }
 
 /* Zoom-Effect for the overlay content */
-#overlay.to-open-overlay.is-changing #detail,
-#overlay.to-close-overlay.is-changing #detail {
+#overlay.is-changing #detail {
   transition: transform 150ms;
   transform: scale(1);
 }
@@ -66,23 +63,20 @@ html.is-leaving .transition-main {
 /*
 * The animation between overlays. Directional animation based on data-swup-animation
 */
-#overlay.to-switch-overlay.is-changing {
-  transition-duration: 200ms;
-}
-#overlay.to-switch-overlay.is-changing #detail {
+#detail.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
-#overlay.to-switch-overlay.to-next #detail {
+#detail.to-next {
   --direction: 1;
 }
-#overlay.to-switch-overlay.to-previous #detail {
+#detail.to-previous {
   --direction: -1;
 }
-#overlay.to-switch-overlay.is-animating #detail {
+#detail.is-animating {
   opacity: 0;
   transform: translateX(calc(40px * var(--direction)));
 }
-#overlay.to-switch-overlay.is-leaving #detail {
+#detail.is-leaving {
   transform: translateX(calc(40px * var(--direction) * -1));
 }
 
