@@ -96,11 +96,11 @@ of the fragment matching the provided selector. This is in use for the overlay c
 
 [Learn more about this attribute](https://github.com/swup/fragment-plugin#link-to-fragment)
 
-### Modals as children of `transform`ed parents
+### Modals inside `transform`ed parents
 
 Suppose you have an overlay that you want to present like a modal, above all other content:
 
-```html '<div id="user" class="modal">'
+```html {10-15}
 <div id="swup" class="transition-main">
   <section>
     <ul>
@@ -131,7 +131,7 @@ You might have this (minimal) CSS to make the `#user` appear as a modal above ev
 
 This will work fine, until you apply a `transform` to one of the modal's parent elements:
 
-```css
+```css {7}
 html.is-changing .transition-main {
   transition: opacity 250ms, transform 250ms;
 }

@@ -58,8 +58,6 @@ html.is-leaving .transition-main {
   transform: scale(0.95);
 }
 
-
-
 /*
 * The animation between overlays. Directional animation based on data-swup-animation
 */
