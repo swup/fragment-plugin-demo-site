@@ -372,7 +372,7 @@ p a:where(:not(.button)),
   border: none;
 }
 .overlay::backdrop {
-  display: none;
+  background: rgba(0 0 0 / 0.8);
 }
 
 .overlay_inner {
@@ -394,7 +394,7 @@ p a:where(:not(.button)),
   position: absolute;
   inset: 0;
   cursor: no-drop;
-  background: rgba(0 0 0 / 0.8);
+  /* background: rgba(0 0 0 / 0.8); */
 }
 
 .overlay .character {

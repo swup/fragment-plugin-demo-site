@@ -58,6 +58,15 @@ html.is-leaving .transition-main {
   transform: scale(0.95);
 }
 
+/* Aniamte the backdrop of the overlay */
+#overlay::backdrop {
+  transition: opacity 300ms;
+}
+#overlay.is-animating::backdrop,
+.is-animating #overlay::backdrop {
+  opacity: 0;
+}
+
 /*
 * The animation between overlays. Directional animation based on data-swup-animation
 */
