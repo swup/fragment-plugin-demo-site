@@ -9,5 +9,6 @@
       "@swup/fragment-plugin": ["packages/fragment-plugin/src/index"],
       "@swup/parallel-plugin": ["packages/parallel-plugin/src/index"]
     },
+    "skipLibCheck": true
   }
 }
