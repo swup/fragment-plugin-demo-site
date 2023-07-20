@@ -2,6 +2,7 @@ import Swup, { Handler, Location, Context } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
   Options as FragmentPluginOptions,
+  logger
 } from "@swup/fragment-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
@@ -56,7 +57,7 @@ const swup = new Swup({
   plugins: [
     new FragmentPlugin({
       rules,
-      debug: true,
+      logger
     }),
     // new ParallelPlugin({ containers: ["#detail"] }),
   ],
