@@ -37,7 +37,7 @@ The following code is being used on this very site for initializing swup with fr
 [Learn more about rules](https://github.com/swup/fragment-plugin#rules)
 
 Did you notice something strange about rule 3? It's telling the plugin to
-not only replace the `#overlay` but also the `#list`! Surely that's
+not only replace the `#character-modal` but also the `#list`! Surely that's
 not we want when we are closing an overlay, right?
 
 Turns out: There are cases where we actually want that! When navigating to another
@@ -69,8 +69,8 @@ the attribute `data-swup-fragment-url="/characters/"` to it. Now Fragment Plugin
 can correctly skip the `#list` when we navigate from the overlay to `/characters/`:
 
 ```html title="/character/luigi/index.html" 'data-swup-fragment-url="/characters/"'
-<main id="overlay">
-	<!-- ...overlay content... -->
+<main id="character-modal">
+	<!-- ...modal content... -->
 </main>
 <div id="list" data-swup-fragment-url="/characters/">
 	<!-- ...filters & characters... -->
@@ -85,7 +85,7 @@ Using `[data-swup-link-to-fragment="<fragment-selector>"]`, you can tell any lin
 of the fragment matching the provided selector. This is in use for the overlay close buttons on this site:
 
 ```html title="/character/luigi/index.html" 'data-link-to-fragment="#list"'
-<main id="overlay">
+<main id="character-modal">
   <!-- Tells the link to sync it's `href` to the fragment #list: -->
 	<a href="" data-link-to-fragment="#list">Close overlay</a>
 </main>
@@ -150,8 +150,8 @@ You have two options to fix this:
 2. Use `<detail open>` for the modal:
 
 ```diff lang="html"
-- <div id="overlay" class="modal">
-+ <dialog open id="overlay" aria-role="article">
+- <div id="character-modal" class="modal">
++ <dialog open id="character-modal" aria-role="article">
     <main>
       <h1>User 1</h1>
       <p>Lorem ipsum dolor...</p>

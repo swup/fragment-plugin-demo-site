@@ -31,89 +31,84 @@ const { name, color, image } = post.data;
 ---
 
 <Character {...post.data}>
-  <dialog role="article"
-		open
-    id="overlay"
-    class="overlay transition-main"
-    x-data="overlay"
-		x-bind="bindings"
-  >
-    <div class="overlay_inner">
+  <dialog role="article" open id="character-modal" class="modal transition-main" x-data="modal" x-on:scroll="onScroll">
+    <div class="modal_inner">
       <a
         href="/characters/"
-        class="overlay_close"
+        class="modal_close"
         data-swup-link-to-fragment="#list"
         data-tippy-follow></a>
-			<div class="overlay_content">
-      <main class="character" id="detail" x-ref="detail">
-        <div
-          class="character_header"
-          style={{
-            backgroundColor: color,
-          }}
-        >
-          <a
-            href="/characters/"
-            class="character_close"
-            data-swup-link-to-fragment="#list"
-          >
-            <Icon name="x" />
-          </a>
+      <div class="modal_content">
+        <main id="detail" class="character" x-ref="detail">
           <div
-            class="character_image"
+            class="character_header"
             style={{
-              backgroundImage: `url(/characters/${image})`,
+              backgroundColor: color,
             }}
           >
+            <a
+              href="/characters/"
+              class="character_close"
+              data-swup-link-to-fragment="#list"
+            >
+              <Icon name="x" />
+            </a>
+            <div
+              class="character_image"
+              style={{
+                backgroundImage: `url(/characters/${image})`,
+              }}
+            >
+            </div>
           </div>
-        </div>
-        <div class="character_body text">
-          <h1 class="page-title">{name}</h1>
-          <p>
-            <strong>{name}</strong> is a character in the Super Mario universe. This
-            is just some dummy text to make the whole thing look more natural.
-          </p>
-          <p>
-            The <strong>most complex case</strong> on this site is closing an overlay.
-            Depending on where you are coming from and where you are going, you might
-            want to not only replace the <code>#overlay</code>, but also the <code
-              >#list</code
-            > of characters. Try it out by clicking one of the filters below that
-            you haven't visited just before opening this overlay:
-          </p>
-          <Filters />
-          <p>
-            Visit <a href="/how-it-works/">How it works</a>
-            for more information about how fragments are being enabled on this site.
-          </p>
-        </div>
-        <nav>
-          <ul class="character_nav">
-            <li class="character_nav_item">
-              <a
-                class="character_nav_link --previous"
-                data-swup-history="replace"
-                data-swup-animation="previous"
-                href={`/character/${prevPost.slug}/`}
-              >
-                ← {prevPost.data.name}</a
-              >
-            </li>
-            <li class="character_nav_item">
-              <a
-                class="character_nav_link --next"
-                data-swup-history="replace"
-                data-swup-animation="next"
-                href={`/character/${nextPost.slug}/`}
-              >
-                {nextPost.data.name} →</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </main>
-			</div>
-			<div class="overlay_spacer"></div>
+          <div class="character_body text">
+            <h1 class="page-title">{name}</h1>
+            <p>
+              <strong>{name}</strong> is a character in the Super Mario universe.
+              This is just some dummy text to make the whole thing look more natural.
+            </p>
+            <p>
+              The <strong>most complex case</strong> on this site is closing an overlay.
+              Depending on where you are coming from and where you are going, you
+              might want to not only replace the <code>#character-modal</code>, but also
+              the <code>#list</code> of characters. Try it out by clicking one of
+              the filters below that you haven't visited just before opening this
+              overlay:
+            </p>
+            <Filters />
+            <p>
+              Visit <a href="/how-it-works/">How it works</a>
+              for more information about how fragments are being enabled on this
+              site.
+            </p>
+          </div>
+          <nav>
+            <ul class="character_nav">
+              <li class="character_nav_item">
+                <a
+                  class="character_nav_link --previous"
+                  data-swup-history="replace"
+                  data-swup-animation="previous"
+                  href={`/character/${prevPost.slug}/`}
+                >
+                  ← {prevPost.data.name}</a
+                >
+              </li>
+              <li class="character_nav_item">
+                <a
+                  class="character_nav_link --next"
+                  data-swup-history="replace"
+                  data-swup-animation="next"
+                  href={`/character/${nextPost.slug}/`}
+                >
+                  {nextPost.data.name} →</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </main>
+      </div>
+      <div class="modal_spacer"></div>
     </div>
   </dialog>
 </Character>

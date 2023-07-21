@@ -41,29 +41,29 @@ html.is-leaving .transition-main {
 /*
 * The animation for opening and closing an overlay
 */
-#overlay.is-changing {
+#character-modal.is-changing {
   transition: opacity 300ms;
 }
-#overlay.is-animating {
+#character-modal.is-animating {
   opacity: 0;
 }
 
 /* Zoom-Effect for the overlay content */
-#overlay.is-changing #detail {
+#character-modal.is-changing #detail {
   transition: transform 150ms;
   transform: scale(1);
 }
-#overlay.to-open-overlay.is-animating #detail,
-#overlay.to-close-overlay.is-leaving #detail {
+#character-modal.to-open-overlay.is-animating #detail,
+#character-modal.to-close-overlay.is-leaving #detail {
   transform: scale(0.95);
 }
 
 /* Aniamte the backdrop of the overlay */
-#overlay::backdrop {
+#character-modal::backdrop {
   transition: opacity 300ms;
 }
-#overlay.is-animating::backdrop,
-.is-animating #overlay::backdrop {
+#character-modal.is-animating::backdrop,
+.is-animating #character-modal::backdrop {
   opacity: 0;
 }
 

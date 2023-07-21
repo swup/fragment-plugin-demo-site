@@ -8,7 +8,6 @@
       "swup": ["packages/swup/src/index"],
       "@swup/fragment-plugin": ["packages/fragment-plugin/src/index"],
       "@swup/parallel-plugin": ["packages/parallel-plugin/src/index"],
-      "@swup/debug-plugin": ["packages/debug-plugin/src/index"],
     },
     "skipLibCheck": true
   }

@@ -357,7 +357,7 @@ p a:where(:not(.button)),
 /*
 * Overlay
 */
-.overlay {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -365,21 +365,22 @@ p a:where(:not(.button)),
   height: 100svh;
   max-width: 100vw;
   max-height: 100svh;
-  overflow-x: hidden;
-  overflow-y: auto;
   z-index: 3;
-  overscroll-behavior: contain;
   background: transparent;
   border: none;
+  display: grid;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
-.overlay::backdrop {
+.modal::backdrop {
   background: rgba(0 0 0 / 0.8);
 }
 
-.overlay_inner {
+.modal_inner {
   position: relative;
 }
-.overlay_content {
+.modal_content {
   padding: 2rem 1rem;
   min-height: 100svh;
   display: flex;
@@ -387,10 +388,10 @@ p a:where(:not(.button)),
   justify-content: center;
 
 }
-.overlay_spacer {
+.modal_spacer {
   height: 100svh;
 }
-.overlay_close {
+.modal_close {
   display: block;
   position: absolute;
   inset: 0;
@@ -398,7 +399,7 @@ p a:where(:not(.button)),
   /* background: rgba(0 0 0 / 0.8); */
 }
 
-.overlay .character {
+.modal .character {
   max-width: 700px;
   margin: 0 auto;
 }

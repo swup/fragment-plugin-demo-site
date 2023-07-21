@@ -27,7 +27,6 @@ export default defineConfig({
         swup: local("./packages/swup/src/index.js"),
         "@swup/fragment-plugin": local("./packages/fragment-plugin/src/index.js"),
         "@swup/parallel-plugin": local("./packages/parallel-plugin/src/index.js"),
-        "@swup/debug-plugin": local("./packages/debug-plugin/src/index.js")
       }
     }
   },

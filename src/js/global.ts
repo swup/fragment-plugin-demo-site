@@ -1,9 +1,9 @@
 import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
-  Options as FragmentPluginOptions
+  Options as FragmentPluginOptions,
 } from "@swup/fragment-plugin";
-// import ParallelPlugin from "@swup/parallel-plugin";
+import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -11,7 +11,7 @@ import "tippy.js/themes/light.css";
 
 import feather from "feather-icons";
 
-import Alpine, {AlpineComponent} from "alpinejs";
+import Alpine, { AlpineComponent } from "alpinejs";
 
 // import { consola } from 'consola';
 // import { red } from 'console-log-colors';
@@ -29,19 +29,18 @@ const rules: FragmentPluginOptions["rules"] = [
     to: "/characters/:filter?",
     fragments: ["#list"],
   },
-  // Rule 2: From the list to an overlay.
-  // We want the overlay to be `teleport`ed to the root of the document.
+  // Rule 2: From the list to an overlay
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    fragments: ["#overlay"],
+    fragments: ["#character-modal"],
     name: "open-overlay",
   },
   // Rule 3: From an overlay back to the list
   {
     from: "/character/:character",
     to: "/characters/:filter?",
-    fragments: ["#overlay", "#list"],
+    fragments: ["#character-modal", "#list"],
     name: "close-overlay",
   },
   // Rule 4: Between overlays
@@ -49,7 +48,7 @@ const rules: FragmentPluginOptions["rules"] = [
     from: "/character/:character",
     to: "/character/:character",
     fragments: ["#detail"],
-  }
+  },
 ];
 /** RULES END **/
 
@@ -61,41 +60,45 @@ const swup = new Swup({
   plugins: [
     new FragmentPlugin({
       rules,
-      debug: true
+      debug: true,
     }),
-    // new ParallelPlugin({ containers: ["#detail"] }),
+    // new ParallelPlugin({
+    //   containers: ["#detail"],
+    // }),
   ],
 });
 
-const closeOverlay = () => {
-  const closeLink = document.querySelector('a.character_close') as HTMLAnchorElement;
+const closeModal = () => {
+  const closeLink = document.querySelector(
+    "a.character_close"
+  ) as HTMLAnchorElement;
   if (closeLink) swup.navigate(closeLink.href);
-}
+};
 
-type OverlayComponent = AlpineComponent<{
+type ModalComponent = AlpineComponent<{
   open: boolean;
-}>
+}>;
 
-Alpine.data('overlay', (): OverlayComponent => ({
-  open: true,
-  bindings: {
-    "x-on:scroll": "onScroll"
-  },
-  onScroll() {
-    if (!this.open) return;
-    if (!this.$refs.detail) return;
-    const rect = this.$refs.detail.getBoundingClientRect();
+Alpine.data(
+  "modal",
+  (): ModalComponent => ({
+    open: true,
+    onScroll() {
+      if (!this.open) return;
+      if (!this.$refs.detail) return;
+      const rect = this.$refs.detail.getBoundingClientRect();
 
-    if (rect.bottom < 0) {
-      this.open = false;
-			closeOverlay();
-    }
-  }
-}));
+      if (rect.bottom < 0) {
+        this.open = false;
+        closeModal();
+      }
+    },
+  })
+);
 
 Alpine.start();
 
-// swup.hooks.on("animation:out:start", async (context) => {
+// swup.hooks.on("animation:in:start", async (context) => {
 //   await sleep(20000);
 // });
 
@@ -107,7 +110,7 @@ const onKeyDown = (e: KeyboardEvent) => {
 
   switch (e.key) {
     case "Escape":
-      closeOverlay();
+      closeModal();
       break;
   }
 };
@@ -148,7 +151,7 @@ const showInternalLinkTooltip = (
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
-    appendTo: "parent"
+    appendTo: "parent",
   });
   el.addEventListener("mouseleave", () => tippyInstance.destroy(), {
     once: true,
@@ -202,7 +205,7 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
 
 // Reset the scroll of the overlay when switching #detail
 const onContentReplace: Handler<"content:replace"> = (context) => {
-  const overlay = document.querySelector("#overlay") as HTMLElement | null;
+  const overlay = document.querySelector("#character-modal") as HTMLElement | null;
   if (overlay) overlay.scrollTo({ top: 0, left: 0 });
 };
 swup.hooks.on("content:replace", onContentReplace);
