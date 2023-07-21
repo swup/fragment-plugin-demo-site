@@ -297,9 +297,10 @@ p a:where(:not(.button)),
 }
 
 .character_image {
-  padding-bottom: 30%;
+  padding-bottom: 45%;
   background-repeat: no-repeat;
   background-position: top center;
+  background-size: 50%;
 }
 
 .character_body {
