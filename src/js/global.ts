@@ -1,8 +1,7 @@
-import Swup, { Handler, Location, Context } from "swup";
+import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
-  Options as FragmentPluginOptions,
-  logger
+  Options as FragmentPluginOptions
 } from "@swup/fragment-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
@@ -13,6 +12,11 @@ import "tippy.js/themes/light.css";
 import feather from "feather-icons";
 
 import Alpine, {AlpineComponent} from "alpinejs";
+
+// import { consola } from 'consola';
+// import { red } from 'console-log-colors';
+
+// consola.info(`this should be ${red('red')}`);
 
 /** RULES START **/
 /**
@@ -57,7 +61,7 @@ const swup = new Swup({
   plugins: [
     new FragmentPlugin({
       rules,
-      logger
+      debug: true
     }),
     // new ParallelPlugin({ containers: ["#detail"] }),
   ],
@@ -65,7 +69,7 @@ const swup = new Swup({
 
 const closeOverlay = () => {
   const closeLink = document.querySelector('a.character_close') as HTMLAnchorElement;
-  if (closeLink) swup.visit(closeLink.href);
+  if (closeLink) swup.navigate(closeLink.href);
 }
 
 type OverlayComponent = AlpineComponent<{
