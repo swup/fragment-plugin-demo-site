@@ -18,7 +18,7 @@ const filter = Astro.props;
 ---
 
 <Base title={`Filter: ${filter.data.name}`}>
-	<main id="list">
+	<main id="characters-list">
 		<Filters filter={filter} mark-active={true} />
 		<Teasers filter={filter} />
 	</main>

@@ -37,12 +37,12 @@ The following code is being used on this very site for initializing swup with fr
 [Learn more about rules](https://github.com/swup/fragment-plugin#rules)
 
 Did you notice something strange about rule 3? It's telling the plugin to
-not only replace the `#character-modal` but also the `#list`! Surely that's
-not we want when we are closing an overlay, right?
+not only replace the `#character-modal` but also the `#characters-list`! Surely that's
+not we want when we are closing a character, right?
 
-Turns out: There are cases where we actually want that! When navigating to another
-filter from an overlay, for example. Or when jumping multiple steps backwards or forwards
-in the browser history.
+Turns out: There are cases where we actually want that! When navigating from a character to
+filter that wasn't active before we opened the character. Or when jumping multiple steps backwards
+or forwards in the browser history.
 
 **Fragment Plugin keeps track of the URL for each fragment as soon as it is being rendered.
 On subsequent visits, the fragment won't be replaced if it already matches the visit's URL.**
@@ -60,19 +60,19 @@ The CSS for the animations of fragment visits is scoped to the fragments:
 Let's visit one of the character detail pages directly,
 <a href="/character/luigi/" target="_blank">Luigi</a>, for example.
 
-The overlayed `#list` on that page displays the items that would be rendered when
-navigating towards `/characters/`. But there is no way for Fragment Plugin to automatically
-detect that fact, so it would replace the list upon closing the overlay.
+On that page, the `#characters-list` behind the `#character-modal` displays the items that would also be
+rendered when navigating towards `/characters/`. But there is no way for Fragment Plugin to automatically
+detect that fact, so it would replace the list upon closing the modal.
 
-We can solve this by providing the URL of the `#list` beforehand, by adding
-the attribute `data-swup-fragment-url="/characters/"` to it. Now Fragment Plugin
-can correctly skip the `#list` when we navigate from the overlay to `/characters/`:
+We can solve this by providing the URL of the `#characters-list` beforehand, by adding
+`data-swup-fragment-url="/characters/"` to it. Now Fragment Plugin can correctly skip the
+`#characters-list` when we navigate from the open `#character-modal` to `/characters/`:
 
 ```html title="/character/luigi/index.html" 'data-swup-fragment-url="/characters/"'
 <main id="character-modal">
 	<!-- ...modal content... -->
 </main>
-<div id="list" data-swup-fragment-url="/characters/">
+<div id="characters-list" data-swup-fragment-url="/characters/">
 	<!-- ...filters & characters... -->
 </div>
 ```
@@ -81,15 +81,15 @@ can correctly skip the `#list` when we navigate from the overlay to `/characters
 
 ### [data-swup-link-to-fragment]
 
-Using `[data-swup-link-to-fragment="<fragment-selector>"]`, you can tell any link on your site to be synced to the value of `[data-swup-fragment-url]`
-of the fragment matching the provided selector. This is in use for the overlay close buttons on this site:
+Using `[data-swup-link-to-fragment="<fragment-selector>"]`, you can tell any link on your site to be synced
+to the matching fragment's fragment URL. This is in use for the modal close buttons on this site:
 
-```html title="/character/luigi/index.html" 'data-link-to-fragment="#list"'
+```html title="/character/luigi/index.html" 'data-link-to-fragment="#characters-list"'
 <main id="character-modal">
-  <!-- Tells the link to sync it's `href` to the fragment #list: -->
-	<a href="" data-link-to-fragment="#list">Close overlay</a>
+  <!-- Tells the link to sync it's `href` to the fragment #characters-list: -->
+	<a href="" data-link-to-fragment="#characters-list">Close modal</a>
 </main>
-<div id="list" data-swup-fragment-url="/characters/">
+<div id="characters-list" data-swup-fragment-url="/characters/">
 	<!-- ...filters & characters... -->
 </div>
 ```
@@ -98,28 +98,28 @@ of the fragment matching the provided selector. This is in use for the overlay c
 
 ### Modals inside `transform`ed parents
 
-Suppose you have an overlay that you want to present like a modal, above all other content:
+Suppose you have a fragment that you want to open like a modal, above all other content:
 
 ```html {10-15}
 <div id="swup" class="transition-main">
   <section>
     <ul>
-      <li><a href="/user/1/">User 1</a></li>
-      <li><a href="/user/2/">User 2</a></li>
-      <li><a href="/user/3/">User 3</a></li>
+      <li><a href="/item/1/">Item 1</a></li>
+      <li><a href="/item/2/">Item 2</a></li>
+      <li><a href="/item/3/">Item 3</a></li>
     </ul>
   </section>
   <!-- This should be placed above everything else -->
-  <div id="user" class="modal">
+  <div id="item-detail" class="modal">
     <main>
-      <h1>User 1</h1>
+      <h1>Item 1</h1>
       <p>Lorem ipsum dolor...</p>
     </main>
   </div>
 </div>
 ```
 
-You might have this (minimal) CSS to make the `#user` appear as a modal above everything else:
+You might have this (minimal) CSS to make the `#item-detail` appear as a modal above everything else:
 
 ```css
 .modal {
@@ -129,7 +129,7 @@ You might have this (minimal) CSS to make the `#user` appear as a modal above ev
 }
 ```
 
-This will work fine, until you apply a `transform` to one of the modal's parent elements:
+This will work fine, until you apply a `transform` to any of the modal's parent elements:
 
 ```css {7}
 html.is-changing .transition-main {

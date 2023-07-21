@@ -355,7 +355,7 @@ p a:where(:not(.button)),
 }
 
 /*
-* Overlay
+* Modal
 */
 .modal {
   position: fixed;

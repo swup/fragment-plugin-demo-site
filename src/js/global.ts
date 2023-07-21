@@ -23,31 +23,31 @@ import Alpine, { AlpineComponent } from "alpinejs";
  * Define the rules for Fragment Plugin
  */
 const rules: FragmentPluginOptions["rules"] = [
-  // Rule 1: Between filters of the list
+  // Rule 1: Between the various views of the characters list
   {
     from: "/characters/:filter?",
     to: "/characters/:filter?",
-    fragments: ["#list"],
+    fragments: ["#characters-list"],
   },
-  // Rule 2: From the list to an overlay
+  // Rule 2: From the list of characters to a single character
   {
     from: "/characters/:filter?",
     to: "/character/:character",
     fragments: ["#character-modal"],
-    name: "open-overlay",
+    name: "open-character",
   },
-  // Rule 3: From an overlay back to the list
+  // Rule 3: From a single character back to the list of characters
   {
     from: "/character/:character",
     to: "/characters/:filter?",
-    fragments: ["#character-modal", "#list"],
-    name: "close-overlay",
+    fragments: ["#character-modal", "#characters-list"],
+    name: "close-character",
   },
-  // Rule 4: Between overlays
+  // Rule 4: Between characters (previous/next)
   {
     from: "/character/:character",
     to: "/character/:character",
-    fragments: ["#detail"],
+    fragments: ["#character-detail"],
   },
 ];
 /** RULES END **/
@@ -63,7 +63,7 @@ const swup = new Swup({
       debug: true,
     }),
     // new ParallelPlugin({
-    //   containers: ["#detail"],
+    //   containers: ["#character-detail"],
     // }),
   ],
 });
@@ -103,7 +103,7 @@ Alpine.start();
 // });
 
 /**
- * Close eventual overlays using the Escape key
+ * Close eventual modals using the Escape key
  */
 const onKeyDown = (e: KeyboardEvent) => {
   if (e.metaKey) return;
@@ -203,10 +203,10 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
   capture: true,
 });
 
-// Reset the scroll of the overlay when switching #detail
+// Reset the scroll of the modal when switching #character-detail
 const onContentReplace: Handler<"content:replace"> = (context) => {
-  const overlay = document.querySelector("#character-modal") as HTMLElement | null;
-  if (overlay) overlay.scrollTo({ top: 0, left: 0 });
+  const modal = document.querySelector("#character-modal") as HTMLElement | null;
+  if (modal) modal.scrollTo({ top: 0, left: 0 });
 };
 swup.hooks.on("content:replace", onContentReplace);
 

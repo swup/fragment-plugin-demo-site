@@ -36,10 +36,10 @@ const { name, color, image } = post.data;
       <a
         href="/characters/"
         class="modal_close"
-        data-swup-link-to-fragment="#list"
+        data-swup-link-to-fragment="#characters-list"
         data-tippy-follow></a>
       <div class="modal_content">
-        <main id="detail" class="character" x-ref="detail">
+        <main id="character-detail" class="character" x-ref="detail">
           <div
             class="character_header"
             style={{
@@ -49,7 +49,7 @@ const { name, color, image } = post.data;
             <a
               href="/characters/"
               class="character_close"
-              data-swup-link-to-fragment="#list"
+              data-swup-link-to-fragment="#characters-list"
             >
               <Icon name="x" />
             </a>
@@ -68,12 +68,12 @@ const { name, color, image } = post.data;
               This is just some dummy text to make the whole thing look more natural.
             </p>
             <p>
-              The <strong>most complex case</strong> on this site is closing an overlay.
+              The <strong>most complex case</strong> on this site is closing a character.
               Depending on where you are coming from and where you are going, you
               might want to not only replace the <code>#character-modal</code>, but also
-              the <code>#list</code> of characters. Try it out by clicking one of
+              the <code>#characters-list</code> of characters. Try it out by clicking one of
               the filters below that you haven't visited just before opening this
-              overlay:
+              character:
             </p>
             <Filters />
             <p>
