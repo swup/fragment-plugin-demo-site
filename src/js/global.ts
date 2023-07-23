@@ -1,7 +1,7 @@
 import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
-  Options as FragmentPluginOptions,
+  Options as FragmentPluginOptions
 } from "@swup/fragment-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
@@ -27,27 +27,27 @@ const rules: FragmentPluginOptions["rules"] = [
   {
     from: "/characters/:filter?",
     to: "/characters/:filter?",
-    fragments: ["#characters-list"],
+    containers: ["#characters-list"],
   },
   // Rule 2: From the list of characters to a single character
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    fragments: ["#character-modal"],
+    containers: ["#character-modal"],
     name: "open-character",
   },
   // Rule 3: From a single character back to the list of characters
   {
     from: "/character/:character",
     to: "/characters/:filter?",
-    fragments: ["#character-modal", "#characters-list"],
+    containers: ["#character-modal", "#characters-list"],
     name: "close-character",
   },
   // Rule 4: Between characters (previous/next)
   {
     from: "/character/:character",
     to: "/character/:character",
-    fragments: ["#character-detail"],
+    containers: ["#character-detail"],
   },
 ];
 /** RULES END **/
@@ -132,7 +132,7 @@ const humanReadableArray = (
   });
 
 /**
- * Show a tooltip with the targeted fragments when hovering internal links
+ * Show a tooltip with the targeted fragment elements when hovering internal links
  */
 const showInternalLinkTooltip = (
   el: HTMLAnchorElement,
@@ -159,7 +159,7 @@ const showInternalLinkTooltip = (
 };
 
 /**
- * Show a tooltip containing the targeted fragments when hovering swup links
+ * Show a tooltip containing the targeted fragment containers when hovering swup links
  */
 const onHoverLink = ({ target: el }) => {
   const isLink = el instanceof HTMLAnchorElement;
@@ -194,7 +194,7 @@ const onHoverLink = ({ target: el }) => {
 
   showInternalLinkTooltip(
     el,
-    fragmentVisit?.fragments?.map((selector) => selector) ||
+    fragmentVisit?.containers?.map((selector) => selector) ||
       swup.options.containers
   );
 };

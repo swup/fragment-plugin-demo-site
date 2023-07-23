@@ -49,7 +49,7 @@ On subsequent visits, the fragment won't be replaced if it already matches the v
 
 ## CSS
 
-The CSS for the animations of fragment visits is scoped to the fragments:
+The CSS for the animations of fragment visits is scoped to the fragment elements:
 
 <Code code={CSS} lang="css" />
 
@@ -68,7 +68,7 @@ detect that fact, so it would replace the list upon closing the modal, following
 {
   from: "/character/:character",
   to: "/characters/:filter?",
-  fragments: ["#character-modal", "#characters-list"],
+  containers: ["#character-modal", "#characters-list"],
   name: "close-character",
 }
 ```
@@ -169,6 +169,6 @@ You have two options to fix this:
 + </dialog>
 ```
 
-Fragment Plugin will detect `<detail>` fragments automatically on every page view and run [`showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) on them, putting them on the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) and thus allows them to not be affected by parent element styles, anymore.
+Fragment Plugin will detect `<detail>` fragment elements automatically on every page view and run [`showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) on them, putting them on the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) and thus allows them to not be affected by parent element styles, anymore.
 
 > **Note:** The second solution will produce [semantically incorrect markup](https://stackoverflow.com/a/75007908/586823), so you should only use it if you think you really have to. It's the cleanest solution for now, until the [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) reaches [wider browser support](https://caniuse.com/?search=popover).
