@@ -62,7 +62,16 @@ Let's visit one of the character detail pages directly,
 
 On that page, the `#characters-list` behind the `#character-modal` displays the items that would also be
 rendered when navigating towards `/characters/`. But there is no way for Fragment Plugin to automatically
-detect that fact, so it would replace the list upon closing the modal.
+detect that fact, so it would replace the list upon closing the modal, following our third fragment rule:
+
+```js
+{
+  from: "/character/:character",
+  to: "/characters/:filter?",
+  fragments: ["#character-modal", "#characters-list"],
+  name: "close-character",
+}
+```
 
 We can solve this by providing the URL of the `#characters-list` beforehand, by adding
 `data-swup-fragment-url="/characters/"` to it. Now Fragment Plugin can correctly skip the
@@ -82,7 +91,7 @@ We can solve this by providing the URL of the `#characters-list` beforehand, by 
 ### [data-swup-link-to-fragment]
 
 Using `[data-swup-link-to-fragment="<fragment-selector>"]`, you can tell any link on your site to be synced
-to the matching fragment's fragment URL. This is in use for the modal close buttons on this site:
+to the matching element's fragment URL. This is in use for the modal's close links on this site:
 
 ```html title="/character/luigi/index.html" 'data-link-to-fragment="#characters-list"'
 <main id="character-modal">
