@@ -57,6 +57,7 @@ const rules: FragmentPluginOptions["rules"] = [
  */
 const swup = new Swup({
   animateHistoryBrowsing: false,
+  cache: true,
   plugins: [
     new FragmentPlugin({
       rules,
