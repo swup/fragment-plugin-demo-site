@@ -14,10 +14,13 @@ import feather from "feather-icons";
 
 import Alpine, { AlpineComponent } from "alpinejs";
 
-// import { consola } from 'consola';
-// import { red } from 'console-log-colors';
-
-// consola.info(`this should be ${red('red')}`);
+/**
+ * Checks:
+ *
+ * - swup.preload not detected
+ * - swup.getFragmentVisit suddenly has problems with this
+ * - Handler<"link:hover"> should be simpler to use (only args, no visit)
+ */
 
 /** RULES START **/
 /**
