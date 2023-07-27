@@ -23,6 +23,11 @@ const packages = [
     branch: "master",
     folder: "./packages/swup",
   },
+  {
+    url: "https://github.com/swup/preload-plugin.git",
+    branch: "typescript",
+    folder: "./packages/debug-plugin",
+  },
   // {
   //   url: "https://github.com/swup/parallel-plugin.git",
   //   branch: "development",
