@@ -153,6 +153,7 @@ const showInternalLinkTooltip = (
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
     appendTo: "parent",
+    maxWidth: 400
   });
   el.addEventListener("mouseleave", () => tippyInstance.destroy(), {
     once: true,
@@ -182,8 +183,6 @@ const onHoverLink = ({ target: el }) => {
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
-
-  if (!fragmentVisit) return;
 
   showInternalLinkTooltip(
     el,
