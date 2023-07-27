@@ -1,7 +1,7 @@
 import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
-  Options as FragmentPluginOptions
+  Options as FragmentPluginOptions,
 } from "@swup/fragment-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
@@ -174,24 +174,16 @@ const onHoverLink = ({ target: el }) => {
 
   // ignore links to same page
   if (
-    swup.isSameResolvedUrl(
-      Location.fromElement(el).url,
-      Location.fromUrl(window.location.href).url
-    )
-  ) {
+    Location.fromElement(el).url === Location.fromUrl(window.location.href).url
+  )
     return;
-  }
 
-  // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin(
-    "SwupFragmentPlugin"
-  ) as FragmentPlugin;
-  if (!fragmentPlugin) return;
-
-  const fragmentVisit = fragmentPlugin.getFragmentVisit({
+  const fragmentVisit = swup.getFragmentVisit?.({
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
+
+  if (!fragmentVisit) return;
 
   showInternalLinkTooltip(
     el,
@@ -206,7 +198,9 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
 
 // Reset the scroll of the modal when switching #character-detail
 const onContentReplace: Handler<"content:replace"> = (context) => {
-  const modal = document.querySelector("#character-modal") as HTMLElement | null;
+  const modal = document.querySelector(
+    "#character-modal"
+  ) as HTMLElement | null;
   if (modal) modal.scrollTo({ top: 0, left: 0 });
 };
 swup.hooks.on("content:replace", onContentReplace);
