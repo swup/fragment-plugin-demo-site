@@ -1,4 +1,4 @@
-import Swup, { Handler, Location } from "swup";
+import Swup, { DelegateEventHandler, Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
   Options as FragmentPluginOptions,
@@ -64,7 +64,7 @@ const swup = new Swup({
       rules,
       debug: true,
     }),
-    new SwupPreloadPlugin()
+    new SwupPreloadPlugin(),
   ],
 });
 
@@ -152,7 +152,7 @@ const showInternalLinkTooltip = (
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
     appendTo: "parent",
-    maxWidth: 400
+    maxWidth: 400,
   });
   el.addEventListener("mouseleave", () => tippyInstance.destroy(), {
     once: true,
@@ -162,12 +162,8 @@ const showInternalLinkTooltip = (
 /**
  * Show a tooltip containing the targeted fragment containers when hovering swup links
  */
-const onHoverLink = ({ target: el }) => {
-  const isLink = el instanceof HTMLAnchorElement;
-  if (!isLink) return;
-
-  // ignore external links
-  if (el.origin !== location.origin) return;
+const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
+  if (!(el instanceof HTMLAnchorElement)) return;
 
   // ignore anchor links
   if (el.getAttribute("href")?.startsWith("#")) return;
@@ -189,10 +185,7 @@ const onHoverLink = ({ target: el }) => {
       swup.options.containers
   );
 };
-// Delegate mouseenter
-swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
-  capture: true,
-});
+swup.hooks.on("link:hover", onHoverLink);
 
 // Reset the scroll of the modal when switching #character-detail
 const onContentReplace: Handler<"content:replace"> = (context) => {
