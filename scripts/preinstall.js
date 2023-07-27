@@ -20,7 +20,7 @@ const packages = [
   },
   {
     url: "https://github.com/swup/swup.git",
-    branch: "next",
+    branch: "master",
     folder: "./packages/swup",
   },
   // {
