@@ -3,6 +3,7 @@ import { isTouch, sleep } from "./frontend.js";
 import FragmentPlugin, {
   Options as FragmentPluginOptions,
 } from "@swup/fragment-plugin";
+import SwupPreloadPlugin from "@swup/preload-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
@@ -63,9 +64,7 @@ const swup = new Swup({
       rules,
       debug: true,
     }),
-    // new ParallelPlugin({
-    //   containers: ["#character-detail"],
-    // }),
+    new SwupPreloadPlugin()
   ],
 });
 
