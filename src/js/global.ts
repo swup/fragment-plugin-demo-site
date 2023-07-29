@@ -6,6 +6,7 @@ import FragmentPlugin, {
 import SwupPreloadPlugin from "@swup/preload-plugin";
 import SwupHeadPlugin from "@swup/head-plugin";
 import SwupA11yPlugin from "@swup/a11y-plugin";
+import SwupScrollPlugin from "@swup/scroll-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
@@ -72,7 +73,13 @@ const swup = new Swup({
     }),
     new SwupPreloadPlugin(),
     new SwupHeadPlugin(),
-    new SwupA11yPlugin()
+    new SwupA11yPlugin(),
+    new SwupScrollPlugin({
+      offset: () => {
+        const header = document.querySelector('.global-header') as HTMLElement;
+        return header.offsetHeight;
+      },
+    })
   ],
 });
 
@@ -223,3 +230,4 @@ function addAnchorLinks() {
   });
 }
 swup.hooks.on("page:view", addAnchorLinks);
+addAnchorLinks();
