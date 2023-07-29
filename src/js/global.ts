@@ -72,18 +72,6 @@ const swup = new Swup({
   ],
 });
 
-// swup.preload?.("/foo/");
-// swup.preloadLinks?.();
-// swup.getFragmentVisit?.({ from: "/foo/", to: "/bar/" });
-// swup.hooks.on("link:hover", (visit, args) => {});
-
-// const maxCacheEntries = 2;
-
-// swup.hooks.on('cache:set', () => {
-//   const prune = [...swup.cache.all.keys()].reverse().slice(maxCacheEntries);
-//   swup.cache.prune((url) => prune.includes(url));
-// });
-
 
 const closeModal = () => {
   const closeLink = document.querySelector(
