@@ -25,7 +25,7 @@ const packages = [
   },
   {
     url: "https://github.com/swup/preload-plugin.git",
-    branch: "typescript",
+    branch: "master",
     folder: "./packages/debug-plugin",
   },
   // {
