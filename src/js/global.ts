@@ -13,12 +13,13 @@ import "tippy.js/themes/light.css";
 import feather from "feather-icons";
 
 import Alpine, { AlpineComponent } from "alpinejs";
+import type { CacheData } from "packages/swup/dist/types/index.js";
 
 /**
  * Checks:
  *
- * - swup.preload not detected
- * - swup.getFragmentVisit suddenly has problems with this
+ * - swup.preload not detected (solved using `export interface Swup` instead of `export class Swup`)
+ * - swup.getFragmentVisit suddenly has problems with `this` (solved)
  * - Handler<"link:hover"> should be simpler to use (only args, no visit)
  */
 
@@ -70,6 +71,19 @@ const swup = new Swup({
     new SwupPreloadPlugin(),
   ],
 });
+
+// swup.preload?.("/foo/");
+// swup.preloadLinks?.();
+// swup.getFragmentVisit?.({ from: "/foo/", to: "/bar/" });
+// swup.hooks.on("link:hover", (visit, args) => {});
+
+// const maxCacheEntries = 2;
+
+// swup.hooks.on('cache:set', () => {
+//   const prune = [...swup.cache.all.keys()].reverse().slice(maxCacheEntries);
+//   swup.cache.prune((url) => prune.includes(url));
+// });
+
 
 const closeModal = () => {
   const closeLink = document.querySelector(
@@ -177,16 +191,16 @@ const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
   )
     return;
 
-  const fragmentVisit = swup.getFragmentVisit?.({
-    from: Location.fromUrl(window.location.href).url,
-    to: Location.fromElement(el).url,
-  });
+  // const fragmentVisit = swup.getFragmentVisit?.({
+  //   from: Location.fromUrl(window.location.href).url,
+  //   to: Location.fromElement(el).url,
+  // });
 
-  showInternalLinkTooltip(
-    el,
-    fragmentVisit?.containers?.map((selector) => selector) ||
-      swup.options.containers
-  );
+  // showInternalLinkTooltip(
+  //   el,
+  //   fragmentVisit?.containers?.map((selector) => selector) ||
+  //     swup.options.containers
+  // );
 };
 swup.hooks.on("link:hover", onHoverLink);
 
