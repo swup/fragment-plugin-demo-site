@@ -111,6 +111,13 @@ Suppose you have a fragment that you want to open like a modal, above all other 
 
 ```html {10-15}
 <div id="swup" class="transition-main">
+  <!-- This should be placed above everything else, like a modal -->
+  <div id="item-detail" class="modal">
+    <main>
+      <h1>Item 1</h1>
+      <p>Lorem ipsum dolor...</p>
+    </main>
+  </div>
   <section>
     <ul>
       <li><a href="/item/1/">Item 1</a></li>
@@ -118,13 +125,6 @@ Suppose you have a fragment that you want to open like a modal, above all other 
       <li><a href="/item/3/">Item 3</a></li>
     </ul>
   </section>
-  <!-- This should be placed above everything else -->
-  <div id="item-detail" class="modal">
-    <main>
-      <h1>Item 1</h1>
-      <p>Lorem ipsum dolor...</p>
-    </main>
-  </div>
 </div>
 ```
 
@@ -159,16 +159,41 @@ You have two options to fix this:
 2. Use `<detail open>` for the modal:
 
 ```diff lang="html"
-- <div id="character-modal" class="modal">
-+ <dialog open id="character-modal" aria-role="article">
+<div id="swup" class="transition-main">
+  <!-- This should be placed above everything else, like a modal -->
+- <div id="item-detail" class="modal">
++ <dialog open id="item-detail" class="modal">
     <main>
-      <h1>User 1</h1>
+      <h1>Item 1</h1>
       <p>Lorem ipsum dolor...</p>
     </main>
 - </div>
 + </dialog>
+  <section>
+    <ul>
+      <li><a href="/item/1/">Item 1</a></li>
+      <li><a href="/item/2/">Item 2</a></li>
+      <li><a href="/item/3/">Item 3</a></li>
+    </ul>
+  </section>
+</div>
 ```
 
-Fragment Plugin will detect `<detail>` fragment elements automatically on every page view and run [`showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) on them, putting them on the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) and thus allows them to not be affected by parent element styles, anymore.
+Fragment Plugin will detect `<detail open>` fragment elements automatically on every page view and run [`showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) on them, putting them on the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) and thus allows them to not be affected by parent element styles, anymore.
 
-> **Note:** The second solution will produce [semantically incorrect markup](https://stackoverflow.com/a/75007908/586823), so you should only use it if you think you really have to. It's the cleanest solution for now, until the [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) reaches [wider browser support](https://caniuse.com/?search=popover).
+## Modals and accessibility
+
+### Element order
+
+The first `<main>` element in a document will be considered the main content by assistive technology. If you are using the [A11y Plugin](https://swup.js.org/plugins/a11y-plugin/), that's also the element that will automatically be focused upon page visits. For that reason, **you should always put your modal before any overlayed content**, if it should be considered the primary content of a page.
+
+### Pros and cons of using the dialog element for modals
+
+**Pros**:
+
+- The modal's positioning won't be affected by `transform` animations on any of it's parents.
+- Focus trapping will be natively available for the modal without you having to do anything.
+
+**Cons**:
+
+- Wrapping your `<main>` content inside a `<dialog>` will produce [semantically incorrect markup](https://stackoverflow.com/a/75007908/586823). We still think it's the cleanest approach for now, until the [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) reaches [wider browser support](https://caniuse.com/?search=popover).
