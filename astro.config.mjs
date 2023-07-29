@@ -19,7 +19,7 @@ const expressiveCodeOptions = {
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://swup-fragment-plugin.netlify.app",
   integrations: [sitemap(), expressiveCode(expressiveCodeOptions), mdx()],
   vite: {
     resolve: {
