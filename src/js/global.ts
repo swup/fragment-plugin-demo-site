@@ -4,6 +4,8 @@ import FragmentPlugin, {
   Options as FragmentPluginOptions,
 } from "@swup/fragment-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
+import SwupHeadPlugin from "@swup/head-plugin";
+import SwupA11yPlugin from "@swup/a11y-plugin";
 // import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
@@ -69,6 +71,8 @@ const swup = new Swup({
       debug: true,
     }),
     new SwupPreloadPlugin(),
+    new SwupHeadPlugin(),
+    new SwupA11yPlugin()
   ],
 });
 
