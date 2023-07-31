@@ -51,7 +51,7 @@ import SwupFragmentPlugin, { Rule as FragmentRule } from "@swup/fragment-plugin"
 ${swupCode}
 
 /**
- * Initialize Swup
+ * Initialize Swup with Fragment Plugin
  */
 const swup = new Swup({
   plugins: [

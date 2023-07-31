@@ -35,7 +35,7 @@ const rules: FragmentRule[] = [
     to: "/characters/:filter?",
     containers: ["#characters-list"],
   },
-  // Rule 2: From the list of characters to a single character
+  // Rule 2: From the list of characters to a character detail page
   {
     from: "/characters/:filter?",
     to: "/character/:character",
