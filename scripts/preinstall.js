@@ -15,7 +15,7 @@ console.log(process.env.NETLIFY);
 const packages = [
   {
     url: "https://github.com/swup/fragment-plugin.git",
-    branch: "master",
+    branch: "optimize-types",
     folder: "./packages/fragment-plugin",
   },
   {

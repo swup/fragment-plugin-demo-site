@@ -1,8 +1,6 @@
 import Swup, { DelegateEventHandler, Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import FragmentPlugin, {
-  Options as FragmentPluginOptions,
-} from "@swup/fragment-plugin";
+import SwupFragmentPlugin, { Rule as FragmentRule } from "@swup/fragment-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 import SwupHeadPlugin from "@swup/head-plugin";
 import SwupA11yPlugin from "@swup/a11y-plugin";
@@ -30,7 +28,7 @@ import type { CacheData } from "packages/swup/dist/types/index.js";
 /**
  * Define the rules for Fragment Plugin
  */
-const rules: FragmentPluginOptions["rules"] = [
+const rules: FragmentRule[] = [
   // Rule 1: Between the various views of the characters list
   {
     from: "/characters/:filter?",
@@ -67,7 +65,7 @@ const swup = new Swup({
   animateHistoryBrowsing: false,
   cache: true,
   plugins: [
-    new FragmentPlugin({
+    new SwupFragmentPlugin({
       rules,
       debug: true,
     }),
@@ -76,13 +74,12 @@ const swup = new Swup({
     new SwupA11yPlugin(),
     new SwupScrollPlugin({
       offset: () => {
-        const header = document.querySelector('.global-header') as HTMLElement;
+        const header = document.querySelector(".global-header") as HTMLElement;
         return header.offsetHeight;
       },
-    })
+    }),
   ],
 });
-
 
 const closeModal = () => {
   const closeLink = document.querySelector(

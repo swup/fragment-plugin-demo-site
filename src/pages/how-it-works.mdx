@@ -16,19 +16,20 @@ export const CSS = loadSwupCSS();
 
 export const DataFragmentUrlExample = ``;
 
-## Installation
 
-```bash
-npm install swup @swup/fragment-plugin
-```
-
-### Fragment support on this site is being achieved with:
+# Fragment support on this site is being achieved with:
 
 1. [JavaScript](#javascript) for setting up fragment rules
 2. [CSS](#css) for animating fragment visits
 3. The [DOM](#dom) for special cases and extra functionality
 
 ## JavaScript
+
+This is how you can install swup and fragment-plugin from NPM:
+
+```bash
+npm install swup @swup/fragment-plugin
+```
 
 The following code is being used on this very site for initializing swup with fragment support:
 
@@ -37,15 +38,14 @@ The following code is being used on this very site for initializing swup with fr
 [Learn more about rules](https://github.com/swup/fragment-plugin#rules)
 
 Did you notice something strange about rule 3? It's telling the plugin to
-not only replace the `#character-modal` but also the `#characters-list`! Surely that's
-not we want when we are closing a character, right?
+not only replace `#character-modal` but also `#characters-list`! Surely that's
+not we want when we are only closing an overlay, right?
 
-Turns out: There are cases where we actually want that! When navigating from a character to
-filter that wasn't active before we opened the character. Or when jumping multiple steps backwards
-or forwards in the browser history.
+Turns out: There are cases where we actually want that! When navigating from a character to a
+filtered list of characters that wasn't active before we opened the character. Or when jumping multiple steps backwards or forwards in the browser history.
 
-**Fragment Plugin keeps track of the URL for each fragment as soon as it is being rendered.
-On subsequent visits, the fragment won't be replaced if it already matches the visit's URL.**
+**Fragment Plugin keeps track of the URL for each fragment element as soon as it is being rendered.
+On subsequent visits, the element won't be replaced if it already matches the visit's URL.**
 
 ## CSS
 
@@ -90,8 +90,8 @@ We can solve this by providing the URL of the `#characters-list` beforehand, by 
 
 ### [data-swup-link-to-fragment]
 
-Using `[data-swup-link-to-fragment="<fragment-selector>"]`, you can tell any link on your site to be synced
-to the matching element's fragment URL. This is in use for the modal's close links on this site:
+Using `[data-swup-link-to-fragment="<selector>"]`, you can tell any link on your site to be synced
+to the matching element's fragment URL. This is in use for the character modal's close links on this site:
 
 ```html title="/character/luigi/index.html" 'data-link-to-fragment="#characters-list"'
 <main id="character-modal">
@@ -107,28 +107,10 @@ to the matching element's fragment URL. This is in use for the modal's close lin
 
 ### Modals inside `transform`ed parents
 
-Suppose you have a fragment that you want to open like a modal, above all other content:
+Suppose you have a fragment that you want to open like a modal, above all other content. Just like
+on the character detail pages on this site.
 
-```html {10-15}
-<div id="swup" class="transition-main">
-  <!-- This should be placed above everything else, like a modal -->
-  <div id="item-detail" class="modal">
-    <main>
-      <h1>Item 1</h1>
-      <p>Lorem ipsum dolor...</p>
-    </main>
-  </div>
-  <section>
-    <ul>
-      <li><a href="/item/1/">Item 1</a></li>
-      <li><a href="/item/2/">Item 2</a></li>
-      <li><a href="/item/3/">Item 3</a></li>
-    </ul>
-  </section>
-</div>
-```
-
-You might have this (minimal) CSS to make the `#item-detail` appear as a modal above everything else:
+This (reduced) CSS is being used to make the `#item-detail` appear as a modal above everything else:
 
 ```css
 .modal {
@@ -138,7 +120,7 @@ You might have this (minimal) CSS to make the `#item-detail` appear as a modal a
 }
 ```
 
-This will work fine, until you apply a `transform` to any of the modal's parent elements:
+This will work fine, until we apply a `transform` to any of the modal's parent elements, as we do on this site:
 
 ```css {7}
 html.is-changing .transition-main {
@@ -160,22 +142,14 @@ You have two options to fix this:
 
 ```diff lang="html"
 <div id="swup" class="transition-main">
-  <!-- This should be placed above everything else, like a modal -->
-- <div id="item-detail" class="modal">
-+ <dialog open id="item-detail" class="modal">
-    <main>
-      <h1>Item 1</h1>
-      <p>Lorem ipsum dolor...</p>
-    </main>
-- </div>
-+ </dialog>
-  <section>
-    <ul>
-      <li><a href="/item/1/">Item 1</a></li>
-      <li><a href="/item/2/">Item 2</a></li>
-      <li><a href="/item/3/">Item 3</a></li>
-    </ul>
-  </section>
+- <main id="character-modal">
++ <dialog open id="character-modal"><main>
+    <!-- character content -->
+- </main>
++ </main></dialog>
+  <div id="characters-list" data-swup-fragment-url="/characters/">
+	  <!-- ...filters & characters... -->
+  </div>
 </div>
 ```
 
