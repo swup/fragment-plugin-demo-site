@@ -3,8 +3,20 @@ layout: ../layouts/Page.astro
 isFrontPage: true
 ---
 
-This is a demo and test site for the <a href="https://github.com/swup/fragment-plugin">fragment plugin</a> for <a href="https://github.com/swup/">swup</a>.
+This is a demo for the for <a href="https://github.com/swup/fragment-plugin">fragment-plugin</a>, a <a href="https://github.com/swup/">swup</a> plugin for dynamically updating elements based on custom rules 🧩
+
 
 Under <a href="/characters/">Characters</a>, you can find a filterable list of super mario characters. Note how only the <code>#characters-list</code> is replaced when filtering characters. How a single character opens in a <code>#character-modal</code>. How only the <code>#character-detail</code> is being replaced when navigating between characters, without touching any other element.
 
-<strong>All this is is the work of the Fragment Plugin! 🧩</strong>
+<strong>All this is is the work of the Fragment Plugin!</strong>
+
+## Use cases
+
+All of the following scenarios require updating only a small content fragment instead of performing a full page transition:
+
+- a filter UI that live-updates its list of results on every interaction
+- a detail overlay that shows on top of the currently open content
+- a tab group that should update only itself upon clicking one of the tabs
+
+<br/>
+<a class="button" href="/characters/">Start Demo →</a>
