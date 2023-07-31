@@ -377,6 +377,13 @@ p a:where(:not(.button)),
   background: rgba(0 0 0 / 0.8);
 }
 
+/* main[tabindex="-1"] {
+  outline: none;
+} */
+main:focus {
+  outline: none;
+}
+
 .modal_inner {
   position: relative;
 }
