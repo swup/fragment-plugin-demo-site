@@ -1,6 +1,8 @@
 import Swup, { DelegateEventHandler, Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import SwupFragmentPlugin, { Rule as FragmentRule } from "@swup/fragment-plugin";
+import SwupFragmentPlugin, {
+  Rule as FragmentRule,
+} from "@swup/fragment-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 import SwupHeadPlugin from "@swup/head-plugin";
 import SwupA11yPlugin from "@swup/a11y-plugin";
@@ -14,7 +16,6 @@ import "tippy.js/themes/light.css";
 import feather from "feather-icons";
 
 import Alpine, { AlpineComponent } from "alpinejs";
-import type { CacheData } from "packages/swup/dist/types/index.js";
 
 /**
  * Checks:
@@ -34,6 +35,7 @@ const rules: FragmentRule[] = [
     from: "/characters/:filter?",
     to: "/characters/:filter?",
     containers: ["#characters-list"],
+    scroll: '#characters-list'
   },
   // Rule 2: From the list of characters to a character detail page
   {
@@ -41,6 +43,7 @@ const rules: FragmentRule[] = [
     to: "/character/:character",
     containers: ["#character-modal"],
     name: "open-character",
+    scroll: true
   },
   // Rule 3: From a single character back to the list of characters
   {
@@ -75,7 +78,7 @@ const swup = new Swup({
     new SwupScrollPlugin({
       offset: () => {
         const header = document.querySelector(".global-header") as HTMLElement;
-        return header.offsetHeight;
+        return header.offsetHeight + 15;
       },
     }),
   ],
@@ -187,16 +190,16 @@ const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
   )
     return;
 
-  // const fragmentVisit = swup.getFragmentVisit?.({
-  //   from: Location.fromUrl(window.location.href).url,
-  //   to: Location.fromElement(el).url,
-  // });
+  const fragmentVisit = swup.getFragmentVisit?.({
+    from: window.location.href,
+    to: el.href,
+  });
 
-  // showInternalLinkTooltip(
-  //   el,
-  //   fragmentVisit?.containers?.map((selector) => selector) ||
-  //     swup.options.containers
-  // );
+  showInternalLinkTooltip(
+    el,
+    fragmentVisit?.containers.map((selector) => selector) ||
+      swup.options.containers
+  );
 };
 swup.hooks.on("link:hover", onHoverLink);
 
