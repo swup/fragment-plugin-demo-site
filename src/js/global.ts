@@ -1,4 +1,4 @@
-import Swup, { DelegateEventHandler, Handler, Location } from "swup";
+import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
 import SwupFragmentPlugin, {
   Rule as FragmentRule,
@@ -35,7 +35,6 @@ const rules: FragmentRule[] = [
     from: "/characters/:filter?",
     to: "/characters/:filter?",
     containers: ["#characters-list"],
-    scroll: '#characters-list'
   },
   // Rule 2: From the list of characters to a character detail page
   {
@@ -43,7 +42,6 @@ const rules: FragmentRule[] = [
     to: "/character/:character",
     containers: ["#character-modal"],
     name: "open-character",
-    scroll: true
   },
   // Rule 3: From a single character back to the list of characters
   {
@@ -72,7 +70,7 @@ const swup = new Swup({
       rules,
       debug: true,
     }),
-    new SwupPreloadPlugin(),
+    new SwupPreloadPlugin({ preloadVisibleLinks: true }),
     new SwupHeadPlugin(),
     new SwupA11yPlugin(),
     new SwupScrollPlugin({

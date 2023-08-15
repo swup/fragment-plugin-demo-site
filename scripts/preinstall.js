@@ -10,6 +10,7 @@
 import { execSync } from "child_process";
 import { existsSync, rmSync } from "fs";
 
+
 console.log(process.env.NETLIFY);
 
 const packages = [
