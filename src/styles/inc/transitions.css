@@ -1,14 +1,13 @@
 /* The default transition for non-fragment visits */
-html.is-changing .transition-main,
-html.is-changing main {
+html.is-changing .transition-main {
   transition-property: opacity, transform;
-  transition-duration: 400ms;
+  transition-duration: 500ms;
 }
-html.is-animating main {
+html.is-animating .transition-main {
   opacity: 0;
   transform: translateY(-20px);
 }
-html.is-leaving main {
+html.is-leaving .transition-main {
   transform: translateY(20px);
 }
 

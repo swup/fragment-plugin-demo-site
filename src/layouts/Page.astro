@@ -6,7 +6,7 @@ const { title, description, content } = Astro.props;
 
 <!-- <Debug data={content.isFrontPage} /> -->
 <Base title={title} description={description} isFrontPage={content.isFrontPage}>
-	<main>
+	<main class="transition-main">
 		<div class="text">
 			<slot />
 		</div>

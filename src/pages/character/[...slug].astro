@@ -31,7 +31,7 @@ const { name, color, image } = post.data;
 ---
 
 <Character {...post.data}>
-  <dialog role="article" open id="character-modal" class="modal transition-main" x-data="modal" x-on:scroll="onScroll">
+  <dialog role="article" open id="character-modal" class="modal" x-data="modal" x-on:scroll="onScroll">
     <div class="modal_inner">
       <a
         href="/characters/"

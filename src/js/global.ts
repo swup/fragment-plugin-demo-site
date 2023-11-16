@@ -226,22 +226,29 @@ swup.hooks.on("page:view", addAnchorLinks);
 addAnchorLinks();
 
 /**
- * Test rapid navigation
+ * Test rapid navigation.
+ *
+ * Notes:
+ *  - clearing classes in swup.navigate will always STOP all animations
+ *  - execution of animate:in needs to check after each step if it should continue
+ *  - clear path to a solution still missing
  */
 async function testRapidNavigation() {
   swup.hooks.once("visit:end", navigateToCharacters);
   swup.navigate("/", { animate: false });
 
   async function navigateToCharacters() {
-    await sleep(100);
-    swup.hooks.once("animation:in:start", navigateToHowItWorks);
-    queryLink("/characters/")?.click();
+    setTimeout(() => {
+      swup.hooks.once("content:replace", navigateToHowItWorks);
+      queryLink("/characters/")?.click();
+    }, 200);
   }
 
   async function navigateToHowItWorks() {
-    await sleep(100);
-    // swup.hooks.once("animation:out:start", async () => sleep(50000));
-    queryLink("/how-it-works/")?.click();
+    setTimeout(() => {
+      // swup.hooks.on("animation:out:start", async () => sleep(10000), { once: true });
+      queryLink("/how-it-works/")?.click();
+    }, 200);
   }
 }
 function queryLink(href: string): HTMLAnchorElement | null {

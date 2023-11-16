@@ -19,7 +19,7 @@ const filter = Astro.props;
 
 <Base title={`Filter: ${filter.data.name}`}>
   <template id="character-modal"></template>
-	<main id="characters-list">
+	<main id="characters-list" class="transition-main">
 		<Filters filter={filter} mark-active={true} />
 		<Teasers filter={filter} />
 	</main>
