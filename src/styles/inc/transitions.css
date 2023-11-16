@@ -2,7 +2,7 @@
 html.is-changing .transition-main,
 html.is-changing main {
   transition-property: opacity, transform;
-  transition-duration: 2000ms;
+  transition-duration: 400ms;
 }
 html.is-animating main {
   opacity: 0;

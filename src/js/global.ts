@@ -7,7 +7,6 @@ import SwupPreloadPlugin from "@swup/preload-plugin";
 import SwupHeadPlugin from "@swup/head-plugin";
 import SwupA11yPlugin from "@swup/a11y-plugin";
 import SwupScrollPlugin from "@swup/scroll-plugin";
-// import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -16,16 +15,10 @@ import "tippy.js/themes/light.css";
 import feather from "feather-icons";
 
 import Alpine, { AlpineComponent } from "alpinejs";
-import type { HookDefinitions } from "swup";
-import type { HookName } from "swup";
+import type { DelegateEvent } from "swup";
 
-/**
- * Checks:
- *
- * - swup.preload not detected (solved using `export interface Swup` instead of `export class Swup`)
- * - swup.getFragmentVisit suddenly has problems with `this` (solved)
- * - Handler<"link:hover"> should be simpler to use (only args, no visit)
- */
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
 /** RULES START **/
 /**
@@ -114,10 +107,6 @@ Alpine.data(
 
 Alpine.start();
 
-// swup.hooks.on("animation:in:start", async (context) => {
-//   await sleep(20000);
-// });
-
 /**
  * Close eventual modals using the Escape key
  */
@@ -178,7 +167,9 @@ const showInternalLinkTooltip = (
 /**
  * Show a tooltip containing the targeted fragment containers when hovering swup links
  */
-const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
+function onHoverLink(event: DelegateEvent<MouseEvent>) {
+  const el = event.delegateTarget as HTMLAnchorElement;
+  console.log(el);
   if (!(el instanceof HTMLAnchorElement)) return;
 
   // ignore anchor links
@@ -200,8 +191,10 @@ const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
     fragmentVisit?.containers.map((selector) => selector) ||
       swup.options.containers
   );
-};
-swup.hooks.on("link:hover", onHoverLink);
+}
+swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
+  capture: true,
+});
 
 // Reset the scroll of the modal when switching #character-detail
 const onContentReplace: Handler<"content:replace"> = (context) => {
@@ -232,14 +225,10 @@ function addAnchorLinks() {
 swup.hooks.on("page:view", addAnchorLinks);
 addAnchorLinks();
 
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
-function queryLink(href: string): HTMLAnchorElement | null {
-  return $<HTMLAnchorElement>(`a[href="${href}"]`);
-}
-
-async function performRapidNavigation() {
+/**
+ * Test rapid navigation
+ */
+async function testRapidNavigation() {
   swup.hooks.once("visit:end", navigateToCharacters);
   swup.navigate("/", { animate: false });
 
@@ -251,12 +240,13 @@ async function performRapidNavigation() {
 
   async function navigateToHowItWorks() {
     await sleep(100);
-    swup.hooks.once("animation:out:start", async () => sleep(50000));
+    // swup.hooks.once("animation:out:start", async () => sleep(50000));
     queryLink("/how-it-works/")?.click();
   }
 }
-
-$("[data-action=rapidNavigation]")?.addEventListener(
-  "click",
-  () => performRapidNavigation()
+function queryLink(href: string): HTMLAnchorElement | null {
+  return $<HTMLAnchorElement>(`a[href="${href}"]`);
+}
+$("[data-action=rapidNavigation]")?.addEventListener("click", () =>
+  testRapidNavigation()
 );
