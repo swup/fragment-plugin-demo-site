@@ -251,6 +251,7 @@ async function performRapidNavigation() {
 
   async function navigateToHowItWorks() {
     await sleep(100);
+    swup.hooks.once("animation:out:start", async () => sleep(50000));
     queryLink("/how-it-works/")?.click();
   }
 }
