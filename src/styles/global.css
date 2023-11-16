@@ -2,3 +2,9 @@
 @import "./inc/custom-media.css";
 @import "./inc/demo.css";
 @import "./inc/transitions.css";
+
+[data-action=rapidNavigation] {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}

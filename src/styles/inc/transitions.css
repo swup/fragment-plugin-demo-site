@@ -1,15 +1,17 @@
 /* The default transition for non-fragment visits */
-.is-changing .transition-main {
+html.is-changing .transition-main,
+html.is-changing main {
   transition-property: opacity, transform;
-  transition-duration: 250ms;
+  transition-duration: 2000ms;
 }
-html.is-animating .transition-main {
+html.is-animating main {
   opacity: 0;
   transform: translateY(-20px);
 }
-html.is-leaving .transition-main {
+html.is-leaving main {
   transform: translateY(20px);
 }
+
 
 /*
  * The transition when filtering the characters.

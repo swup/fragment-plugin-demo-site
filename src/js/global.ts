@@ -1,4 +1,4 @@
-import Swup, { Handler, Location } from "swup";
+import Swup, { Handler, Location, nextTick } from "../../../swup/src/index.js";
 import { isTouch, sleep } from "./frontend.js";
 import SwupFragmentPlugin, {
   Rule as FragmentRule,
@@ -16,6 +16,8 @@ import "tippy.js/themes/light.css";
 import feather from "feather-icons";
 
 import Alpine, { AlpineComponent } from "alpinejs";
+import type { HookDefinitions } from "swup";
+import type { HookName } from "swup";
 
 /**
  * Checks:
@@ -229,3 +231,31 @@ function addAnchorLinks() {
 }
 swup.hooks.on("page:view", addAnchorLinks);
 addAnchorLinks();
+
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
+function queryLink(href: string): HTMLAnchorElement | null {
+  return $<HTMLAnchorElement>(`a[href="${href}"]`);
+}
+
+async function performRapidNavigation() {
+  swup.hooks.once("visit:end", navigateToCharacters);
+  swup.navigate("/", { animate: false });
+
+  async function navigateToCharacters() {
+    await sleep(100);
+    swup.hooks.once("animation:in:start", navigateToHowItWorks);
+    queryLink("/characters/")?.click();
+  }
+
+  async function navigateToHowItWorks() {
+    await sleep(100);
+    queryLink("/how-it-works/")?.click();
+  }
+}
+
+$("[data-action=rapidNavigation]")?.addEventListener(
+  "click",
+  () => performRapidNavigation()
+);
