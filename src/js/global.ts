@@ -1,4 +1,9 @@
-import Swup, { Handler, Location, nextTick } from "../../../swup/src/index.js";
+import Swup, {
+  Handler,
+  HookEvent,
+  Location,
+  nextTick,
+} from "../../../swup/src/index.js";
 import { isTouch, sleep } from "./frontend.js";
 import SwupFragmentPlugin, {
   Rule as FragmentRule,
@@ -16,6 +21,8 @@ import feather from "feather-icons";
 
 import Alpine, { AlpineComponent } from "alpinejs";
 import type { DelegateEvent } from "swup";
+import type { HookName } from "swup";
+import type { Visit } from "swup";
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -59,21 +66,21 @@ const rules: FragmentRule[] = [
  */
 const swup = new Swup({
   animateHistoryBrowsing: false,
-  cache: true,
+  cache: false,
   plugins: [
-    new SwupFragmentPlugin({
-      rules,
-      debug: true,
-    }),
-    new SwupPreloadPlugin({ preloadVisibleLinks: true }),
-    new SwupHeadPlugin(),
-    new SwupA11yPlugin(),
-    new SwupScrollPlugin({
-      offset: () => {
-        const header = document.querySelector(".global-header") as HTMLElement;
-        return header.offsetHeight + 15;
-      },
-    }),
+    // new SwupFragmentPlugin({
+    //   rules,
+    //   debug: true,
+    // }),
+    // new SwupPreloadPlugin({ preloadVisibleLinks: true }),
+    // new SwupHeadPlugin(),
+    // new SwupA11yPlugin(),
+    // new SwupScrollPlugin({
+    //   offset: () => {
+    //     const header = document.querySelector(".global-header") as HTMLElement;
+    //     return header.offsetHeight + 15;
+    //   },
+    // }),
   ],
 });
 
@@ -169,7 +176,6 @@ const showInternalLinkTooltip = (
  */
 function onHoverLink(event: DelegateEvent<MouseEvent>) {
   const el = event.delegateTarget as HTMLAnchorElement;
-  console.log(el);
   if (!(el instanceof HTMLAnchorElement)) return;
 
   // ignore anchor links
@@ -235,10 +241,12 @@ addAnchorLinks();
  */
 async function testRapidNavigation() {
   swup.hooks.once("visit:end", navigateToCharacters);
+
   swup.navigate("/", { animate: false });
 
   async function navigateToCharacters() {
     setTimeout(() => {
+      window.addEventListener("swup:any", handleSwupEvent);
       swup.hooks.once("content:replace", navigateToHowItWorks);
       queryLink("/characters/")?.click();
     }, 200);
@@ -257,3 +265,55 @@ function queryLink(href: string): HTMLAnchorElement | null {
 $("[data-action=rapidNavigation]")?.addEventListener("click", () =>
   testRapidNavigation()
 );
+
+const debug = {
+  expected: [
+    "visit:start",
+    "animation:out:start",
+    "fetch:request",
+    "page:load",
+    "animation:out:await",
+    "animation:out:end",
+    "content:replace",
+    "scroll:top",
+    "content:scroll",
+    "page:view",
+    "animation:in:start",
+    "animation:in:await",
+    "animation:in:end",
+    "visit:transition",
+    "visit:end",
+  ],
+  received: [] as { hook: HookName; visitId: number }[],
+};
+
+function handleSwupEvent(event: any) {
+  const { hook, visit } = (event as HookEvent).detail;
+
+  if (hook === "visit:start") {
+    debug.received = [];
+  }
+
+  debug.received.push({ hook, visitId: visit.id });
+
+  if (hook === "visit:end") {
+    window.removeEventListener("swup:any", handleSwupEvent);
+    if (!isArrayEqual(debug.expected, debug.received)) {
+      const table: any[] = [];
+      debug.expected.forEach((expected, index) => {
+        const received = debug.received[index];
+        table.push({
+          expected: expected,
+          received: received.hook,
+          visitId: received.visitId,
+          match: expected === received.hook,
+        });
+      });
+      console.table(table);
+    }
+  }
+}
+
+function isArrayEqual(a: unknown[], b: unknown[]): boolean {
+  return a.toString() === b.toString();
+}
