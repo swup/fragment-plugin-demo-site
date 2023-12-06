@@ -15,7 +15,9 @@ import "tippy.js/themes/light.css";
 
 import feather from "feather-icons";
 
-import Alpine, { AlpineComponent } from "alpinejs";
+import Alpine from "alpinejs";
+import type { AlpineComponent } from "alpinejs";
+export const defineComponent = <P, T>(fn: (params: P) => AlpineComponent<T>) => fn; // prettier-ignore
 
 /**
  * Checks:
@@ -89,13 +91,8 @@ const closeModal = () => {
   if (closeLink) swup.navigate(closeLink.href);
 };
 
-type ModalComponent = AlpineComponent<{
-  open: boolean;
-}>;
-
-Alpine.data(
-  "modal",
-  (): ModalComponent => ({
+const Modal = defineComponent(() => {
+  return {
     open: true,
     onScroll() {
       if (!this.open) return;
@@ -107,8 +104,10 @@ Alpine.data(
         closeModal();
       }
     },
-  })
-);
+  };
+});
+
+Alpine.data("modal", Modal);
 
 Alpine.start();
 
