@@ -16,6 +16,9 @@ html.is-leaving .transition-main {
  * The transition when filtering the characters.
  * Here we are animating children of the element #list
  */
+ #list.is-changing {
+  transition-duration: 250ms;
+ }
 #list.is-changing .transition-teaser {
   transition-property: opacity, transform;
   transition-duration: 450ms;
@@ -34,35 +37,30 @@ html.is-leaving .transition-main {
 * The transition for opening and closing an overlay.
 * The animation happens on the element itself
 */
-.transition-overlay.is-changing {
+#overlay.is-changing {
   transition: opacity 350ms;
 }
 
-.transition-overlay.is-animating {
+#overlay.is-animating {
   opacity: 0;
-}
-/* Custom handling based on route */
-.transition-overlay.to-open-overlay.is-leaving,
-.transition-overlay.to-close-overlay.is-rendering {
-  transition-duration: 0ms;
 }
 
 /*
 * The transition between characters.
 * The animation happens on the element itself
 */
-.transition-character.is-changing {
+#detail.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
 
-.transition-character.is-animating {
+#detail.is-animating {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateX(20px);
 }
 
-.transition-character.is-leaving {
+#detail.is-leaving {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateX(-20px);
 }
 
 

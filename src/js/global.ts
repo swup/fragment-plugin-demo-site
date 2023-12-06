@@ -15,27 +15,27 @@ const rules = [
   {
     from: "/characters/:filter?",
     to: "/characters/:filter?",
-    fragments: ["#list"],
+    containers: ["#list"],
   },
   // Rule 2: From the list to an overlay
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    fragments: ["#overlay"],
+    containers: ["#overlay"],
     name: "open-overlay",
   },
   // Rule 3: From an overlay back to the list
   {
     from: "/character/:character",
     to: "/characters/:filter?",
-    fragments: ["#overlay", "#list"],
+    containers: ["#overlay", "#list"],
     name: "close-overlay",
   },
   // Rule 4: Between overlays
   {
     from: "/character/:character",
     to: "/character/:character",
-    fragments: ["#detail"],
+    containers: ["#detail"],
   },
 ];
 /** RULES END **/
@@ -46,12 +46,6 @@ const rules = [
 const swup = new Swup({
   animateHistoryBrowsing: true,
   plugins: [new FragmentPlugin({ rules, debug: true })],
-});
-
-console.log(swup.version);
-
-swup.hooks.on("animationInStart", async () => {
-  // await sleep(20000);
 });
 
 /**
@@ -124,15 +118,15 @@ const onHoverLink = ({ target: el }) => {
   if (el.origin !== location.origin) return;
 
   // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as any;
+  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as FragmentPlugin;
   if (!fragmentPlugin) return;
 
-  const state = fragmentPlugin.getState({
+  const fragmentVisit = fragmentPlugin.getFragmentVisit({
     from: Location.fromUrl(window.location.href).url,
     to: Location.fromElement(el).url,
   });
 
-  showInternalLinkTooltip(el, state?.fragments || swup.options.containers);
+  showInternalLinkTooltip(el, fragmentVisit?.containers || swup.options.containers);
 };
 // Delegate mouseenter
 swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
@@ -140,10 +134,8 @@ swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
 });
 
 // Reset the scroll of the overlay when switching #detail
-const onReplaceContent: Handler<"replaceContent"> = (context) => {
+const onReplaceContent: Handler<"content:replace"> = (context) => {
   const overlay = document.querySelector("#overlay") as HTMLElement | null;
   if (overlay) overlay.scrollTop = 0;
 };
-swup.hooks.on("replaceContent", onReplaceContent);
-
-swup.hooks.on("samePage", () => console.log('samePage'));
+swup.hooks.on("content:replace", onReplaceContent);
