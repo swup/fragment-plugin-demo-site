@@ -6,23 +6,47 @@
   padding: 0;
 }
 
+/*
+* Hide things visually, still shwo them to screen readers
+*/
+.sr-only {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
 :root {
   font-family: var(--font-sans);
   margin: 0;
-  font-size: 18px;
-  line-height: 1.5;
 }
 
-.site-title,
-.page-title {
-  @apply font-extrabold text-4xl;
+html {
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-y: scroll;
+
+  @supports (scrollbar-gutter: stable) {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 }
 
+html,
 body {
-  max-width: 1000px;
-  margin-block: 8%;
+  background: white;
+}
+
+#swup {
+  max-width: 900px;
+  padding-block: calc(var(--header-height) + 6%) 8%;
   margin-inline: auto;
-  padding: 1rem;
+  padding-inline: 1rem;
+}
+#swup {
+  min-height: 100svh;
 }
 
 ul {
@@ -43,9 +67,9 @@ a {
 }
 
 p a:where(:not(.button)),
-.text ul a:where(:not(.button)) {
+.text li a:where(:not(.button)) {
   font-weight: 600;
-  background-image: linear-gradient(#60ddcd 0%, #60ddcd 100%);
+  background-image: linear-gradient(var(--swup-green) 0%, var(--swup-green) 100%);
   background-repeat: repeat-x;
   background-position: 0 100%;
   background-size: 1px 3px;
@@ -53,6 +77,77 @@ p a:where(:not(.button)),
 
 .site-header {
   margin-bottom: 2rem;
+}
+
+/*
+* Global Header
+*/
+.global-header {
+  line-height: 1;
+  width: 100%;
+  display: flex;
+  padding-inline: 0.8rem 1rem;
+  gap: 1rem;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  height: var(--header-height);
+
+  /* background: var(--background); */
+  border-bottom: 1px solid var(--color-transparent-1);
+  /* backdrop-filter: blur(100px) brightness(120%); */
+  background: white;
+}
+
+
+.global-header a,
+.global-header button {
+  pointer-events: all;
+  display: inline-flex;
+}
+
+.global-header_title {
+  display: flex;
+  align-items: center;
+  margin-inline-end: auto;
+  font-size: 1.1em;
+}
+
+.global-header_title_image {
+  display: block;
+  --size: 1.5rem;
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  top: 0.1em;
+  margin-inline-end: 0.5em;
+}
+
+.global-header_title_swup {
+  font-weight: bold;
+  display: none;
+
+  @media (min-width: 300px) {
+    display: block;
+  }
+}
+
+.global-header_title_breadcrumb {
+  display: flex;
+  align-items: center;
+  color: var(--color-transparent-3);
+  position: relative;
+
+  svg {
+    display: inline-block;
+    /* margin: 0 0.15em 0 0.2em; */
+    width: 0.9em;
+    height: 0.9em;
+    position: relative;
+    top: 0.05em;
+  }
 }
 
 /*
@@ -133,7 +228,7 @@ p a:where(:not(.button)),
   --min-column-width: 20%;
 
   @media (--xs-n-above) {
-    --min-column-width: min(33.33333%, 150px);
+    --min-column-width: min(33.33333%, 160px);
   }
 
   display: grid;
@@ -202,9 +297,10 @@ p a:where(:not(.button)),
 }
 
 .character_image {
-  padding-bottom: 30%;
+  padding-bottom: 45%;
   background-repeat: no-repeat;
   background-position: top center;
+  background-size: 50%;
 }
 
 .character_body {
@@ -217,7 +313,26 @@ p a:where(:not(.button)),
 
 :where(.text)>h2 {
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  padding-top: 0.75em;
+}
+
+:where(.text)>h3 {
+  padding-top: 0.75em;
+  font-size: 1.2rem;
+}
+
+:where(.text) ul:not([class]) {
+  list-style: disc;
+  padding-left: 1em;
+}
+
+:where(.text) ol:not([class]) {
+  padding-left: 1em;
+}
+
+:where(.text) li:not(:last-child) {
+  margin-block-end: 0.2em;
 }
 
 .character_nav {
@@ -240,36 +355,58 @@ p a:where(:not(.button)),
 }
 
 /*
-* Overlay
+* Modal
 */
-.overlay {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100svh;
-  overflow: auto;
+  max-width: 100vw;
+  max-height: 100svh;
   z-index: 3;
+  background: transparent;
+  border: none;
+  display: grid;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.modal::backdrop {
+  background: rgba(0 0 0 / 0.8);
 }
 
-.overlay_inner {
+/* main[tabindex="-1"] {
+  outline: none;
+} */
+main:focus {
+  outline: none;
+}
+
+.modal_inner {
+  position: relative;
+}
+.modal_content {
   padding: 2rem 1rem;
-  min-height: 100%;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-}
 
-.overlay_close {
+}
+.modal_spacer {
+  height: 100svh;
+}
+.modal_close {
   display: block;
   position: absolute;
   inset: 0;
-  background: rgba(0 0 0 / 0.8);
   cursor: no-drop;
+  /* background: rgba(0 0 0 / 0.8); */
 }
 
-.overlay .character {
+.modal .character {
   max-width: 700px;
   margin: 0 auto;
 }
@@ -280,7 +417,7 @@ p a:where(:not(.button)),
 .astro-code {
   width: 100%;
   overflow: auto;
-  border-radius: 0.3rem;
+  border-radius: var(--radius-1);
   font-size: 0.9rem;
 }
 
@@ -295,7 +432,7 @@ p a:where(:not(.button)),
 */
 *:not(.astro-code)>code {
   font-family: var(--font-mono);
-  background: 	hsl(172, 65%, 90%);
+  background: hsl(172, 65%, 90%);
   border-radius: 0.3em;
   color: rgb(0 0 0 / 0.8);
   padding: 0.2em 0.5em 0.3em;
@@ -312,4 +449,66 @@ p a:where(:not(.button)),
   font-size: 0.7rem;
   padding: 0.5em;
   font-weight: bold;
+}
+
+/*
+* Anchor links
+*/
+.anchor-link {
+  position: relative;
+  display: inline-block;
+}
+
+.anchor-link_icon {
+  --size: 0.7em;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  right: 100%;
+  margin-right: 0.1em;
+  top: 0.4em;
+  opacity: 0;
+  font-weight: normal;
+}
+
+.anchor-link_icon .feather {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (--mouse) {
+  .anchor-link:hover .anchor-link_icon {
+    opacity: 1;
+  }
+}
+
+/*
+* Hints
+*/
+.hint {
+  background: #caabff;
+  font-style: italic;
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: var(--radius-1);
+
+  @media (--sm-n-above) {
+    flex-direction: row;
+  }
+}
+
+.hit_icon {
+  position: relative;
+  top: 0.2em;
+}
+
+.hit_icon .feather {
+  display: block;
+  width: 1em;
+  height: 1em;
 }

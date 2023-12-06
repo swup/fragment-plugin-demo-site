@@ -1,41 +1,60 @@
 import Swup, { Handler, Location } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import FragmentPlugin from "@swup/fragment-plugin";
+import SwupFragmentPlugin, {
+  Rule as FragmentRule,
+} from "@swup/fragment-plugin";
+import SwupPreloadPlugin from "@swup/preload-plugin";
+import SwupHeadPlugin from "@swup/head-plugin";
+import SwupA11yPlugin from "@swup/a11y-plugin";
+import SwupScrollPlugin from "@swup/scroll-plugin";
+// import ParallelPlugin from "@swup/parallel-plugin";
 
 import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
 
+import feather from "feather-icons";
+
+import Alpine, { AlpineComponent } from "alpinejs";
+
+/**
+ * Checks:
+ *
+ * - swup.preload not detected (solved using `export interface Swup` instead of `export class Swup`)
+ * - swup.getFragmentVisit suddenly has problems with `this` (solved)
+ * - Handler<"link:hover"> should be simpler to use (only args, no visit)
+ */
+
 /** RULES START **/
 /**
  * Define the rules for Fragment Plugin
  */
-const rules = [
-  // Rule 1: Between filters of the list
+const rules: FragmentRule[] = [
+  // Rule 1: Between the various views of the characters list
   {
     from: "/characters/:filter?",
     to: "/characters/:filter?",
-    containers: ["#list"],
+    containers: ["#characters-list"],
   },
-  // Rule 2: From the list to an overlay
+  // Rule 2: From the list of characters to a character detail page
   {
     from: "/characters/:filter?",
     to: "/character/:character",
-    containers: ["#overlay"],
-    name: "open-overlay",
+    containers: ["#character-modal"],
+    name: "open-character",
   },
-  // Rule 3: From an overlay back to the list
+  // Rule 3: From a single character back to the list of characters
   {
     from: "/character/:character",
     to: "/characters/:filter?",
-    containers: ["#overlay", "#list"],
-    name: "close-overlay",
+    containers: ["#character-modal", "#characters-list"],
+    name: "close-character",
   },
-  // Rule 4: Between overlays
+  // Rule 4: Between characters (previous/next)
   {
     from: "/character/:character",
     to: "/character/:character",
-    containers: ["#detail"],
+    containers: ["#character-detail"],
   },
 ];
 /** RULES END **/
@@ -44,23 +63,68 @@ const rules = [
  * Initialize Swup
  */
 const swup = new Swup({
-  animateHistoryBrowsing: true,
-  plugins: [new FragmentPlugin({ rules, debug: true })],
+  animateHistoryBrowsing: false,
+  cache: true,
+  plugins: [
+    new SwupFragmentPlugin({
+      rules,
+      debug: true,
+    }),
+    new SwupPreloadPlugin({ preloadVisibleLinks: true }),
+    new SwupHeadPlugin(),
+    new SwupA11yPlugin(),
+    new SwupScrollPlugin({
+      offset: () => {
+        const header = document.querySelector(".global-header") as HTMLElement;
+        return header.offsetHeight + 15;
+      },
+    }),
+  ],
 });
 
+const closeModal = () => {
+  const closeLink = document.querySelector(
+    "a.character_close"
+  ) as HTMLAnchorElement;
+  if (closeLink) swup.navigate(closeLink.href);
+};
+
+type ModalComponent = AlpineComponent<{
+  open: boolean;
+}>;
+
+Alpine.data(
+  "modal",
+  (): ModalComponent => ({
+    open: true,
+    onScroll() {
+      if (!this.open) return;
+      if (!this.$refs.detail) return;
+      const rect = this.$refs.detail.getBoundingClientRect();
+
+      if (rect.bottom < 0) {
+        this.open = false;
+        closeModal();
+      }
+    },
+  })
+);
+
+Alpine.start();
+
+// swup.hooks.on("animation:in:start", async (context) => {
+//   await sleep(20000);
+// });
+
 /**
- * Close eventual overlays using the Escape key
+ * Close eventual modals using the Escape key
  */
 const onKeyDown = (e: KeyboardEvent) => {
   if (e.metaKey) return;
 
-  const characterClose = document.querySelector(
-    "a.character_close"
-  ) as HTMLAnchorElement;
-
   switch (e.key) {
     case "Escape":
-      if (characterClose) characterClose.click();
+      closeModal();
       break;
   }
 };
@@ -82,25 +146,27 @@ const humanReadableArray = (
   });
 
 /**
- * Show a tooltip with the targeted fragments when hovering internal links
+ * Show a tooltip with the targeted fragment elements when hovering internal links
  */
 const showInternalLinkTooltip = (
   el: HTMLAnchorElement,
-  selectors: string[]
+  containers: string[]
 ): void => {
   // Early returns
-  if (!selectors.length) return;
+  if (!containers.length) return;
   if (isTouch()) return;
 
   const tippyInstance = tippy(el, {
     allowHTML: true,
     theme: "light",
     content: `replaces ${humanReadableArray(
-      selectors.map((selector) => `<code>${selector}</code>`)
+      containers.map((selector) => `<code>${selector}</code>`)
     )}`,
     plugins: [followCursor],
     followCursor: el.matches("[data-tippy-follow]"),
     duration: 0,
+    appendTo: "parent",
+    maxWidth: 400,
   });
   el.addEventListener("mouseleave", () => tippyInstance.destroy(), {
     once: true,
@@ -108,34 +174,58 @@ const showInternalLinkTooltip = (
 };
 
 /**
- * Show a tooltip containing the targeted fragments when hovering swup links
+ * Show a tooltip containing the targeted fragment containers when hovering swup links
  */
-const onHoverLink = ({ target: el }) => {
-  const isLink = el instanceof HTMLAnchorElement;
-  if (!isLink) return;
+const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
+  if (!(el instanceof HTMLAnchorElement)) return;
 
-  // only do this for internal links
-  if (el.origin !== location.origin) return;
+  // ignore anchor links
+  if (el.getAttribute("href")?.startsWith("#")) return;
 
-  // Get the fragment plugin
-  const fragmentPlugin = swup.findPlugin("SwupFragmentPlugin") as FragmentPlugin;
-  if (!fragmentPlugin) return;
+  // ignore links to same page
+  if (
+    Location.fromElement(el).url === Location.fromUrl(window.location.href).url
+  )
+    return;
 
-  const fragmentVisit = fragmentPlugin.getFragmentVisit({
-    from: Location.fromUrl(window.location.href).url,
-    to: Location.fromElement(el).url,
+  const fragmentVisit = swup.getFragmentVisit?.({
+    from: window.location.href,
+    to: el.href,
   });
 
-  showInternalLinkTooltip(el, fragmentVisit?.containers || swup.options.containers);
+  showInternalLinkTooltip(
+    el,
+    fragmentVisit?.containers.map((selector) => selector) ||
+      swup.options.containers
+  );
 };
-// Delegate mouseenter
-swup.delegateEvent(swup.options.linkSelector, "mouseenter", onHoverLink, {
-  capture: true,
-});
+swup.hooks.on("link:hover", onHoverLink);
 
-// Reset the scroll of the overlay when switching #detail
-const onReplaceContent: Handler<"content:replace"> = (context) => {
-  const overlay = document.querySelector("#overlay") as HTMLElement | null;
-  if (overlay) overlay.scrollTop = 0;
+// Reset the scroll of the modal when switching #character-detail
+const onContentReplace: Handler<"content:replace"> = (context) => {
+  const modal = document.querySelector(
+    "#character-modal"
+  ) as HTMLElement | null;
+  if (modal) modal.scrollTo({ top: 0, left: 0 });
 };
-swup.hooks.on("content:replace", onReplaceContent);
+swup.hooks.on("content:replace", onContentReplace);
+
+function addAnchorLinks() {
+  const headings = document
+    .querySelector(".text")
+    ?.querySelectorAll("h2, h3, h4, h5");
+
+  headings?.forEach((heading) => {
+    if (!heading.id) return;
+    const link = document.createElement("a");
+    link.href = `#${heading.id}`;
+    link.classList.add("anchor-link");
+    link.innerHTML = `
+    <span class='anchor-link_icon'>${feather.icons.link.toSvg()}</span>
+    <span class='anchor-link_text'>${heading.innerHTML}</span>
+  `;
+    heading.innerHTML = link.outerHTML;
+  });
+}
+swup.hooks.on("page:view", addAnchorLinks);
+addAnchorLinks();

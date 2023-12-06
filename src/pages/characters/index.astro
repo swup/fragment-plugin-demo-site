@@ -5,9 +5,9 @@ import Filters from "../../components/Filters.astro";
 ---
 
 <Base title="Characters">
-	<main id="list">
-		<Filters />
+	<template id="character-modal"></template>
+	<main id="characters-list">
+		<Filters mark-active={true} />
 		<Teasers />
 	</main>
-	<template id="overlay"></template>
 </Base>

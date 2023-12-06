@@ -1,0 +1,12 @@
+---
+import Base from "../components/Base.astro";
+import { Debug } from "astro/components";
+const { title, description, content } = Astro.props;
+---
+
+<!-- <Debug data={content.isFrontPage} /> -->
+<Base title={title} description={description} isFrontPage={content.isFrontPage}>
+	<div class="text">
+		<slot />
+	</div>
+</Base>

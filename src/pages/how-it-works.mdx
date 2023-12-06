@@ -1,0 +1,173 @@
+---
+layout: ../layouts/Page.astro
+title: How it works
+author: Rasso Hilber
+description: Find out how Fragment Plugin works!
+---
+
+import Base from "../components/Base.astro";
+import Hint from "../components/Hint.astro";
+import { Code } from "astro/components";
+import Icon from "../components/Icon.astro";
+
+import { loadSwupJS, loadSwupCSS } from "../js/backend.js";
+export const JS = loadSwupJS();
+export const CSS = loadSwupCSS();
+
+export const DataFragmentUrlExample = ``;
+
+
+**Fragment support on this site is being achieved with:**
+
+1. [JavaScript](#javascript) for setting up fragment rules
+2. [CSS](#css) for animating fragment visits
+3. The [DOM](#dom) for special cases and extra functionality
+
+## JavaScript
+
+Install swup and fragment-plugin from NPM:
+
+```bash
+npm install swup @swup/fragment-plugin
+```
+
+The following code is being used on this very site for initializing swup with fragment support:
+
+<Code code={JS} lang="js" />
+
+[Learn more about rules](https://github.com/swup/fragment-plugin#rules)
+
+Did you notice something strange about rule 3? It's telling the plugin to
+not only replace `#character-modal` but also `#characters-list`! Surely that's
+not we want when we are only closing an overlay, right?
+
+Turns out: There are cases where we actually want that! When navigating from a character to a
+filtered list of characters that wasn't active before we opened the character. Or when jumping multiple steps backwards or forwards in the browser history.
+
+**Fragment Plugin keeps track of the URL for each fragment element as soon as it is being rendered.
+On subsequent visits, the element won't be replaced if it already matches the visit's URL.**
+
+## CSS
+
+The CSS for the animations of fragment visits is scoped to the fragment elements:
+
+<Code code={CSS} lang="css" />
+
+## DOM
+
+### [data-swup-fragment-url]
+
+Let's visit one of the character detail pages directly,
+<a href="/character/luigi/" target="_blank">Luigi</a>, for example.
+
+On that page, the `#characters-list` behind the `#character-modal` displays the items that would also be
+rendered when navigating towards `/characters/`. But there is no way for Fragment Plugin to automatically
+detect that fact, so it would replace the list upon closing the modal, following our third fragment rule:
+
+```js
+{
+  from: "/character/:character",
+  to: "/characters/:filter?",
+  containers: ["#character-modal", "#characters-list"],
+  name: "close-character",
+}
+```
+
+We can solve this by providing the URL of the `#characters-list` beforehand, by adding
+`data-swup-fragment-url="/characters/"` to it. Now Fragment Plugin can correctly skip the
+`#characters-list` when we navigate from the open `#character-modal` to `/characters/`:
+
+```html title="/character/luigi/index.html" 'data-swup-fragment-url="/characters/"'
+<main id="character-modal">
+	<!-- ...modal content... -->
+</main>
+<div id="characters-list" data-swup-fragment-url="/characters/">
+	<!-- ...filters & characters... -->
+</div>
+```
+
+[Learn more about this attribute](https://github.com/swup/fragment-plugin#fragment-url)
+
+### [data-swup-link-to-fragment]
+
+Using `[data-swup-link-to-fragment="<selector>"]`, you can tell any link on your site to be synced
+to the matching element's fragment URL. This is in use for the character modal's close links on this site:
+
+```html title="/character/luigi/index.html" 'data-link-to-fragment="#characters-list"'
+<main id="character-modal">
+  <!-- Tells the link to sync it's `href` to the fragment #characters-list: -->
+	<a href="" data-link-to-fragment="#characters-list">Close modal</a>
+</main>
+<div id="characters-list" data-swup-fragment-url="/characters/">
+	<!-- ...filters & characters... -->
+</div>
+```
+
+[Learn more about this attribute](https://github.com/swup/fragment-plugin#link-to-fragment)
+
+### Modals inside `transform`ed parents
+
+Suppose you have a fragment that you want to open like a modal, above all other content. Just like
+on the character detail pages on this site.
+
+This (reduced) CSS is being used to make the `#item-detail` appear as a modal above everything else:
+
+```css
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+}
+```
+
+This will work fine, until we apply a `transform` to any of the modal's parent elements, as we do on this site:
+
+```css {7}
+html.is-changing .transition-main {
+  transition: opacity 250ms, transform 250ms;
+}
+html.is-animating .transition-main {
+  opacity: 0;
+  /* `transform` will misplace the .modal's positioning during an animated page visit */
+  transform: translateY(20px);
+}
+```
+
+The reason for this is that `transform` establishes a [containing block for all descendants](https://www.w3.org/TR/css-transforms-1/#containing-block-for-all-descendants).
+
+You have two options to fix this:
+
+1. Don't apply CSS `transform`s to any of the parents of a modal
+2. Use `<detail open>` for the modal:
+
+```diff lang="html"
+<div id="swup" class="transition-main">
+- <main id="character-modal">
++ <dialog open id="character-modal"><main>
+    <!-- character content -->
+- </main>
++ </main></dialog>
+  <div id="characters-list" data-swup-fragment-url="/characters/">
+	  <!-- ...filters & characters... -->
+  </div>
+</div>
+```
+
+Fragment Plugin will detect `<detail open>` fragment elements automatically on every page view and run [`showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) on them, putting them on the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) and thus allows them to not be affected by parent element styles, anymore.
+
+## Modals and accessibility
+
+### Element order
+
+The first `<main>` element in a document will be considered the main content by assistive technology. If you are using the [A11y Plugin](https://swup.js.org/plugins/a11y-plugin/), that's also the element that will automatically be focused upon page visits. For that reason, **you should always put your modal before any overlayed content**, if it should be considered the primary content of a page.
+
+### Pros and cons of using a `<dialog open>` element for modals
+
+**Pros**:
+
+- The modal's positioning won't be affected by `transform` animations on any of it's parents.
+- Focus trapping will be natively available for the modal without you having to do anything.
+
+**Cons**:
+
+- Wrapping your `<main>` content inside a `<dialog>` will produce [semantically incorrect markup](https://stackoverflow.com/a/75007908/586823). We still think it's the cleanest approach for now, until the [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) reaches [wider browser support](https://caniuse.com/?search=popover).

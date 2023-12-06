@@ -1,76 +1,91 @@
 /* The default transition for non-fragment visits */
-html.is-changing .transition-main {
-  transition: opacity 250ms, transform 250ms;
+.is-changing .transition-main {
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
 }
-
 html.is-animating .transition-main {
   opacity: 0;
   transform: translateY(-20px);
 }
-
 html.is-leaving .transition-main {
   transform: translateY(20px);
 }
 
 /*
  * The transition when filtering the characters.
- * Here we are animating children of the element #list
+ * Here, we are animating the `.teaeser` elements individually
  */
- #list.is-changing {
-  transition-duration: 250ms;
- }
-#list.is-changing .transition-teaser {
-  transition-property: opacity, transform;
-  transition-duration: 450ms;
+#characters-list.is-changing {
+  --duration-leave: 150ms;
+  --duration-enter: 400ms;
+  transition-duration: var(--duration-enter);
 }
-
-#list.is-animating .transition-teaser {
+#characters-list.is-leaving {
+  transition-duration: var(--duration-leave);
+}
+#characters-list.is-changing .teaser {
+  transition-property: opacity, transform;
+  transition-duration: var(--duration-enter);
+  transition-timing-function: cubic-bezier(0.230, 1.000, 0.320, 1.000); /* easeOutQuint */
+}
+#characters-list.is-animating .teaser {
   opacity: 0;
   transform: scale(0.75);
 }
-
-#list.is-leaving .transition-teaser {
-  transition-duration: 100ms;
+/* Change easing and duration for the leave-phase */
+#characters-list.is-leaving .teaser {
+  transition-timing-function: ease-in;
+  transition-duration: var(--duration-leave);
 }
 
 /*
-* The transition for opening and closing an overlay.
-* The animation happens on the element itself
+* The animation for opening and closing the character modal
 */
-#overlay.is-changing {
-  transition: opacity 350ms;
+#character-modal.is-changing {
+  transition: opacity 300ms;
+}
+#character-modal.is-animating {
+  opacity: 0;
 }
 
-#overlay.is-animating {
+/* Zoom-Effect for the character detail when opening/closing the modal */
+#character-modal.is-changing #character-detail {
+  transition: transform 150ms;
+  transform: scale(1);
+}
+#character-modal.to-open-character.is-animating #character-detail,
+#character-modal.to-close-character.is-leaving #character-detail {
+  transform: scale(0.95);
+}
+
+/* Animate the backdrop of the modal */
+#character-modal::backdrop {
+  transition: opacity 300ms;
+}
+#character-modal.is-animating::backdrop,
+.is-animating #character-modal::backdrop {
   opacity: 0;
 }
 
 /*
-* The transition between characters.
-* The animation happens on the element itself
+* The animation between charcter details. Directional animation based on data-swup-animation
 */
-#detail.is-changing {
+#character-detail.is-changing {
   transition: opacity 200ms, transform 200ms;
 }
-
-#detail.is-animating {
-  opacity: 0;
-  transform: translateX(20px);
+#character-detail.to-next {
+  --direction: 1;
 }
-
-#detail.is-leaving {
+#character-detail.to-previous {
+  --direction: -1;
+}
+#character-detail.is-animating {
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(calc(40px * var(--direction)));
+}
+#character-detail.is-leaving {
+  transform: translateX(calc(40px * var(--direction) * -1));
 }
 
 
 /* cut */
-
-/* .overlay-placeholder {
-  width: 300px;
-  aspect-ratio: 1;
-  background: red;
-  position: fixed;
-  top: 0;
-  pointer-events: none;
-} */

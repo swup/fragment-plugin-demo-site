@@ -8,24 +8,40 @@
  */
 
 import { execSync } from "child_process";
-import { existsSync } from "fs";
+import { existsSync, rmSync } from "fs";
+
+
+console.log(process.env.NETLIFY);
 
 const packages = [
   {
-    url: "git@github.com:swup/fragment-plugin.git",
-    branch: "develop",
+    url: "https://github.com/swup/fragment-plugin.git",
+    branch: "optimize-types",
     folder: "./packages/fragment-plugin",
   },
   {
-    url: "git@github.com:swup/swup.git",
-    branch: "next",
+    url: "https://github.com/swup/swup.git",
+    branch: "master",
     folder: "./packages/swup",
   },
+  {
+    url: "https://github.com/swup/preload-plugin.git",
+    branch: "master",
+    folder: "./packages/debug-plugin",
+  },
+  // {
+  //   url: "https://github.com/swup/parallel-plugin.git",
+  //   branch: "development",
+  //   folder: "./packages/parallel-plugin",
+  // },
 ];
 
 packages.forEach(({ url, branch, folder }) => {
   // Bail early if the folder already exists
   if (existsSync(folder)) return;
+
+  // Always delete the target folders if on Netlify
+  if (process.env.NETLIFY) rmSync(folder, { recursive: true, force: true });
 
   /**
    * Clone the repo into the given folder
@@ -35,5 +51,5 @@ packages.forEach(({ url, branch, folder }) => {
    * Run `npm install` inside the folder
    * @see https://stackoverflow.com/a/68299198/586823
    */
-  execSync(`npm --prefix ${folder} install`);
+  if (process.env.NETLIFY) execSync(`npm --prefix ${folder} install`);
 });
