@@ -31,7 +31,14 @@ const { name, color, image } = post.data;
 ---
 
 <Character {...post.data}>
-  <dialog role="article" open id="character-modal" class="modal transition-main" x-data="modal" x-on:scroll="onScroll">
+  <dialog
+    role="article"
+    open
+    id="character-modal"
+    class="modal transition-main"
+    x-data="Modal"
+    x-on:scroll="onScroll"
+  >
     <div class="modal_inner">
       <a
         href="/characters/"
@@ -70,16 +77,16 @@ const { name, color, image } = post.data;
             <p>
               The <strong>most complex case</strong> on this site is closing a character.
               Depending on where you are coming from and where you are going, you
-              might want to not only replace the <code>#character-modal</code>, but also
-              the <code>#characters-list</code> of characters. Try it out by clicking one of
-              the filters below that you haven't visited just before opening this
-              character:
+              might want to not only replace the <code>#character-modal</code>,
+              but also the <code>#characters-list</code> of characters. Try it out
+              by clicking one of the filters below that you haven't visited just
+              before opening this character:
             </p>
             <Filters />
             <p>
               Visit <a href="/how-it-works/">How it works</a>
-              for more information about how fragment containers are being enabled on this
-              site.
+              for more information about how fragment containers are being enabled
+              on this site.
             </p>
           </div>
           <nav>

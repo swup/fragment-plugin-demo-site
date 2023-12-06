@@ -107,7 +107,7 @@ const Modal = defineComponent(() => {
   };
 });
 
-Alpine.data("modal", Modal);
+Alpine.data("Modal", Modal);
 
 Alpine.start();
 
