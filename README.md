@@ -12,3 +12,6 @@ cd ./fragment-plugin-demo-site
 npm install
 npm run dev
 ```
+
+> [!TIP]
+> On `npm install`, `@swup/fragment-plugin` will be installed by cloning the package to `./packages/ fragment-plugin`. This simplifies development and debugging of the plugin directly on this demo site.
