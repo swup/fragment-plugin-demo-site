@@ -1,8 +1,8 @@
-import Swup, { Handler, Location } from "swup";
+import Swup, { Location } from "swup";
+import type { Handler } from "swup";
 import { isTouch, sleep } from "./frontend.js";
-import SwupFragmentPlugin, {
-  Rule as FragmentRule,
-} from "@swup/fragment-plugin";
+import SwupFragmentPlugin from "@swup/fragment-plugin";
+import type { Rule as FragmentRule } from "@swup/fragment-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
 import SwupHeadPlugin from "@swup/head-plugin";
 import SwupA11yPlugin from "@swup/a11y-plugin";
@@ -181,13 +181,21 @@ const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
   // ignore anchor links
   if (el.getAttribute("href")?.startsWith("#")) return;
 
-  // ignore links to same page
-  if (
-    Location.fromElement(el).url === Location.fromUrl(window.location.href).url
-  )
-    return;
+  const currentLocation = Location.fromUrl(window.location.href);
+  const targetLocation = Location.fromElement(el);
 
-  const fragmentPlugin = swup.findPlugin('SwupFragmentPlugin') as SwupFragmentPlugin;
+  // ignore links to same page
+  if (currentLocation.url === targetLocation.url) {
+    return;
+  }
+
+  if (currentLocation.hostname !== targetLocation.hostname) {
+    return;
+  }
+
+  const fragmentPlugin = swup.findPlugin(
+    "SwupFragmentPlugin"
+  ) as SwupFragmentPlugin;
 
   const fragmentVisit = fragmentPlugin.getFragmentVisit({
     from: window.location.pathname,
