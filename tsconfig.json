@@ -5,10 +5,10 @@
     "noImplicitAny": false,
     "baseUrl": "./",
     "paths": {
-      "swup": ["packages/swup/src/index"],
-      "@swup/fragment-plugin": ["packages/fragment-plugin/src/index"],
-      "@swup/parallel-plugin": ["packages/parallel-plugin/src/index"],
-      "@swup/preload-plugin": ["packages/preload-plugin/src/index"],
+      // "swup": ["packages/swup/src/index"],
+      // "@swup/fragment-plugin": ["packages/fragment-plugin/src/index"],
+      // "@swup/parallel-plugin": ["packages/parallel-plugin/src/index"],
+      // "@swup/preload-plugin": ["packages/preload-plugin/src/index"],
     },
     "skipLibCheck": true
   }
