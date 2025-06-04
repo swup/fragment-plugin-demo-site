@@ -16,12 +16,12 @@ console.log(process.env.NETLIFY);
 const packages = [
   {
     url: "https://github.com/swup/fragment-plugin.git",
-    branch: "optimize-types",
+    branch: "main",
     folder: "./packages/fragment-plugin",
   },
   {
     url: "https://github.com/swup/swup.git",
-    branch: "master",
+    branch: "main",
     folder: "./packages/swup",
   },
   {
