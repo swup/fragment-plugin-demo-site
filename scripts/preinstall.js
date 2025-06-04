@@ -34,9 +34,9 @@ const packages = [
   // },
 ];
 
-packages.forEach(({ url, branch, folder }) => {
-  /** Bail early if the folder already exists */
-  if (existsSync(folder)) {
+packages.forEach(({url, branch, folder}) => {
+  /** Bail early if the folder already exists and we are not on Netlify */
+  if (!!process.env.NETLIFY && existsSync(folder)) {
     return info(`${url} alrady cloned to ${folder}`);
   }
 
