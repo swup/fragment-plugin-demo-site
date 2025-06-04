@@ -187,9 +187,11 @@ const onHoverLink: Handler<"link:hover"> = (visit, { el }) => {
   )
     return;
 
-  const fragmentVisit = swup.getFragmentVisit?.({
-    from: window.location.href,
-    to: el.href,
+  const fragmentPlugin = swup.findPlugin('SwupFragmentPlugin') as SwupFragmentPlugin;
+
+  const fragmentVisit = fragmentPlugin.getFragmentVisit({
+    from: window.location.pathname,
+    to: el.pathname,
   });
 
   showInternalLinkTooltip(
